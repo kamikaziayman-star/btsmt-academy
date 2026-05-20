@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: btsmt-academy
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run btsmtacademy.py --server.port $PORT --server.address 0.0.0.0
+    envVars:
+      - key: BTSMT_ADMIN_PASSWORD
+        sync: false
+      - key: BTSMT_DIRECTION_PASSWORD
+        sync: false

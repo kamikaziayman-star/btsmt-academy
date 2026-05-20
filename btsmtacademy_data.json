@@ -1,0 +1,758 @@
+{
+  "messages": [
+    {
+      "titre": "sdgfqsgqsq",
+      "matiere": "Toutes les matieres",
+      "prof": "Direction BTSMT",
+      "date": "20/05/2026 17:46",
+      "important": true,
+      "contenu": "gqsdgqzer"
+    },
+    {
+      "titre": "ana ayman mol had platforme",
+      "matiere": "Marketing touristique",
+      "prof": "Prof Marketing touristique",
+      "date": "20/05/2026 16:45",
+      "important": false,
+      "contenu": "hello word"
+    },
+    {
+      "titre": "Bienvenue sur BTSMT Academy",
+      "matiere": "General",
+      "prof": "Administration",
+      "date": "20/05/2026 12:00",
+      "contenu": "Les professeurs peuvent publier ici les annonces, les nouveaux cours et les dates importantes.",
+      "important": false
+    }
+  ],
+  "cours": {
+    "Controle de gestion": [
+      {
+        "titre": "Couts complets",
+        "description": "Cours PDF de Controle de gestion.",
+        "url": "https://drive.google.com/file/d/18ws4gjRIAPml44g452xAOAOtmdFzCKoG/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Couts partiels",
+        "description": "Cours PDF de Controle de gestion.",
+        "url": "https://drive.google.com/file/d/1wTh5LP67FF25xt7nx9Im9zCajWgMm8ZL/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Analyse financiere",
+        "description": "Cours PDF de Controle de gestion.",
+        "url": "https://drive.google.com/file/d/1Ns8BCz_YFEAHyqSwkq_x_NIfrdHgz4lo/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "L'ajustement liniere",
+        "description": "Cours PDF de Controle de gestion.",
+        "url": "https://drive.google.com/file/d/1Zdj97bFtyvePuucyuaRN2LCexVsC_7yd/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Les ecart",
+        "description": "Cours PDF de Controle de gestion.",
+        "url": "https://drive.google.com/file/d/1O-ochdb92X0BH_1qqZWIGZh9gNbW5wPz/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Approvisionnements",
+        "description": "Cours PDF de Controle de gestion.",
+        "url": "https://drive.google.com/file/d/1xt_AC-as2RXsZQOT-ynoAAFH5OqGlefn/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Informatique de gestion": [
+      {
+        "titre": "Cours de Informatique de gestion",
+        "description": "Ajoutez ici le lien Drive du dossier de cours.",
+        "url": "https://drive.google.com/",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Marketing touristique": [
+      {
+        "titre": "Introduction marketing",
+        "description": "Cours PDF de Marketing touristique.",
+        "url": "https://drive.google.com/file/d/1hwJOhaIfLAigg88ICek_q5AA34hrFAtL/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Politique produit",
+        "description": "Cours PDF de Marketing touristique.",
+        "url": "https://drive.google.com/file/d/13oLm8U7z18_tSR7_jLeVgmJV0Nwwcck_/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Produit marque",
+        "description": "Cours PDF de Marketing touristique.",
+        "url": "https://drive.google.com/file/d/1H8Bc85uSyf_opa8mUC5Od0KUnNTKKNDQ/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Produit gamme",
+        "description": "Cours PDF de Marketing touristique.",
+        "url": "https://drive.google.com/file/d/15XMKYWno_aO65i0mcCFJVC1l4IDwfSwp/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Politique prix",
+        "description": "Cours PDF de Marketing touristique.",
+        "url": "https://drive.google.com/file/d/15-NBpH0kvFOwcjl7_uYwb5TSQmRsWk-P/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Politique de distribution",
+        "description": "Cours PDF de Marketing touristique.",
+        "url": "https://drive.google.com/file/d/1a_NP-CldhL6LYF0o2caW2npQpRVnW60h/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Commercialisation des services touristiques": [
+      {
+        "titre": "Cours de Commercialisation des services touristiques",
+        "description": "Ajoutez ici le lien Drive du dossier de cours.",
+        "url": "https://drive.google.com/",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Communication professionnelle": [
+      {
+        "titre": "Rapport et application",
+        "description": "Cours PDF de Communication professionnelle.",
+        "url": "https://drive.google.com/file/d/1YcxCe7yBUyxIlkzu-8dgBNfePv30DVFY/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Les reunions et application",
+        "description": "Cours PDF de Communication professionnelle.",
+        "url": "https://drive.google.com/file/d/1YVkaOV1zYqjhb_DzvbIC9rFDPROkMPek/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Les concepts de base de la communication",
+        "description": "Cours PDF de Communication professionnelle.",
+        "url": "https://drive.google.com/file/d/1CzYnEkX20m_216Z-uGD7sEME5DPgSt0e/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Le compte rendu et application",
+        "description": "Cours PDF de Communication professionnelle.",
+        "url": "https://drive.google.com/file/d/1QvpLbhizPhxXDNdtxww4Ul4DYueSNjul/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "L'entretien",
+        "description": "Cours PDF de Communication professionnelle.",
+        "url": "https://drive.google.com/file/d/1tGRVitIzcE08x4-wEMVj1Du4VD5aZBzX/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "L'entretien telephonique",
+        "description": "Cours PDF de Communication professionnelle.",
+        "url": "https://drive.google.com/file/d/1wo7Qy2fonym4TRKjjYohSbmJZ4UtAmZ7/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Courrier electronique application",
+        "description": "Cours PDF de Communication professionnelle.",
+        "url": "https://drive.google.com/file/d/154-AXQySD21BMlKGeUqtdr2WLBP760LD/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Communication ecrite professionnelle et application",
+        "description": "Cours PDF de Communication professionnelle.",
+        "url": "https://drive.google.com/file/d/1OxDXteRayTzygyQni5xZkWn4WZ_lGo-Y/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Accueil et application",
+        "description": "Cours PDF de Communication professionnelle.",
+        "url": "https://drive.google.com/file/d/1Ntb4UBMbLRUGeg8p8Wi7jiIeh5dd6J2A/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Entrepreneuriat": [
+      {
+        "titre": "Cours de Entrepreneuriat",
+        "description": "Ajoutez ici le lien Drive du dossier de cours.",
+        "url": "https://drive.google.com/",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Anglais": [
+      {
+        "titre": "UNIT I Student - Hospitality Customer Behaviour",
+        "description": "Cours PDF de Anglais.",
+        "url": "https://drive.google.com/file/d/16YWrLZty9LTSs6UFjifXI4CZcqijLZNH/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Unit II Rest.Serv.Management Student",
+        "description": "Cours PDF de Anglais.",
+        "url": "https://drive.google.com/file/d/1Ff0FiwuWGD7Te37cLcu89R83DfD3nklr/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Unit 3 - Catering Trends and Moroccan Gastronomy",
+        "description": "Cours PDF de Anglais.",
+        "url": "https://drive.google.com/file/d/1OIMF11a857Yrf6_L2LzzTT2JQYzXfji-/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "UNIT 4 Event Management",
+        "description": "Cours PDF de Anglais.",
+        "url": "https://drive.google.com/file/d/125uTTNCRoOppmoNjw5PrUWR5vJnAUrn_/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Unit 5. Handling Guest Complaint",
+        "description": "Cours PDF de Anglais.",
+        "url": "https://drive.google.com/file/d/1EQmhZMQAmfzgdopvqsiAMZiJHrjXszSS/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Arabe": [
+      {
+        "titre": "Cours de Arabe",
+        "description": "Ajoutez ici le lien Drive du dossier de cours.",
+        "url": "https://drive.google.com/",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Espagnol": [
+      {
+        "titre": "Verbo SER y ESTAR",
+        "description": "Cours PDF de Espagnol.",
+        "url": "https://drive.google.com/file/d/1cHZS57B01bwSGkuNlDebaoPnqMecTQam/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Tecnico de respusta - linco",
+        "description": "Cours PDF de Espagnol.",
+        "url": "https://drive.google.com/file/d/1icS7MwT-Q7cl1e-pxBE_ysB2H0wTWFVY/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Presentate basudocte sabio los siguientes datos (information)",
+        "description": "Cours PDF de Espagnol.",
+        "url": "https://drive.google.com/file/d/1Fmg_RM_knslOCnf98fdPQImkDHLjzZOk/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Presentate basudocte sabio los siguientes datos (information) SUITE",
+        "description": "Cours PDF de Espagnol.",
+        "url": "https://drive.google.com/file/d/1pWfMxSo-xpIsfJOydDUlX3TSe4mCYNNM/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Motivation (E mail)",
+        "description": "Cours PDF de Espagnol.",
+        "url": "https://drive.google.com/file/d/1KZFcXoZ1NfPgTLzCmCrSHU056MJqhjZK/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Imperativo infirmativo",
+        "description": "Cours PDF de Espagnol.",
+        "url": "https://drive.google.com/file/d/1AOW7lu6A3go10aJC7HFxuUTlUaweMlo4/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Future",
+        "description": "Cours PDF de Espagnol.",
+        "url": "https://drive.google.com/file/d/1y_E96F80ZowxugVuCP49zAfVxbGDF_vO/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Applicacion 1",
+        "description": "Cours PDF de Espagnol.",
+        "url": "https://drive.google.com/file/d/1pelROl4CvWab1DoKS3oEhjBuIdjiERXl/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Applicacion 2",
+        "description": "Cours PDF de Espagnol.",
+        "url": "https://drive.google.com/file/d/1lrz8VgAN8SlEcGNGAPsoO5pr2MYpGTtP/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Francais": [
+      {
+        "titre": "LEXPRESSION-DU-BUT (1)",
+        "description": "Cours PDF de Francais.",
+        "url": "https://drive.google.com/file/d/14mizZLT1nD06Vn0KNL4LYkAhqeYwcqoG/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Les procedes de reprise",
+        "description": "Cours PDF de Francais.",
+        "url": "https://drive.google.com/file/d/14Py1j4t9NlYggf9GAuujurTdXxYjwKxN/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Expression de but",
+        "description": "Cours PDF de Francais.",
+        "url": "https://drive.google.com/file/d/1CfdkjpkciFetHwwLFlSQcdX8rcjzvoF-/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Exercice nominalisation",
+        "description": "Cours PDF de Francais.",
+        "url": "https://drive.google.com/file/d/1twShOPdaYB5SYaOQiZv6PUjC78P7gP67/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Concession (1)",
+        "description": "Cours PDF de Francais.",
+        "url": "https://drive.google.com/file/d/1QqYZuqyNvMsajDejdqmz3slEGy92b6VZ/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Activite de langue discours",
+        "description": "Cours PDF de Francais.",
+        "url": "https://drive.google.com/file/d/1nF2mnO-nZUdr34JVNIW6vCoOwqJsAtIR/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "La voix passive",
+        "description": "Cours PDF de Francais.",
+        "url": "https://drive.google.com/file/d/1XpKt7gtCGR7LNomtd1Jdsz34TbA0ehIp/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "La subordonnee circonstancielle de but",
+        "description": "Cours PDF de Francais.",
+        "url": "https://drive.google.com/file/d/1nM8O3ctFWYcTyn6KrG1ZEpWK9kPsz9FG/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Economie generale et touristique": [
+      {
+        "titre": "Intervention par l'etat",
+        "description": "Cours PDF de Economie generale et touristique.",
+        "url": "https://drive.google.com/file/d/1yNt30DHNU8an9UH8Qm7IfUnJS_v71m-i/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Politique economique",
+        "description": "Cours PDF de Economie generale et touristique.",
+        "url": "https://drive.google.com/file/d/1q0JBqF0mG6fjGY4TiY5b9iHEdKr53oH2/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Politique monetaire (1)",
+        "description": "Cours PDF de Economie generale et touristique.",
+        "url": "https://drive.google.com/file/d/1gX0EBr0HBM0wG3oDcMVmMnVibSTLNod5/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "La politique de change",
+        "description": "Cours PDF de Economie generale et touristique.",
+        "url": "https://drive.google.com/file/d/1JR_A6OEnoGco53VVSDiklB0fKiMV8TO9/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "La monnaie",
+        "description": "Cours PDF de Economie generale et touristique.",
+        "url": "https://drive.google.com/file/d/12-W2m0g2PU_4vFmJ2GQu1zTx2nVsokpz/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Croissance et developpement",
+        "description": "Cours PDF de Economie generale et touristique.",
+        "url": "https://drive.google.com/file/d/1-nsjeNCn17u5GYWwYtL7Zx6i8ZIJTdOU/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Commerce international",
+        "description": "Cours PDF de Economie generale et touristique.",
+        "url": "https://drive.google.com/file/d/1z1CGD-Swnz9DzMwX5Kc3Si7GFihZM1lG/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Les echanges touristiques",
+        "description": "Cours PDF de Economie generale et touristique.",
+        "url": "https://drive.google.com/file/d/1mP4gOc9cgTy2i5WVX7ckaBw4fXpTyq6j/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "Le chomage",
+        "description": "Cours PDF de Economie generale et touristique.",
+        "url": "https://drive.google.com/file/d/1HPw9ehowH-EDKtj5Q7YdxVuNY0F9zMoI/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "L'inflation",
+        "description": "Cours PDF de Economie generale et touristique.",
+        "url": "https://drive.google.com/file/d/1Rqc2gnX4RmNPbqOKlYgandfg7pF-Dd-b/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Management des organisations touristiques": [
+      {
+        "titre": "Les strategies d'entreprise (2)",
+        "description": "Cours PDF de Management des organisations touristiques.",
+        "url": "https://drive.google.com/file/d/1r1qa79Hidm15iclkFIMNXszCi_Ibl3M_/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "L'analyse concurrentielle",
+        "description": "Cours PDF de Management des organisations touristiques.",
+        "url": "https://drive.google.com/file/d/1jYPJZPzSsFK3lDRE_KJBIwrUeRwr0PW7/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "GRH",
+        "description": "Cours PDF de Management des organisations touristiques.",
+        "url": "https://drive.google.com/file/d/1XIfORDbh1Wf9__m7BlrCGJ2cM104rSnn/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ],
+    "Droit applique au tourisme": [
+      {
+        "titre": "DROIT DE TRAVAIL",
+        "description": "Cours PDF de Droit applique au tourisme.",
+        "url": "https://drive.google.com/file/d/1mpwpAN6UnXabc0SO6b1xwYTV57FHqprB/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      },
+      {
+        "titre": "DROIT TOURISME",
+        "description": "Cours PDF de Droit applique au tourisme.",
+        "url": "https://drive.google.com/file/d/1y6v3PEEd3d3AMEVrZnm9pRcVPQ48B5KU/view?usp=drive_link",
+        "type": "Cours",
+        "statut": "Disponible",
+        "date": "Date non indiquee",
+        "prof": "Administration"
+      }
+    ]
+  },
+  "examens": [
+    {
+      "titre": "Examens nationaux precedents",
+      "matiere": "Toutes les matieres",
+      "annee": "Archive",
+      "description": "Ajoutez ici le lien Drive des examens nationaux.",
+      "url": "https://drive.google.com/",
+      "session": "Archive",
+      "corrige_url": "",
+      "date": "Date non indiquee"
+    }
+  ],
+  "prof_accounts": {
+    "admin@btsmtacademy.com": {
+      "name": "Administration BTSMT",
+      "subject": "Toutes les matieres",
+      "password": "admin123",
+      "role": "admin"
+    },
+    "controle@btsmtacademy.com": {
+      "name": "Prof Controle de gestion",
+      "subject": "Controle de gestion",
+      "password": "controle123",
+      "role": "prof"
+    },
+    "informatique@btsmtacademy.com": {
+      "name": "Prof Informatique de gestion",
+      "subject": "Informatique de gestion",
+      "password": "informatique123",
+      "role": "prof"
+    },
+    "marketing@btsmtacademy.com": {
+      "name": "Prof Marketing touristique",
+      "subject": "Marketing touristique",
+      "password": "marketing123",
+      "role": "prof"
+    },
+    "commercialisation@btsmtacademy.com": {
+      "name": "Prof Commercialisation",
+      "subject": "Commercialisation des services touristiques",
+      "password": "commercialisation123",
+      "role": "prof"
+    },
+    "communication@btsmtacademy.com": {
+      "name": "Prof Communication professionnelle",
+      "subject": "Communication professionnelle",
+      "password": "communication123",
+      "role": "prof"
+    },
+    "entrepreneuriat@btsmtacademy.com": {
+      "name": "Prof Entrepreneuriat",
+      "subject": "Entrepreneuriat",
+      "password": "entrepreneuriat123",
+      "role": "prof"
+    },
+    "anglais@btsmtacademy.com": {
+      "name": "Prof Anglais",
+      "subject": "Anglais",
+      "password": "anglais123",
+      "role": "prof"
+    },
+    "arabe@btsmtacademy.com": {
+      "name": "Prof Arabe",
+      "subject": "Arabe",
+      "password": "arabe123",
+      "role": "prof"
+    },
+    "espagnol@btsmtacademy.com": {
+      "name": "Prof Espagnol",
+      "subject": "Espagnol",
+      "password": "espagnol123",
+      "role": "prof"
+    },
+    "francais@btsmtacademy.com": {
+      "name": "Prof Francais",
+      "subject": "Francais",
+      "password": "francais123",
+      "role": "prof"
+    },
+    "economie@btsmtacademy.com": {
+      "name": "Prof Economie generale et touristique",
+      "subject": "Economie generale et touristique",
+      "password": "economie123",
+      "role": "prof"
+    },
+    "management@btsmtacademy.com": {
+      "name": "Prof Management",
+      "subject": "Management des organisations touristiques",
+      "password": "management123",
+      "role": "prof"
+    },
+    "droit@btsmtacademy.com": {
+      "name": "Prof Droit applique au tourisme",
+      "subject": "Droit applique au tourisme",
+      "password": "droit123",
+      "role": "prof"
+    }
+  },
+  "devoirs": [
+    {
+      "matiere": "Informatique de gestion",
+      "titre": "Examen - Informatique de gestion",
+      "description": "",
+      "date_limite": "2026-11-17",
+      "lien": "",
+      "prof": "Prof Informatique de gestion",
+      "date_publication": "20/05/2026 17:35"
+    }
+  ],
+  "shared_files": [
+    {
+      "titre": "devoity",
+      "description": "adbnfgfsg  wfdgnwd wdfgnsfgns",
+      "matiere": "Toutes les matieres",
+      "auteur": "Direction BTSMT",
+      "role": "direction",
+      "date": "20/05/2026 17:47",
+      "filename": "Capture d’écran 2026-05-20 170649.jpg",
+      "path": "btsmtacademy_uploads\\Toutes_les_matieres\\20260520_174741_Capture_d_écran_2026-05-20_170649.jpg",
+      "mime": "image/jpeg"
+    },
+    {
+      "titre": "sdgfqsgqsq",
+      "description": "gqsdgqzer",
+      "matiere": "Toutes les matieres",
+      "auteur": "Direction BTSMT",
+      "role": "direction",
+      "date": "20/05/2026 17:46",
+      "filename": "Capture d’écran 2026-05-20 170649.jpg",
+      "path": "btsmtacademy_uploads\\Toutes_les_matieres\\20260520_174627_Capture_d_écran_2026-05-20_170649.jpg",
+      "mime": "image/jpeg"
+    }
+  ],
+  "student_contacts": [
+    {
+      "matiere": "Informatique de gestion",
+      "nom": "marzagui",
+      "prenom": "ayman",
+      "message": "hi mr",
+      "date": "20/05/2026 18:44",
+      "reponse": "",
+      "date_reponse": ""
+    }
+  ]
+}
