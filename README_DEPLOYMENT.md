@@ -57,11 +57,19 @@ Optionnellement, ajouter les variables professeurs depuis `.env.example`.
 
 ## Donnees
 
-Les donnees sont dans:
+Les donnees sont sauvegardees dans une base SQLite locale:
+
+```text
+btsmtacademy.db
+```
+
+Une copie lisible est aussi gardee dans:
 
 ```text
 btsmtacademy_data.json
 ```
+
+Important: sur Streamlit Community Cloud, les fichiers locaux peuvent etre recrees lors d'un redemarrage. Pour une plateforme publique durable, il faudra connecter Supabase ou une autre base externe.
 
 Les fichiers envoyes sont dans:
 
@@ -79,7 +87,7 @@ btsmtacademy_backups/
 
 Pour un vrai usage public avec beaucoup d'utilisateurs, la prochaine evolution conseillee est:
 
-- remplacer JSON par SQLite ou PostgreSQL
+- connecter Supabase ou PostgreSQL externe
 - stocker les fichiers dans Google Drive, Supabase Storage ou S3
 - hasher les mots de passe
 - ajouter sauvegarde externe automatique

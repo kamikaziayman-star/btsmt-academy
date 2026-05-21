@@ -3,6 +3,7 @@ import base64
 import json
 import os
 import shutil
+import sqlite3
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -11,6 +12,7 @@ import streamlit as st
 
 APP_TITLE = "BTSMT Academy"
 DATA_FILE = Path("btsmtacademy_data.json")
+DATABASE_FILE = Path("btsmtacademy.db")
 BACKUP_DIR = Path("btsmtacademy_backups")
 UPLOAD_DIR = Path("btsmtacademy_uploads")
 LOGO_PATH = Path(r"c:\Users\pc\Downloads\plf logo.png")
@@ -292,12 +294,77 @@ def default_data():
     }
 
 
-def load_data():
-    if not DATA_FILE.exists():
-        save_data(default_data())
+def init_database():
+    with sqlite3.connect(DATABASE_FILE) as connection:
+        connection.execute(
+            """
+            CREATE TABLE IF NOT EXISTS app_state (
+                id TEXT PRIMARY KEY,
+                payload TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )
+            """
+        )
+        connection.execute(
+            """
+            CREATE TABLE IF NOT EXISTS audit_log (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                action TEXT NOT NULL,
+                created_at TEXT NOT NULL
+            )
+            """
+        )
+        connection.commit()
 
-    with DATA_FILE.open("r", encoding="utf-8") as file:
-        data = json.load(file)
+
+def load_data_from_database():
+    if not DATABASE_FILE.exists():
+        return None
+
+    init_database()
+    with sqlite3.connect(DATABASE_FILE) as connection:
+        row = connection.execute(
+            "SELECT payload FROM app_state WHERE id = ?",
+            ("main",),
+        ).fetchone()
+
+    if not row:
+        return None
+
+    return json.loads(row[0])
+
+
+def save_data_to_database(data):
+    init_database()
+    payload = json.dumps(data, ensure_ascii=False)
+    updated_at = datetime.now().strftime("%d/%m/%Y %H:%M")
+    with sqlite3.connect(DATABASE_FILE) as connection:
+        connection.execute(
+            """
+            INSERT INTO app_state (id, payload, updated_at)
+            VALUES (?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                payload = excluded.payload,
+                updated_at = excluded.updated_at
+            """,
+            ("main", payload, updated_at),
+        )
+        connection.execute(
+            "INSERT INTO audit_log (action, created_at) VALUES (?, ?)",
+            ("save_data", updated_at),
+        )
+        connection.commit()
+
+
+def load_data():
+    data = load_data_from_database()
+    if data is None:
+        if DATA_FILE.exists():
+            with DATA_FILE.open("r", encoding="utf-8") as file:
+                data = json.load(file)
+        else:
+            data = default_data()
+        save_data(data, create_backup=False)
 
     for message in data.get("messages", []):
         message.setdefault("matiere", "General")
@@ -382,6 +449,7 @@ def load_data():
         ticket.setdefault("reponse", "")
         ticket.setdefault("date_reponse", "")
 
+    save_data(data, create_backup=False)
     return data
 
 
@@ -399,8 +467,10 @@ def backup_data_file():
         old_backup.unlink(missing_ok=True)
 
 
-def save_data(data):
-    backup_data_file()
+def save_data(data, create_backup=True):
+    if create_backup:
+        backup_data_file()
+    save_data_to_database(data)
     with DATA_FILE.open("w", encoding="utf-8") as file:
         json.dump(data, file, ensure_ascii=False, indent=2)
 
