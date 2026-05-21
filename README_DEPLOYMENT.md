@@ -23,8 +23,17 @@ Voir `.env.example`.
 Comptes par defaut en developpement:
 
 ```text
+Etudiant: btsmteljadidaacademy@.com / btsmt123
+Invite test: invite@btsmtacademy.com / invite123
 Admin: admin@btsmtacademy.com / admin123
 Direction: direction@btsmtacademy.com / direction123
+```
+
+Les etudiants peuvent aussi creer leur propre compte depuis la page de connexion.
+Le compte reste en attente jusqu'a validation dans:
+
+```text
+Espace direction > Comptes etudiants
 ```
 
 ## Deployer sur Render
@@ -38,6 +47,10 @@ Direction: direction@btsmtacademy.com / direction123
 ```text
 BTSMT_ADMIN_PASSWORD
 BTSMT_DIRECTION_PASSWORD
+BTSMT_STUDENT_EMAIL
+BTSMT_STUDENT_PASSWORD
+BTSMT_GUEST_EMAIL
+BTSMT_GUEST_PASSWORD
 ```
 
 Optionnellement, ajouter les variables professeurs depuis `.env.example`.
