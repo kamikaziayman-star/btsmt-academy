@@ -5971,6 +5971,121 @@ def user_management_admin(data):
         st.info("Aucun utilisateur trouve.")
         return
 
+    actionable_users = [user for user in users if user["kind"] != "system"]
+    if actionable_users:
+        st.markdown("#### Panneau d'action rapide")
+        selected_email = st.selectbox(
+            "Choisir un utilisateur a gerer",
+            [user["email"] for user in actionable_users],
+            format_func=lambda email: next(
+                f"{user['name']} | {user['email']} | {user['role']} | {user['status']}"
+                for user in actionable_users
+                if user["email"] == email
+            ),
+            key="admin_quick_user_select",
+        )
+        selected_user = next(user for user in actionable_users if user["email"] == selected_email)
+        st.markdown(
+            f"""
+            <div class="card">
+                <h3>Utilisateur selectionne: {selected_user["name"]}</h3>
+                <p>
+                    Role: <strong>{selected_user["role"]}</strong><br>
+                    Email: <strong>{selected_user["email"]}</strong><br>
+                    Statut: <strong>{selected_user["status"]}</strong>
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        new_password = st.text_input(
+            "Nouveau mot de passe",
+            type="password",
+            key=f"quick_password_{selected_user['kind']}_{selected_user['email']}",
+        )
+        msg_title = st.text_input(
+            "Titre du message",
+            key=f"quick_message_title_{selected_user['kind']}_{selected_user['email']}",
+        )
+        msg_content = st.text_area(
+            "Message a envoyer",
+            key=f"quick_message_content_{selected_user['kind']}_{selected_user['email']}",
+        )
+        col1, col2, col3, col4 = st.columns(4)
+
+        if col1.button("Changer mot de passe", key=f"quick_pwd_{selected_user['kind']}_{selected_user['email']}"):
+            if not new_password.strip():
+                st.error("Le nouveau mot de passe est obligatoire.")
+            elif selected_user["kind"] == "prof":
+                data["prof_accounts"][selected_user["email"]]["password"] = new_password.strip()
+                save_data(data)
+                st.success("Mot de passe professeur modifie.")
+                st.rerun()
+            else:
+                data["student_accounts"][selected_user["email"]]["password"] = new_password.strip()
+                save_data(data)
+                st.success("Mot de passe etudiant modifie.")
+                st.rerun()
+
+        is_banned = selected_user["status"] == "Banni"
+        ban_label = "Debannir" if is_banned else "Bannir"
+        if col2.button(ban_label, key=f"quick_ban_{selected_user['kind']}_{selected_user['email']}"):
+            if selected_user["kind"] == "prof":
+                data["prof_accounts"][selected_user["email"]]["banned"] = not is_banned
+            else:
+                data["student_accounts"][selected_user["email"]]["banned"] = not is_banned
+            save_data(data)
+            st.success("Statut de bannissement mis a jour.")
+            st.rerun()
+
+        if col3.button("Envoyer message", key=f"quick_msg_{selected_user['kind']}_{selected_user['email']}"):
+            if not msg_title.strip() or not msg_content.strip():
+                st.error("Le titre et le message sont obligatoires.")
+            elif selected_user["kind"] == "student":
+                data["student_accounts"][selected_user["email"]].setdefault("admin_messages", []).insert(
+                    0,
+                    {
+                        "titre": msg_title.strip(),
+                        "contenu": msg_content.strip(),
+                        "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
+                    },
+                )
+                save_data(data)
+                st.success("Message envoye a l'etudiant.")
+                st.rerun()
+            else:
+                data.setdefault("messages", []).insert(
+                    0,
+                    {
+                        "titre": msg_title.strip(),
+                        "matiere": data["prof_accounts"][selected_user["email"]].get("subject", "General"),
+                        "prof": "Administration BTSMT",
+                        "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
+                        "important": True,
+                        "contenu": f"Message destine a {selected_user['name']}: {msg_content.strip()}",
+                    },
+                )
+                save_data(data)
+                st.success("Message enregistre pour le professeur.")
+                st.rerun()
+
+        if col4.button("Supprimer", key=f"quick_delete_{selected_user['kind']}_{selected_user['email']}"):
+            if selected_user["kind"] == "prof":
+                if selected_user["email"] == ADMIN_EMAIL:
+                    st.error("Impossible de supprimer le compte admin.")
+                else:
+                    del data["prof_accounts"][selected_user["email"]]
+                    save_data(data)
+                    st.success("Compte professeur supprime.")
+                    st.rerun()
+            else:
+                del data["student_accounts"][selected_user["email"]]
+                save_data(data)
+                st.success("Compte etudiant supprime.")
+                st.rerun()
+
+    st.markdown("#### Liste des identifiants")
     for user in users:
         is_system = user["kind"] == "system"
         st.markdown(
@@ -5990,104 +6105,12 @@ def user_management_admin(data):
 
         if is_system:
             st.caption("Compte systeme: changez ces identifiants dans les variables d'environnement ou dans le code.")
-            continue
-
-        with st.expander(f"Actions admin - {user['email']}"):
-            new_password = st.text_input(
-                "Nouveau mot de passe",
-                type="password",
-                key=f"user_new_password_{user['kind']}_{user['email']}",
-            )
-            msg_title = st.text_input(
-                "Titre du message",
-                key=f"user_message_title_{user['kind']}_{user['email']}",
-            )
-            msg_content = st.text_area(
-                "Message a envoyer",
-                key=f"user_message_content_{user['kind']}_{user['email']}",
-            )
-            col1, col2, col3, col4 = st.columns(4)
-
-            if col1.button("Changer mot de passe", key=f"user_pwd_{user['kind']}_{user['email']}"):
-                if not new_password.strip():
-                    st.error("Le nouveau mot de passe est obligatoire.")
-                elif user["kind"] == "prof":
-                    data["prof_accounts"][user["email"]]["password"] = new_password.strip()
-                    save_data(data)
-                    st.success("Mot de passe professeur modifie.")
-                    st.rerun()
-                else:
-                    data["student_accounts"][user["email"]]["password"] = new_password.strip()
-                    save_data(data)
-                    st.success("Mot de passe etudiant modifie.")
-                    st.rerun()
-
-            is_banned = user["status"] == "Banni"
-            ban_label = "Debannir" if is_banned else "Bannir"
-            if col2.button(ban_label, key=f"user_ban_{user['kind']}_{user['email']}"):
-                if user["kind"] == "prof":
-                    data["prof_accounts"][user["email"]]["banned"] = not is_banned
-                else:
-                    data["student_accounts"][user["email"]]["banned"] = not is_banned
-                save_data(data)
-                st.success("Statut de bannissement mis a jour.")
-                st.rerun()
-
-            if col3.button("Envoyer message", key=f"user_msg_{user['kind']}_{user['email']}"):
-                if not msg_title.strip() or not msg_content.strip():
-                    st.error("Le titre et le message sont obligatoires.")
-                elif user["kind"] == "student":
-                    data["student_accounts"][user["email"]].setdefault("admin_messages", []).insert(
-                        0,
-                        {
-                            "titre": msg_title.strip(),
-                            "contenu": msg_content.strip(),
-                            "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
-                        },
-                    )
-                    save_data(data)
-                    st.success("Message envoye a l'etudiant.")
-                    st.rerun()
-                else:
-                    data.setdefault("messages", []).insert(
-                        0,
-                        {
-                            "titre": msg_title.strip(),
-                            "matiere": data["prof_accounts"][user["email"]].get("subject", "General"),
-                            "prof": "Administration BTSMT",
-                            "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
-                            "important": True,
-                            "contenu": f"Message destine a {user['name']}: {msg_content.strip()}",
-                        },
-                    )
-                    save_data(data)
-                    st.success("Message enregistre pour le professeur.")
-                    st.rerun()
-
-            if col4.button("Supprimer", key=f"user_delete_{user['kind']}_{user['email']}"):
-                if user["kind"] == "prof":
-                    if user["email"] == ADMIN_EMAIL:
-                        st.error("Impossible de supprimer le compte admin.")
-                    else:
-                        del data["prof_accounts"][user["email"]]
-                        save_data(data)
-                        st.success("Compte professeur supprime.")
-                        st.rerun()
-                else:
-                    del data["student_accounts"][user["email"]]
-                    save_data(data)
-                    st.success("Compte etudiant supprime.")
-                    st.rerun()
+        else:
+            st.caption("Pour modifier ce compte, utilisez le panneau d'action rapide en haut.")
 
 
 def show_admin_space(data):
     st.success("Connecte: Administration BTSMT | Acces complet")
-    if st.button("Se deconnecter", key="admin_logout"):
-        st.session_state.prof_connected = False
-        st.session_state.prof_subject = None
-        st.session_state.prof_name = None
-        st.session_state.prof_role = None
-        st.rerun()
 
     section = st.radio(
         "Choisir une section",
@@ -6133,75 +6156,26 @@ def show_admin_space(data):
 
 
 def show_prof_space(data):
-    if "prof_connected" not in st.session_state:
-        st.session_state.prof_connected = False
-    if "prof_subject" not in st.session_state:
-        st.session_state.prof_subject = None
-    if "prof_name" not in st.session_state:
-        st.session_state.prof_name = None
-    if "prof_role" not in st.session_state:
-        st.session_state.prof_role = None
+    user_role = st.session_state.get("platform_user_role", "student")
+    user_email = st.session_state.get("platform_user_email", "")
 
-    if not st.session_state.prof_connected:
-        render_login_topbar("Professeur")
-        login_left, login_right = st.columns([1, 1], gap="large")
-        with login_left:
-            render_login_intro(
-                "Espace professeur",
-                "Accedez a vos cours, examens, messages et fichiers partages.",
-                "P",
-            )
-            with st.form("prof_login_form"):
-                username = st.text_input(
-                    "Email ou identifiant professeur",
-                    help="Entrez l'email ou l'identifiant donne par l'administration.",
-                    key="prof_login_email",
-                )
-                password = st.text_input(
-                    "Mot de passe",
-                    type="password",
-                    help="Entrez le mot de passe associe a votre compte professeur.",
-                    key="prof_login_password",
-                )
-                submitted = st.form_submit_button("Se connecter")
-        with login_right:
-            render_login_visual()
-
-        if submitted:
-            accounts = data.get("prof_accounts", PROF_ACCOUNTS)
-            clean_username = username.strip().lower()
-            clean_password = password.strip()
-            account = accounts.get(clean_username)
-            if account and clean_password == str(account["password"]).strip():
-                st.session_state.prof_connected = True
-                st.session_state.prof_subject = account["subject"]
-                st.session_state.prof_name = account["name"]
-                st.session_state.prof_role = account.get("role", "prof")
-                st.success("Connexion reussie.")
-                st.rerun()
-            elif account:
-                st.error("Email correct, mais mot de passe incorrect.")
-            else:
-                st.error("Compte professeur introuvable.")
-        st.caption(
-            "Chaque compte professeur donne acces seulement a sa matiere."
-        )
+    if user_role not in ("prof", "admin"):
+        st.error("Acces reserve aux professeurs et a l'administration.")
         return
 
-    if st.session_state.prof_role == "admin":
+    if user_role == "admin":
         show_admin_space(data)
         return
 
+    account = data.get("prof_accounts", {}).get(user_email)
+    if not account:
+        st.error("Compte professeur introuvable.")
+        return
+
     st.subheader("Espace professeur")
-    subject = st.session_state.prof_subject
-    prof_name = st.session_state.prof_name or "Professeur"
+    subject = account.get("subject", "General")
+    prof_name = account.get("name", "Professeur")
     st.success(f"Connecte: {prof_name} | Matiere: {subject}")
-    if st.button("Se deconnecter"):
-        st.session_state.prof_connected = False
-        st.session_state.prof_subject = None
-        st.session_state.prof_name = None
-        st.session_state.prof_role = None
-        st.rerun()
 
     section = st.radio(
         "Choisir une section",
@@ -6234,41 +6208,13 @@ def show_prof_space(data):
 
 
 def show_direction_space(data):
-    if "direction_connected" not in st.session_state:
-        st.session_state.direction_connected = False
-
-    if not st.session_state.direction_connected:
-        render_login_topbar("Directeur")
-        login_left, login_right = st.columns([1, 1], gap="large")
-        with login_left:
-            render_login_intro(
-                "Espace direction",
-                "Accedez a votre espace de gestion et de pilotage.",
-                "D",
-            )
-            with st.form("direction_login_form"):
-                email = st.text_input(
-                    "Email direction",
-                )
-                password = st.text_input("Mot de passe", type="password")
-                submitted = st.form_submit_button("Se connecter")
-        with login_right:
-            render_login_visual()
-
-        if submitted:
-            if email.strip().lower() == DIRECTION_EMAIL and password.strip() == DIRECTION_PASSWORD:
-                st.session_state.direction_connected = True
-                st.success("Connexion direction reussie.")
-                st.rerun()
-            else:
-                st.error("Identifiant direction incorrect.")
+    user_role = st.session_state.get("platform_user_role", "student")
+    if user_role not in ("direction", "admin"):
+        st.error("Acces reserve a la direction.")
         return
 
     st.subheader("Espace direction")
     st.success("Connecte: Direction BTSMT")
-    if st.button("Se deconnecter", key="direction_logout"):
-        st.session_state.direction_connected = False
-        st.rerun()
 
     section = st.radio(
         "Choisir une section",
