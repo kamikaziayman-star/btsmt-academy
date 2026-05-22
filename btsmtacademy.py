@@ -253,6 +253,7 @@ def default_data():
         "shared_files": [],
         "student_contacts": [],
         "support_tickets": [],
+        "direct_messages": [],
         "messages": [
             {
                 "titre": "Bienvenue sur BTSMT Academy",
@@ -448,6 +449,23 @@ def load_data():
         ticket.setdefault("statut", "Nouveau")
         ticket.setdefault("reponse", "")
         ticket.setdefault("date_reponse", "")
+        ticket.setdefault("screenshot_path", "")
+        ticket.setdefault("screenshot_name", "")
+        ticket.setdefault("screenshot_mime", "")
+
+    data.setdefault("direct_messages", [])
+    for message in data["direct_messages"]:
+        message.setdefault("from_email", ADMIN_EMAIL)
+        message.setdefault("from_name", "Administration BTSMT")
+        message.setdefault("to_email", "")
+        message.setdefault("to_name", "")
+        message.setdefault("titre", "Message")
+        message.setdefault("contenu", "")
+        message.setdefault("date", "Date non indiquee")
+        message.setdefault("attachment_path", "")
+        message.setdefault("attachment_name", "")
+        message.setdefault("attachment_mime", "application/octet-stream")
+        message.setdefault("read", False)
 
     save_data(data, create_backup=False)
     return data
@@ -541,6 +559,71 @@ def render_shared_file(shared_file):
         mime=mime,
         key=f"download_{path.as_posix()}_{shared_file.get('date', '')}",
     )
+
+
+def render_local_attachment(path_value, file_name="", mime="application/octet-stream", key_prefix="attachment"):
+    path = Path(path_value or "")
+    if not path.exists():
+        if path_value:
+            st.warning("Le fichier joint n'existe plus dans le dossier local.")
+        return
+
+    if (mime or "").startswith("image/"):
+        st.image(str(path), width="stretch")
+
+    st.download_button(
+        "Telecharger la piece jointe",
+        data=path.read_bytes(),
+        file_name=file_name or path.name,
+        mime=mime or "application/octet-stream",
+        key=f"{key_prefix}_{path.as_posix()}",
+    )
+
+
+def platform_users_directory(data):
+    users = [
+        {
+            "email": STUDENT_EMAIL,
+            "name": "Compte etudiant general",
+            "role": "Etudiant general",
+        },
+        {
+            "email": GUEST_EMAIL,
+            "name": "Compte invite test",
+            "role": "Invite",
+        },
+        {
+            "email": DIRECTION_EMAIL,
+            "name": "Direction BTSMT",
+            "role": "Direction",
+        },
+    ]
+
+    for email, account in data.get("prof_accounts", {}).items():
+        users.append(
+            {
+                "email": email,
+                "name": account.get("name", "Professeur"),
+                "role": account.get("role", "prof"),
+            }
+        )
+
+    for email, account in data.get("student_accounts", {}).items():
+        users.append(
+            {
+                "email": email,
+                "name": f"{account.get('prenom', '')} {account.get('nom', '')}".strip() or "Etudiant",
+                "role": f"Etudiant - {account.get('groupe', 'Sans groupe')}",
+            }
+        )
+
+    seen = set()
+    unique_users = []
+    for user in users:
+        if user["email"] and user["email"] not in seen:
+            unique_users.append(user)
+            seen.add(user["email"])
+    return unique_users
 
 
 def parse_date(value):
@@ -5887,6 +5970,12 @@ def support_tickets_admin(data):
             """,
             unsafe_allow_html=True,
         )
+        render_local_attachment(
+            ticket.get("screenshot_path", ""),
+            ticket.get("screenshot_name", ""),
+            ticket.get("screenshot_mime", "application/octet-stream"),
+            key_prefix=f"support_ticket_{original_index}_{ticket.get('date', '')}",
+        )
         col1, col2, col3 = st.columns(3)
         if col1.button("En cours", key=f"support_progress_{original_index}_{ticket.get('date')}"):
             tickets[original_index]["statut"] = "En cours"
@@ -6396,12 +6485,30 @@ def show_support(data):
             "Message",
             placeholder="Expliquez clairement votre reclamation ou le probleme rencontre...",
         )
+        screenshot = st.file_uploader(
+            "Capture d'ecran ou fichier du probleme",
+            accept_multiple_files=False,
+            help="Ajoutez une capture d'ecran si vous avez un probleme technique.",
+        )
         submitted = st.form_submit_button("Envoyer au support")
 
     if submitted:
         if not name.strip() or not subject.strip() or not message.strip():
             st.error("Le nom, le sujet et le message sont obligatoires.")
             return
+        if ticket_type in ("Probleme technique", "Probleme de compte") and screenshot is None:
+            st.error("Pour ce type de demande, ajoutez une capture d'ecran ou un fichier du probleme.")
+            return
+
+        screenshot_path = ""
+        screenshot_name = ""
+        screenshot_mime = ""
+        if screenshot is not None:
+            path = save_uploaded_file(screenshot, folder="support")
+            screenshot_path = str(path)
+            screenshot_name = screenshot.name
+            screenshot_mime = screenshot.type or "application/octet-stream"
+
         data.setdefault("support_tickets", []).insert(
             0,
             {
@@ -6415,6 +6522,9 @@ def show_support(data):
                 "statut": "Nouveau",
                 "reponse": "",
                 "date_reponse": "",
+                "screenshot_path": screenshot_path,
+                "screenshot_name": screenshot_name,
+                "screenshot_mime": screenshot_mime,
             },
         )
         save_data(data)
@@ -6424,11 +6534,141 @@ def show_support(data):
         """
         <div class="contact-help">
             <span class="contact-help-icon">i</span>
-            <span>Les reclamations sont visibles par la direction et seront traitees selon leur priorite.</span>
+            <span>Les reclamations sont visibles par l'administration et seront traitees selon leur priorite.</span>
         </div>
         """,
         unsafe_allow_html=True,
     )
+
+
+def show_direct_messages(data):
+    current_email = st.session_state.get("platform_user_email", "")
+    current_role = st.session_state.get("platform_user_role", "student")
+    current_name = st.session_state.get("platform_user_label", "Utilisateur")
+
+    st.markdown(
+        """
+        <div class="contact-topbar">
+            <div class="contact-brand">BTS<span>MT</span> Academy</div>
+            <div class="contact-user">
+                <span>Boite<br><strong>Messages</strong></span>
+                <span class="contact-avatar"></span>
+            </div>
+        </div>
+        <div class="contact-hero">
+            <div class="contact-title-wrap">
+                <div class="contact-icon">M</div>
+                <div>
+                    <h1>Messages</h1>
+                    <p>Consultez vos messages administratifs et les pieces jointes envoyees.</p>
+                </div>
+            </div>
+            <div class="contact-art"></div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    if current_role == "admin":
+        st.markdown("#### Envoyer un message a un utilisateur")
+        recipients = platform_users_directory(data)
+        recipient_email = st.selectbox(
+            "Utilisateur destinataire",
+            [user["email"] for user in recipients],
+            format_func=lambda email: next(
+                f"{user['name']} | {user['email']} | {user['role']}"
+                for user in recipients
+                if user["email"] == email
+            ),
+            key="direct_message_recipient",
+        )
+        recipient = next(user for user in recipients if user["email"] == recipient_email)
+
+        with st.form("direct_message_form", clear_on_submit=True):
+            title = st.text_input("Titre du message")
+            content = st.text_area("Message")
+            uploaded_file = st.file_uploader(
+                "Ajouter une photo, PDF, Word, Excel ou autre fichier",
+                accept_multiple_files=False,
+            )
+            submitted = st.form_submit_button("Envoyer le message")
+
+        if submitted:
+            if not title.strip() or not content.strip():
+                st.error("Le titre et le message sont obligatoires.")
+            else:
+                attachment_path = ""
+                attachment_name = ""
+                attachment_mime = "application/octet-stream"
+                if uploaded_file is not None:
+                    path = save_uploaded_file(uploaded_file, folder="direct_messages")
+                    attachment_path = str(path)
+                    attachment_name = uploaded_file.name
+                    attachment_mime = uploaded_file.type or "application/octet-stream"
+
+                data.setdefault("direct_messages", []).insert(
+                    0,
+                    {
+                        "from_email": current_email or ADMIN_EMAIL,
+                        "from_name": current_name or "Administration BTSMT",
+                        "to_email": recipient["email"],
+                        "to_name": recipient["name"],
+                        "titre": title.strip(),
+                        "contenu": content.strip(),
+                        "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
+                        "attachment_path": attachment_path,
+                        "attachment_name": attachment_name,
+                        "attachment_mime": attachment_mime,
+                        "read": False,
+                    },
+                )
+                save_data(data)
+                st.success("Message envoye.")
+                st.rerun()
+
+    st.markdown("#### Boite de reception")
+    messages = [
+        message
+        for message in data.get("direct_messages", [])
+        if message.get("to_email") == current_email or current_role == "admin"
+    ]
+    messages = sorted(messages, key=lambda message: parse_date(message.get("date")), reverse=True)
+
+    if not messages:
+        st.info("Aucun message pour le moment.")
+        return
+
+    for index, message in enumerate(messages):
+        target_line = (
+            f" | Destinataire: {message.get('to_name', '')} ({message.get('to_email', '')})"
+            if current_role == "admin"
+            else ""
+        )
+        st.markdown(
+            f"""
+            <div class="message">
+                <div class="message-title">{message.get("titre", "Message")}</div>
+                <div class="message-meta">
+                    De: {message.get("from_name", "Administration BTSMT")} | Date: {message.get("date", "Date non indiquee")}{target_line}
+                </div>
+                <div class="message-content">{message.get("contenu", "")}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        render_local_attachment(
+            message.get("attachment_path", ""),
+            message.get("attachment_name", ""),
+            message.get("attachment_mime", "application/octet-stream"),
+            key_prefix=f"direct_message_{index}_{message.get('date', '')}",
+        )
+
+        if current_role == "admin":
+            if st.button("Supprimer ce message", key=f"delete_direct_message_{index}_{message.get('date', '')}"):
+                data["direct_messages"].remove(message)
+                save_data(data)
+                st.success("Message supprime.")
+                st.rerun()
 
 
 def sidebar_navigation():
@@ -6438,6 +6678,7 @@ def sidebar_navigation():
         ("Fichiers partages", "Fichiers Drive"),
         ("Examens nationaux", "Examens"),
         ("Planification des examens", "Calendrier"),
+        ("Messages directs", "Messages"),
         ("Contact", "Contact"),
         ("Contact et support", "Support"),
     ]
@@ -6446,6 +6687,7 @@ def sidebar_navigation():
         pages = [
             ("Accueil", "Accueil"),
             ("Espace professeur", "Professeurs"),
+            ("Messages directs", "Messages"),
             ("Contact", "Contact"),
             ("Contact et support", "Support"),
         ]
@@ -6459,6 +6701,7 @@ def sidebar_navigation():
             ("Espace professeur", "Professeurs"),
             ("Espace direction", "Direction"),
             ("Utilisateurs", "Utilisateurs"),
+            ("Messages directs", "Messages"),
             ("Contact", "Contact"),
             ("Contact et support", "Support"),
         ]
@@ -6466,6 +6709,7 @@ def sidebar_navigation():
         pages = [
             ("Accueil", "Accueil"),
             ("Espace direction", "Direction"),
+            ("Messages directs", "Messages"),
             ("Contact", "Contact"),
             ("Contact et support", "Support"),
         ]
@@ -6568,6 +6812,8 @@ def main():
         show_direction_space(data)
     elif page == "Utilisateurs":
         user_management_admin(data)
+    elif page == "Messages directs":
+        show_direct_messages(data)
     elif page == "Contact et support":
         show_support(data)
     else:
