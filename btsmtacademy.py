@@ -1,9 +1,14 @@
 import calendar
 import base64
+import hashlib
+import hmac
 import json
 import os
+import secrets
 import shutil
 import sqlite3
+import urllib.error
+import urllib.request
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -26,10 +31,52 @@ STUDENT_EMAIL = os.getenv("BTSMT_STUDENT_EMAIL", "btsmteljadidaacademy@.com")
 STUDENT_PASSWORD = os.getenv("BTSMT_STUDENT_PASSWORD", "btsmt123")
 GUEST_EMAIL = os.getenv("BTSMT_GUEST_EMAIL", "invite@btsmtacademy.com")
 GUEST_PASSWORD = os.getenv("BTSMT_GUEST_PASSWORD", "invite123")
+SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
+SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_ANON_KEY", "")
+PASSWORD_HASH_PREFIX = "pbkdf2_sha256"
+PASSWORD_HASH_ITERATIONS = 260000
 
 
 def env_password(name, default):
     return os.getenv(name, default)
+
+
+def hash_password(password):
+    salt = secrets.token_hex(16)
+    digest = hashlib.pbkdf2_hmac(
+        "sha256",
+        password.encode("utf-8"),
+        salt.encode("utf-8"),
+        PASSWORD_HASH_ITERATIONS,
+    ).hex()
+    return f"{PASSWORD_HASH_PREFIX}${PASSWORD_HASH_ITERATIONS}${salt}${digest}"
+
+
+def is_password_hash(value):
+    return isinstance(value, str) and value.startswith(f"{PASSWORD_HASH_PREFIX}$")
+
+
+def verify_password(password, stored_password):
+    if not stored_password:
+        return False
+    if not is_password_hash(stored_password):
+        return hmac.compare_digest(password, str(stored_password))
+
+    try:
+        _prefix, iterations, salt, expected_digest = stored_password.split("$", 3)
+        digest = hashlib.pbkdf2_hmac(
+            "sha256",
+            password.encode("utf-8"),
+            salt.encode("utf-8"),
+            int(iterations),
+        ).hex()
+        return hmac.compare_digest(digest, expected_digest)
+    except (ValueError, TypeError):
+        return False
+
+
+def protect_password(password):
+    return password if is_password_hash(password) else hash_password(str(password))
 
 SUBJECTS = [
     "Controle de gestion",
@@ -318,7 +365,77 @@ def init_database():
         connection.commit()
 
 
+def supabase_is_configured():
+    return bool(SUPABASE_URL and SUPABASE_KEY)
+
+
+def supabase_request(method, path, payload=None, extra_headers=None):
+    url = f"{SUPABASE_URL}/rest/v1/{path.lstrip('/')}"
+    body = None
+    if payload is not None:
+        body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+
+    headers = {
+        "apikey": SUPABASE_KEY,
+        "Authorization": f"Bearer {SUPABASE_KEY}",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
+    if extra_headers:
+        headers.update(extra_headers)
+
+    request = urllib.request.Request(url, data=body, headers=headers, method=method)
+    with urllib.request.urlopen(request, timeout=12) as response:
+        content = response.read().decode("utf-8")
+    return json.loads(content) if content else None
+
+
+def load_data_from_supabase():
+    if not supabase_is_configured():
+        return None
+    try:
+        rows = supabase_request(
+            "GET",
+            "app_state?id=eq.main&select=payload",
+        )
+        if not rows:
+            return None
+        payload = rows[0].get("payload")
+        if isinstance(payload, str):
+            return json.loads(payload)
+        return payload
+    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, ValueError, KeyError):
+        return None
+
+
+def save_data_to_supabase(data):
+    if not supabase_is_configured():
+        return False
+    payload = json.dumps(data, ensure_ascii=False)
+    updated_at = datetime.now().strftime("%d/%m/%Y %H:%M")
+    try:
+        supabase_request(
+            "POST",
+            "app_state",
+            {
+                "id": "main",
+                "payload": payload,
+                "updated_at": updated_at,
+            },
+            {
+                "Prefer": "resolution=merge-duplicates,return=minimal",
+            },
+        )
+        return True
+    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError):
+        return False
+
+
 def load_data_from_database():
+    supabase_data = load_data_from_supabase()
+    if supabase_data is not None:
+        return supabase_data
+
     if not DATABASE_FILE.exists():
         return None
 
@@ -336,6 +453,7 @@ def load_data_from_database():
 
 
 def save_data_to_database(data):
+    save_data_to_supabase(data)
     init_database()
     payload = json.dumps(data, ensure_ascii=False)
     updated_at = datetime.now().strftime("%d/%m/%Y %H:%M")
@@ -391,7 +509,11 @@ def load_data():
         data["prof_accounts"].setdefault(email, account)
         env_var = ACCOUNT_PASSWORD_ENV.get(email)
         if env_var and os.getenv(env_var):
-            data["prof_accounts"][email]["password"] = os.getenv(env_var)
+            data["prof_accounts"][email]["password"] = hash_password(os.getenv(env_var))
+        else:
+            data["prof_accounts"][email]["password"] = protect_password(
+                data["prof_accounts"][email].get("password", "")
+            )
 
     data.setdefault("student_accounts", {})
     for email, account in data["student_accounts"].items():
@@ -404,6 +526,7 @@ def load_data():
         account.setdefault("validated_at", "")
         account.setdefault("banned", False)
         account.setdefault("admin_messages", [])
+        account["password"] = protect_password(account.get("password", ""))
 
     data.setdefault("devoirs", [])
     for devoir in data["devoirs"]:
@@ -4637,14 +4760,14 @@ def validate_platform_login(email, password, data):
     clean_email = email.strip().lower()
     clean_password = password.strip()
 
-    if clean_email == STUDENT_EMAIL.lower() and clean_password == STUDENT_PASSWORD:
+    if clean_email == STUDENT_EMAIL.lower() and verify_password(clean_password, STUDENT_PASSWORD):
         return {"label": "Etudiant", "role": "student", "email": clean_email}
 
-    if clean_email == GUEST_EMAIL.lower() and clean_password == GUEST_PASSWORD:
+    if clean_email == GUEST_EMAIL.lower() and verify_password(clean_password, GUEST_PASSWORD):
         return {"label": "Invite", "role": "guest", "email": clean_email}
 
     student_account = data.get("student_accounts", {}).get(clean_email)
-    if student_account and clean_password == student_account.get("password"):
+    if student_account and verify_password(clean_password, student_account.get("password")):
         full_name = f"{student_account.get('prenom', '').strip()} {student_account.get('nom', '').strip()}".strip()
         label = full_name or "Etudiant"
         if student_account.get("banned"):
@@ -4665,12 +4788,12 @@ def validate_platform_login(email, password, data):
             }
         return {"label": label, "role": "student", "email": clean_email}
 
-    if clean_email == DIRECTION_EMAIL.lower() and clean_password == DIRECTION_PASSWORD:
+    if clean_email == DIRECTION_EMAIL.lower() and verify_password(clean_password, DIRECTION_PASSWORD):
         return {"label": "Direction", "role": "direction", "email": clean_email}
 
     accounts = data.get("prof_accounts", PROF_ACCOUNTS)
     account = accounts.get(clean_email)
-    if account and clean_password == account.get("password"):
+    if account and verify_password(clean_password, account.get("password")):
         if account.get("banned"):
             return {
                 "label": account.get("name", "Professeur"),
@@ -4713,7 +4836,7 @@ def register_student_account(data, first_name, last_name, email, group, password
         "prenom": clean_first_name,
         "nom": clean_last_name,
         "groupe": clean_group,
-        "password": clean_password,
+        "password": hash_password(clean_password),
         "status": "pending",
         "created_at": datetime.now().strftime("%d/%m/%Y %H:%M"),
         "validated_at": "",
@@ -6001,7 +6124,7 @@ def user_management_admin(data):
         "email": STUDENT_EMAIL,
         "name": "Compte etudiant general",
         "role": "Etudiant general",
-        "password": STUDENT_PASSWORD,
+        "password": "Protege par configuration",
         "status": "Actif",
         "kind": "system",
     })
@@ -6009,7 +6132,7 @@ def user_management_admin(data):
         "email": GUEST_EMAIL,
         "name": "Compte invite test",
         "role": "Invite",
-        "password": GUEST_PASSWORD,
+        "password": "Protege par configuration",
         "status": "Actif",
         "kind": "system",
     })
@@ -6017,7 +6140,7 @@ def user_management_admin(data):
         "email": DIRECTION_EMAIL,
         "name": "Direction BTSMT",
         "role": "Direction",
-        "password": DIRECTION_PASSWORD,
+        "password": "Protege par configuration",
         "status": "Actif",
         "kind": "system",
     })
@@ -6027,7 +6150,7 @@ def user_management_admin(data):
             "email": email,
             "name": account.get("name", "Professeur"),
             "role": account.get("role", "prof"),
-            "password": account.get("password", ""),
+            "password": "Protege",
             "status": "Banni" if account.get("banned") else "Actif",
             "kind": "prof",
         })
@@ -6041,7 +6164,7 @@ def user_management_admin(data):
             "email": email,
             "name": f"{account.get('prenom', '')} {account.get('nom', '')}".strip() or "Etudiant",
             "role": f"Etudiant - {account.get('groupe', 'Sans groupe')}",
-            "password": account.get("password", ""),
+            "password": "Protege",
             "status": status_label,
             "kind": "student",
         })
@@ -6107,12 +6230,12 @@ def user_management_admin(data):
             if not new_password.strip():
                 st.error("Le nouveau mot de passe est obligatoire.")
             elif selected_user["kind"] == "prof":
-                data["prof_accounts"][selected_user["email"]]["password"] = new_password.strip()
+                data["prof_accounts"][selected_user["email"]]["password"] = hash_password(new_password.strip())
                 save_data(data)
                 st.success("Mot de passe professeur modifie.")
                 st.rerun()
             else:
-                data["student_accounts"][selected_user["email"]]["password"] = new_password.strip()
+                data["student_accounts"][selected_user["email"]]["password"] = hash_password(new_password.strip())
                 save_data(data)
                 st.success("Mot de passe etudiant modifie.")
                 st.rerun()

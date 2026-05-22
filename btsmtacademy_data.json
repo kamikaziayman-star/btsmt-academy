@@ -635,85 +635,85 @@
     "admin@btsmtacademy.com": {
       "name": "Administration BTSMT",
       "subject": "Toutes les matieres",
-      "password": "admin123",
+      "password": "pbkdf2_sha256$260000$a77f16130d1674e7475554f12ccff5c6$3b9572bfa7983e22bab87d826d0e6fd28409d0d9dd5548fc8ba5b8f25fcd1a89",
       "role": "admin"
     },
     "controle@btsmtacademy.com": {
       "name": "Prof Controle de gestion",
       "subject": "Controle de gestion",
-      "password": "controle123",
+      "password": "pbkdf2_sha256$260000$4e72aceed0d3f6ac8e49f8d005ea8cff$d02b31929374553552c92a71b6558ee2fdb3263d77054ae1002eab9465b527cf",
       "role": "prof"
     },
     "informatique@btsmtacademy.com": {
       "name": "Prof Informatique de gestion",
       "subject": "Informatique de gestion",
-      "password": "informatique123",
+      "password": "pbkdf2_sha256$260000$1c36fbf241aa7f5199af9144ed4d4ce5$54eb91b22de2c0f2e19686ff1f80e3a3c270df07171bd2d57221741a764a8c77",
       "role": "prof"
     },
     "marketing@btsmtacademy.com": {
       "name": "Prof Marketing touristique",
       "subject": "Marketing touristique",
-      "password": "marketing123",
+      "password": "pbkdf2_sha256$260000$bbcc96e9e5b238a1ce6c9ff96b8f5375$d0644a19d9aaabbf7ffd3574fce5f464a58b287f554b851c9e38e9295725da17",
       "role": "prof"
     },
     "commercialisation@btsmtacademy.com": {
       "name": "Prof Commercialisation",
       "subject": "Commercialisation des services touristiques",
-      "password": "commercialisation123",
+      "password": "pbkdf2_sha256$260000$3a993e98f18ac2a4e9e9431917948efe$00969290a45428fac485c3ac57303da0491d5ee9ae1a290b65513ce904806e6e",
       "role": "prof"
     },
     "communication@btsmtacademy.com": {
       "name": "Prof Communication professionnelle",
       "subject": "Communication professionnelle",
-      "password": "communication123",
+      "password": "pbkdf2_sha256$260000$3a47fc83923d126a3c5c346ccf684a83$efc8c1abfe7fb5c81bd8d5b62727dfda6841e70a1f85ddea1987da21daac5f28",
       "role": "prof"
     },
     "entrepreneuriat@btsmtacademy.com": {
       "name": "Prof Entrepreneuriat",
       "subject": "Entrepreneuriat",
-      "password": "entrepreneuriat123",
+      "password": "pbkdf2_sha256$260000$67ebfdb948691c7ef21fc8522f59c316$5927180f670f9f00d83f66d6eccc5ea0b392c8b47eba78e8b0792f96582cf337",
       "role": "prof"
     },
     "anglais@btsmtacademy.com": {
       "name": "Prof Anglais",
       "subject": "Anglais",
-      "password": "anglais123",
+      "password": "pbkdf2_sha256$260000$b5084e1cab69979f60739ccec4743724$5e422352271c593bfcf8ebf68ffa17382b90d7f446b79075d8b8ef91d1d9536b",
       "role": "prof"
     },
     "arabe@btsmtacademy.com": {
       "name": "Prof Arabe",
       "subject": "Arabe",
-      "password": "arabe123",
+      "password": "pbkdf2_sha256$260000$aa869e9fc71f4fca760e64adaf3a288f$18dc582c6c81b25db19df0ef3d9abfc82c086040ae8ca5dbb3dd7c3621c9d2a3",
       "role": "prof"
     },
     "espagnol@btsmtacademy.com": {
       "name": "Prof Espagnol",
       "subject": "Espagnol",
-      "password": "espagnol123",
+      "password": "pbkdf2_sha256$260000$f125444e15d1cca2a01e05460990c3f9$0c6398e0f8dd3ee52b8026fe8114400a85a2e70e8afa99ee8d2bdf69c0182458",
       "role": "prof"
     },
     "francais@btsmtacademy.com": {
       "name": "Prof Francais",
       "subject": "Francais",
-      "password": "francais123",
+      "password": "pbkdf2_sha256$260000$b928a4fe4727e90d70e99841c9df3c4f$f9886a8c8a979a5014cadde4a4c559f168e83ed9cee475df23b60e96767f166a",
       "role": "prof"
     },
     "economie@btsmtacademy.com": {
       "name": "Prof Economie generale et touristique",
       "subject": "Economie generale et touristique",
-      "password": "economie123",
+      "password": "pbkdf2_sha256$260000$5dc79f0daa63fa9c690d816bb820ac0b$7657ad34020d3c958a16c41d41aaab8d2f5767cd5cdb390735f95502ae614697",
       "role": "prof"
     },
     "management@btsmtacademy.com": {
       "name": "Prof Management",
       "subject": "Management des organisations touristiques",
-      "password": "management123",
+      "password": "pbkdf2_sha256$260000$f7a1773cd6cd5bc29bec556902565656$56da13808c6e170443052ea0ed343b9cbaea09b8ad8cffbb83e57410b5af8220",
       "role": "prof"
     },
     "droit@btsmtacademy.com": {
       "name": "Prof Droit applique au tourisme",
       "subject": "Droit applique au tourisme",
-      "password": "droit123",
+      "password": "pbkdf2_sha256$260000$bc9247ee5e54ab6fc5434b5f07bc28d2$b14d6cc9c55475e7c083e529815cfe8cf860401ab049424b96ab54d455d513b4",
       "role": "prof"
     }
   },
@@ -768,7 +768,7 @@
       "prenom": "Ayman",
       "nom": "marzagui",
       "groupe": "2eme année mt",
-      "password": "ayman123",
+      "password": "pbkdf2_sha256$260000$6be4086f40709ca5e3f1c9f281f915b5$794959808308b56d5a6f67ace7ff32becb07e4c89ba76835d5fe0bbfae3bb5da",
       "status": "approved",
       "created_at": "21/05/2026 09:52",
       "validated_at": "21/05/2026 10:24",

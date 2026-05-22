@@ -36,6 +36,30 @@ Le compte reste en attente jusqu'a validation dans:
 Espace direction > Comptes etudiants
 ```
 
+Les mots de passe des comptes crees dans l'application sont stockes avec un hash PBKDF2.
+L'interface admin n'affiche plus les mots de passe reels.
+
+## Supabase
+
+Pour garder les donnees en ligne sur Streamlit Cloud, creez un projet Supabase puis executez ce SQL dans Supabase SQL Editor:
+
+```sql
+create table if not exists app_state (
+  id text primary key,
+  payload jsonb not null,
+  updated_at text not null
+);
+```
+
+Ajoutez ensuite ces secrets dans Streamlit Cloud:
+
+```text
+SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY
+```
+
+L'application utilisera Supabase automatiquement si ces variables existent. Sinon elle garde SQLite en local.
+
 ## Deployer sur Render
 
 1. Creer un compte sur Render.
@@ -51,13 +75,17 @@ BTSMT_STUDENT_EMAIL
 BTSMT_STUDENT_PASSWORD
 BTSMT_GUEST_EMAIL
 BTSMT_GUEST_PASSWORD
+SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY
 ```
 
 Optionnellement, ajouter les variables professeurs depuis `.env.example`.
 
 ## Donnees
 
-Les donnees sont sauvegardees dans une base SQLite locale:
+Si Supabase est configure, les donnees sont sauvegardees dans Supabase.
+
+Sinon, les donnees sont sauvegardees dans une base SQLite locale:
 
 ```text
 btsmtacademy.db
