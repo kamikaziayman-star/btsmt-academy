@@ -2,6 +2,7 @@ import calendar
 import base64
 import hashlib
 import hmac
+import html
 import json
 import os
 import secrets
@@ -712,6 +713,147 @@ def render_local_attachment(path_value, file_name="", mime="application/octet-st
         mime=mime or "application/octet-stream",
         key=f"{key_prefix}_{abs(hash((path.as_posix(), file_name, mime)))}",
     )
+
+
+def support_bot_answer(user_message):
+    text = user_message.lower()
+    password_words = ["mot de passe", "password", "mdp", "nssit", "نسيت", "code", "connexion", "login"]
+    course_words = ["cours", "cour", "matiere", "module", "pdf", "drive", "lien", "link", "ma kayt7el", "makaykhdemch"]
+    account_words = ["compte", "inscription", "validation", "valider", "banni", "ban", "access", "acces", "دخول"]
+    exam_words = ["examen", "exam", "devoir", "calendrier", "planning", "date"]
+    bug_words = ["bug", "erreur", "problem", "probleme", "مشكل", "mouchkil", "khata", "error", "ne marche pas"]
+
+    if any(word in text for word in password_words):
+        return (
+            "Je comprends. Pour un probleme de connexion ou mot de passe, verifiez d'abord que l'email est ecrit sans espace. "
+            "Si le probleme continue, envoyez cette conversation a l'admin: il pourra verifier votre compte ou changer le mot de passe."
+        )
+    if any(word in text for word in course_words):
+        return (
+            "Pour un cours ou un lien Drive, indiquez la matiere et le nom du cours. "
+            "Si le lien ne s'ouvre pas, l'admin/professeur pourra le corriger apres reception de votre reclamation."
+        )
+    if any(word in text for word in account_words):
+        return (
+            "Pour un compte ou une validation, votre demande doit etre traitee par l'administration. "
+            "Envoyez cette conversation a l'admin avec votre nom, email et groupe."
+        )
+    if any(word in text for word in exam_words):
+        return (
+            "Pour les examens ou la planification, verifiez d'abord l'onglet Calendrier et Examens. "
+            "Si une date ou un fichier manque, envoyez la conversation a l'admin."
+        )
+    if any(word in text for word in bug_words):
+        return (
+            "D'accord. Decrivez ce qui ne marche pas, la page concernee et le moment exact du probleme. "
+            "Une capture est utile mais pas obligatoire. Vous pouvez envoyer cette conversation au support."
+        )
+    return (
+        "Merci pour votre message. Je peux vous aider en darija, francais ou anglais. "
+        "Expliquez le probleme avec plus de details, puis envoyez la conversation a l'admin si vous voulez une intervention."
+    )
+
+
+def support_bot_transcript(messages):
+    lines = []
+    for message in messages:
+        role = "Utilisateur" if message.get("role") == "user" else "Assistant support"
+        lines.append(f"{role}: {message.get('content', '')}")
+    return "\n\n".join(lines).strip()
+
+
+def show_support_assistant(data, user_label, user_email, user_role):
+    if "support_bot_open" not in st.session_state:
+        st.session_state.support_bot_open = False
+    if "support_bot_messages" not in st.session_state:
+        st.session_state.support_bot_messages = [
+            {
+                "role": "assistant",
+                "content": "Salam, bonjour. Expliquez votre probleme en darija, francais ou anglais, je vais vous orienter.",
+            }
+        ]
+
+    col1, col2 = st.columns([1, 3])
+    if col1.button("Assistant support", key="open_support_assistant"):
+        st.session_state.support_bot_open = not st.session_state.support_bot_open
+
+    if not st.session_state.support_bot_open:
+        return
+
+    st.markdown("#### Assistant support")
+    for index, message in enumerate(st.session_state.support_bot_messages):
+        role_label = "Vous" if message.get("role") == "user" else "Assistant"
+        bubble_class = "chat-user" if message.get("role") == "user" else "chat-assistant"
+        st.markdown(
+            f"""
+            <div class="{bubble_class}">
+                <strong>{role_label}</strong><br>
+                {html.escape(message.get('content', ''))}
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with st.form("support_bot_form", clear_on_submit=True):
+        user_message = st.text_area(
+            "Votre message",
+            placeholder="Exemple: ma kaykhdemch lien dyal cours marketing / je n'arrive pas a ouvrir le PDF...",
+            key="support_bot_input",
+        )
+        send_bot_message = st.form_submit_button("Envoyer a l'assistant")
+
+    if send_bot_message:
+        if not user_message.strip():
+            st.error("Ecrivez votre message d'abord.")
+        else:
+            st.session_state.support_bot_messages.append({"role": "user", "content": user_message.strip()})
+            st.session_state.support_bot_messages.append(
+                {"role": "assistant", "content": support_bot_answer(user_message)}
+            )
+            st.rerun()
+
+    col_send, col_reset = st.columns(2)
+    if col_send.button("Envoyer cette conversation a l'admin", key="send_support_bot_to_admin"):
+        transcript = support_bot_transcript(st.session_state.support_bot_messages)
+        if not any(message.get("role") == "user" for message in st.session_state.support_bot_messages):
+            st.error("Discutez d'abord avec l'assistant avant d'envoyer a l'admin.")
+        else:
+            data.setdefault("support_tickets", []).insert(
+                0,
+                {
+                    "type": "Assistant support",
+                    "nom": user_label or "Utilisateur",
+                    "email": user_email,
+                    "role": user_role,
+                    "sujet": "Conversation envoyee depuis l'assistant support",
+                    "message": transcript,
+                    "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
+                    "statut": "Nouveau",
+                    "reponse": "",
+                    "date_reponse": "",
+                    "screenshot_path": "",
+                    "screenshot_name": "",
+                    "screenshot_mime": "",
+                },
+            )
+            save_data(data)
+            st.success("Conversation envoyee a l'admin.")
+            st.session_state.support_bot_messages = [
+                {
+                    "role": "assistant",
+                    "content": "Votre conversation a ete envoyee. Vous pouvez commencer une nouvelle demande si besoin.",
+                }
+            ]
+            st.rerun()
+
+    if col_reset.button("Nouvelle conversation", key="reset_support_bot"):
+        st.session_state.support_bot_messages = [
+            {
+                "role": "assistant",
+                "content": "Salam, bonjour. Expliquez votre probleme en darija, francais ou anglais, je vais vous orienter.",
+            }
+        ]
+        st.rerun()
 
 
 def platform_users_directory(data):
@@ -4662,6 +4804,29 @@ def inject_style():
             transform: translateY(1px) scale(0.985) !important;
         }
 
+        .chat-user,
+        .chat-assistant {
+            width: fit-content;
+            max-width: min(760px, 100%);
+            margin: 10px 0;
+            padding: 14px 16px;
+            border-radius: 18px;
+            line-height: 1.6;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        .chat-user {
+            margin-left: auto;
+            color: #ffffff;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+        }
+
+        .chat-assistant {
+            color: #0f172a;
+            background: #ffffff;
+            border: 1px solid rgba(99, 102, 241, 0.18);
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .subject-icon,
             .dashboard-stat .stat-icon,
@@ -6065,7 +6230,21 @@ def student_accounts_admin(data):
 
 
 def support_tickets_admin(data):
-    st.markdown("#### Reclamations et support")
+    st.markdown(
+        """
+        <div class="contact-hero">
+            <div class="contact-title-wrap">
+                <div class="contact-icon">S</div>
+                <div>
+                    <h1>Support admin</h1>
+                    <p>Consultez les reclamations envoyees par les utilisateurs et repondez directement depuis cette page.</p>
+                </div>
+            </div>
+            <div class="contact-art"></div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     tickets = data.get("support_tickets", [])
     if not tickets:
         st.info("Aucune reclamation pour le moment.")
@@ -6110,17 +6289,38 @@ def support_tickets_admin(data):
             ticket.get("screenshot_mime", "application/octet-stream"),
             key_prefix=f"support_ticket_{original_index}_{ticket.get('date', '')}",
         )
-        col1, col2, col3 = st.columns(3)
-        if col1.button("En cours", key=f"support_progress_{original_index}_{ticket.get('date')}"):
+
+        if ticket.get("reponse"):
+            st.success(
+                f"Reponse admin ({ticket.get('date_reponse', 'Date non indiquee')}): {ticket.get('reponse')}"
+            )
+
+        response = st.text_area(
+            "Reponse a envoyer a l'utilisateur",
+            value=ticket.get("reponse", ""),
+            key=f"support_response_{original_index}_{ticket.get('date', '')}",
+        )
+        col1, col2, col3, col4 = st.columns(4)
+        if col1.button("Enregistrer la reponse", key=f"support_reply_{original_index}_{ticket.get('date')}"):
+            if not response.strip():
+                st.error("La reponse ne peut pas etre vide.")
+            else:
+                tickets[original_index]["reponse"] = response.strip()
+                tickets[original_index]["date_reponse"] = datetime.now().strftime("%d/%m/%Y %H:%M")
+                tickets[original_index]["statut"] = "Traite"
+                save_data(data)
+                st.success("Reponse envoyee et reclamation marquee comme traitee.")
+                st.rerun()
+        if col2.button("En cours", key=f"support_progress_{original_index}_{ticket.get('date')}"):
             tickets[original_index]["statut"] = "En cours"
             save_data(data)
             st.rerun()
-        if col2.button("Traite", key=f"support_done_{original_index}_{ticket.get('date')}"):
+        if col3.button("Traite", key=f"support_done_{original_index}_{ticket.get('date')}"):
             tickets[original_index]["statut"] = "Traite"
             tickets[original_index]["date_reponse"] = datetime.now().strftime("%d/%m/%Y %H:%M")
             save_data(data)
             st.rerun()
-        if col3.button("Supprimer", key=f"support_delete_{original_index}_{ticket.get('date')}"):
+        if col4.button("Supprimer", key=f"support_delete_{original_index}_{ticket.get('date')}"):
             tickets.pop(original_index)
             save_data(data)
             st.rerun()
@@ -6582,6 +6782,11 @@ def show_support(data):
     user_label = st.session_state.get("platform_user_label", "Utilisateur")
     user_email = st.session_state.get("platform_user_email", "")
     user_role = st.session_state.get("platform_user_role", "student")
+
+    if user_role == "admin":
+        support_tickets_admin(data)
+        return
+
     st.markdown(
         """
         <div class="contact-topbar">
@@ -6605,6 +6810,9 @@ def show_support(data):
         """,
         unsafe_allow_html=True,
     )
+
+    show_support_assistant(data, user_label, user_email, user_role)
+    st.divider()
 
     with st.form("support_ticket_form", clear_on_submit=True):
         ticket_type = st.selectbox(
@@ -6670,6 +6878,43 @@ def show_support(data):
         """,
         unsafe_allow_html=True,
     )
+
+    user_tickets = [
+        ticket
+        for ticket in data.get("support_tickets", [])
+        if ticket.get("email", "").strip().lower() == user_email.strip().lower()
+    ]
+    if user_tickets:
+        st.markdown("#### Mes reclamations")
+        for index, ticket in enumerate(sorted(user_tickets, key=lambda item: parse_date(item.get("date")), reverse=True)):
+            response_html = ""
+            if ticket.get("reponse"):
+                response_html = f"""
+                    <div class="message-content">
+                        <strong>Reponse support:</strong><br>
+                        {ticket.get('reponse', '')}<br>
+                        <span class="message-meta">Date de reponse: {ticket.get('date_reponse', 'Date non indiquee')}</span>
+                    </div>
+                """
+            st.markdown(
+                f"""
+                <div class="message">
+                    <div class="message-title">{ticket.get('sujet', 'Reclamation')}</div>
+                    <div class="message-meta">
+                        Type: {ticket.get('type', 'Reclamation')} | Statut: {ticket.get('statut', 'Nouveau')} | Date: {ticket.get('date', 'Date non indiquee')}
+                    </div>
+                    <div class="message-content">{ticket.get('message', '')}</div>
+                    {response_html}
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+            render_local_attachment(
+                ticket.get("screenshot_path", ""),
+                ticket.get("screenshot_name", ""),
+                ticket.get("screenshot_mime", "application/octet-stream"),
+                key_prefix=f"user_support_ticket_{index}_{ticket.get('date', '')}",
+            )
 
 
 def show_direct_messages(data):
