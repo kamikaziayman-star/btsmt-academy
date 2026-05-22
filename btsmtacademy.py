@@ -411,7 +411,6 @@ def load_data_from_supabase():
 def save_data_to_supabase(data):
     if not supabase_is_configured():
         return False
-    payload = json.dumps(data, ensure_ascii=False)
     updated_at = datetime.now().strftime("%d/%m/%Y %H:%M")
     try:
         supabase_request(
@@ -419,7 +418,7 @@ def save_data_to_supabase(data):
             "app_state",
             {
                 "id": "main",
-                "payload": payload,
+                "payload": data,
                 "updated_at": updated_at,
             },
             {
@@ -685,21 +684,33 @@ def render_shared_file(shared_file):
 
 
 def render_local_attachment(path_value, file_name="", mime="application/octet-stream", key_prefix="attachment"):
-    path = Path(path_value or "")
-    if not path.exists():
-        if path_value:
-            st.warning("Le fichier joint n'existe plus dans le dossier local.")
+    raw_path = str(path_value or "").strip()
+    if not raw_path or raw_path in {".", "./", "/", "\\"}:
+        return
+
+    path = Path(raw_path)
+    if not path.exists() or not path.is_file():
+        st.info("Piece jointe indisponible sur ce serveur.")
+        return
+
+    try:
+        attachment_bytes = path.read_bytes()
+    except (OSError, IsADirectoryError, PermissionError):
+        st.info("Piece jointe indisponible sur ce serveur.")
         return
 
     if (mime or "").startswith("image/"):
-        st.image(str(path), width="stretch")
+        try:
+            st.image(str(path), width="stretch")
+        except Exception:
+            pass
 
     st.download_button(
         "Telecharger la piece jointe",
-        data=path.read_bytes(),
+        data=attachment_bytes,
         file_name=file_name or path.name,
         mime=mime or "application/octet-stream",
-        key=f"{key_prefix}_{path.as_posix()}",
+        key=f"{key_prefix}_{abs(hash((path.as_posix(), file_name, mime)))}",
     )
 
 
@@ -6585,7 +6596,7 @@ def show_support(data):
                 <div class="contact-icon">S</div>
                 <div>
                     <h1>Contact & support</h1>
-                    <p>Envoyez une reclamation, un probleme technique ou une demande d'aide a la direction.</p>
+                    <p>Envoyez une reclamation, un probleme technique ou une demande d'aide au support de la plateforme.</p>
                 </div>
             </div>
             <div class="contact-art"></div>
@@ -6609,18 +6620,15 @@ def show_support(data):
             placeholder="Expliquez clairement votre reclamation ou le probleme rencontre...",
         )
         screenshot = st.file_uploader(
-            "Capture d'ecran ou fichier du probleme",
+            "Capture d'ecran ou fichier du probleme (optionnel)",
             accept_multiple_files=False,
-            help="Ajoutez une capture d'ecran si vous avez un probleme technique.",
+            help="Optionnel: ajoutez une capture d'ecran, une image, un PDF ou un autre fichier si cela aide le support.",
         )
         submitted = st.form_submit_button("Envoyer au support")
 
     if submitted:
         if not name.strip() or not subject.strip() or not message.strip():
             st.error("Le nom, le sujet et le message sont obligatoires.")
-            return
-        if ticket_type in ("Probleme technique", "Probleme de compte") and screenshot is None:
-            st.error("Pour ce type de demande, ajoutez une capture d'ecran ou un fichier du probleme.")
             return
 
         screenshot_path = ""
@@ -6657,7 +6665,7 @@ def show_support(data):
         """
         <div class="contact-help">
             <span class="contact-help-icon">i</span>
-            <span>Les reclamations sont visibles par l'administration et seront traitees selon leur priorite.</span>
+            <span>Votre reclamation sera geree par l'admin ou le support de la plateforme.</span>
         </div>
         """,
         unsafe_allow_html=True,
@@ -6711,7 +6719,7 @@ def show_direct_messages(data):
             title = st.text_input("Titre du message")
             content = st.text_area("Message")
             uploaded_file = st.file_uploader(
-                "Ajouter une photo, PDF, Word, Excel ou autre fichier",
+                "Ajouter une photo, PDF, Word, Excel ou autre fichier (optionnel)",
                 accept_multiple_files=False,
             )
             submitted = st.form_submit_button("Envoyer le message")
