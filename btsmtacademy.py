@@ -303,6 +303,7 @@ def default_data():
         "support_tickets": [],
         "direct_messages": [],
         "seen_updates": {},
+        "seen_dashboard": {},
         "messages": [
             {
                 "titre": "Bienvenue sur BTS SMARTCAMPUS",
@@ -608,6 +609,7 @@ def load_data():
             ticket[field] = normalize_brand_text(ticket.get(field, ""))
 
     data.setdefault("seen_updates", {})
+    data.setdefault("seen_dashboard", {})
 
     data.setdefault("direct_messages", [])
     for message in data["direct_messages"]:
@@ -1043,6 +1045,81 @@ def mark_updates_seen(data, items):
     session_seen_store[key] = sorted(current_seen)
     if len(current_seen) != before:
         seen[key] = sorted(current_seen)
+        save_data(data)
+
+
+def dashboard_item_identity(category, item):
+    fields = [
+        category,
+        item.get("titre", ""),
+        item.get("matiere", ""),
+        item.get("date", ""),
+        item.get("date_limite", ""),
+        item.get("url", ""),
+        item.get("filename", ""),
+        item.get("auteur", ""),
+        item.get("prof", ""),
+        item.get("contenu", ""),
+        item.get("message", ""),
+    ]
+    return hashlib.sha256("|".join(str(field) for field in fields).encode("utf-8")).hexdigest()
+
+
+def seen_dashboard_ids(data, category):
+    seen = data.setdefault("seen_dashboard", {})
+    user_seen = seen.setdefault(current_user_key(), {})
+    persisted_seen = set(user_seen.setdefault(category, []))
+    session_store = st.session_state.setdefault("seen_dashboard_session", {})
+    session_user_seen = session_store.setdefault(current_user_key(), {})
+    session_seen = set(session_user_seen.setdefault(category, []))
+    return persisted_seen | session_seen
+
+
+def unseen_dashboard_items(data, category, items, limit=None):
+    seen_ids = seen_dashboard_ids(data, category)
+    unseen = [item for item in items if dashboard_item_identity(category, item) not in seen_ids]
+    return unseen[:limit] if limit else unseen
+
+
+def mark_dashboard_items_seen(data, category, items):
+    if not items:
+        return
+    seen = data.setdefault("seen_dashboard", {})
+    key = current_user_key()
+    user_seen = seen.setdefault(key, {})
+    session_store = st.session_state.setdefault("seen_dashboard_session", {})
+    session_user_seen = session_store.setdefault(key, {})
+    current_seen = set(user_seen.setdefault(category, []))
+    current_seen.update(session_user_seen.setdefault(category, []))
+    before = len(current_seen)
+    current_seen.update(dashboard_item_identity(category, item) for item in items)
+    session_user_seen[category] = sorted(current_seen)
+    if len(current_seen) != before:
+        user_seen[category] = sorted(current_seen)
+        save_data(data)
+
+
+def mark_many_dashboard_items_seen(data, grouped_items):
+    changed = False
+    seen = data.setdefault("seen_dashboard", {})
+    key = current_user_key()
+    user_seen = seen.setdefault(key, {})
+    session_store = st.session_state.setdefault("seen_dashboard_session", {})
+    session_user_seen = session_store.setdefault(key, {})
+
+    for category, items in grouped_items.items():
+        if not items:
+            continue
+        current_seen = set(user_seen.setdefault(category, []))
+        current_seen.update(session_user_seen.setdefault(category, []))
+        before = len(current_seen)
+        current_seen.update(dashboard_item_identity(category, item) for item in items)
+        session_user_seen[category] = sorted(current_seen)
+        if len(current_seen) != before:
+            user_seen[category] = sorted(current_seen)
+            changed = True
+
+    if changed:
         save_data(data)
 
 
@@ -5400,7 +5477,9 @@ def show_home(data):
         if st.button("Reinitialiser mes nouveautes vues", key="reset_seen_updates_admin", width="stretch"):
             seen = data.setdefault("seen_updates", {})
             seen.pop(current_user_key(), None)
+            data.setdefault("seen_dashboard", {}).pop(current_user_key(), None)
             st.session_state.setdefault("seen_updates_session", {}).pop(current_user_key(), None)
+            st.session_state.setdefault("seen_dashboard_session", {}).pop(current_user_key(), None)
             save_data(data)
             st.success("Historique de lecture reinitialise pour votre compte.")
             st.rerun()
@@ -5413,19 +5492,37 @@ def show_home(data):
     planned_exams = sorted(
         planned_exams,
         key=lambda devoir: parse_deadline(devoir.get("date_limite")),
-    )[:6]
+    )
+    planned_exams = unseen_dashboard_items(data, "planning", planned_exams, limit=6)
 
     recent_files = sorted(
         data.get("shared_files", []),
         key=lambda shared_file: parse_date(shared_file.get("date")),
         reverse=True,
-    )[:4]
+    )
+    recent_files = unseen_dashboard_items(data, "files", recent_files, limit=4)
+
+    messages = sorted(
+        data["messages"],
+        key=lambda message: (message.get("important", False), parse_date(message.get("date"))),
+        reverse=True,
+    )
+    messages = unseen_dashboard_items(data, "messages", messages, limit=5)
+
+    mark_many_dashboard_items_seen(
+        data,
+        {
+            "planning": planned_exams,
+            "files": recent_files,
+            "messages": messages,
+        },
+    )
 
     dash_left, dash_right = st.columns(2)
     with dash_left:
         st.subheader("Planification des examens")
         if not planned_exams:
-            st.info("Aucun examen planifie pour le moment.")
+            st.info("Aucun nouvel examen planifie a afficher.")
         else:
             for devoir in planned_exams:
                 exam_date = devoir.get("date_limite", "")
@@ -5444,7 +5541,7 @@ def show_home(data):
     with dash_right:
         st.subheader("Fichiers partages recents")
         if not recent_files:
-            st.info("Aucun fichier partage pour le moment.")
+            st.info("Aucun nouveau fichier partage a afficher.")
         else:
             for shared_file in recent_files:
                 render_shared_file(shared_file)
@@ -5460,16 +5557,10 @@ def show_home(data):
 
     with messages_right:
         st.subheader("Messages aux etudiants")
-        if not data["messages"]:
-            st.info("Aucun message pour le moment.")
+        if not messages:
+            st.info("Aucun nouveau message a afficher.")
 
-        messages = sorted(
-            data["messages"],
-            key=lambda message: (message.get("important", False), parse_date(message.get("date"))),
-            reverse=True,
-        )
-
-        for message in messages[:5]:
+        for message in messages:
             subject_label = message.get("matiere", "General")
             prof_label = message.get("prof", "Administration")
             is_direction_message = "direction" in prof_label.lower()
