@@ -1011,7 +1011,11 @@ def current_user_key():
 
 def seen_update_ids(data):
     seen = data.setdefault("seen_updates", {})
-    return set(seen.setdefault(current_user_key(), []))
+    key = current_user_key()
+    persisted_seen = set(seen.setdefault(key, []))
+    session_seen_store = st.session_state.setdefault("seen_updates_session", {})
+    session_seen = set(session_seen_store.setdefault(key, []))
+    return persisted_seen | session_seen
 
 
 def unread_updates(data, limit=4):
@@ -1025,9 +1029,13 @@ def mark_updates_seen(data, items):
         return
     seen = data.setdefault("seen_updates", {})
     key = current_user_key()
+    session_seen_store = st.session_state.setdefault("seen_updates_session", {})
+    session_seen = set(session_seen_store.setdefault(key, []))
     current_seen = set(seen.setdefault(key, []))
+    current_seen.update(session_seen)
     before = len(current_seen)
     current_seen.update(update_identity(item) for item in items)
+    session_seen_store[key] = sorted(current_seen)
     if len(current_seen) != before:
         seen[key] = sorted(current_seen)
         save_data(data)
@@ -5346,6 +5354,7 @@ def show_home(data):
     total_courses = sum(len(resources) for resources in data["cours"].values())
     dashboard_updates = unread_updates(data, limit=4)
     new_courses = len(dashboard_updates)
+    mark_updates_seen(data, dashboard_updates)
     total_files = len(data.get("shared_files", []))
     total_exams = len(data.get("examens", []))
     st.markdown(
@@ -5435,7 +5444,6 @@ def show_home(data):
         for item in dashboard_updates:
             extra = f"{item.get('matiere')} | {item.get('type')} | {item.get('statut')} | {item.get('date')}"
             show_resource_card(item, extra=extra)
-        mark_updates_seen(data, dashboard_updates)
 
     with messages_right:
         st.subheader("Messages aux etudiants")
