@@ -11,7 +11,7 @@
     {
       "titre": "sdgfqsgqsq",
       "matiere": "Toutes les matieres",
-      "prof": "Direction BTSMT",
+      "prof": "Direction BTS SMARTCAMPUS",
       "date": "20/05/2026 17:46",
       "important": true,
       "contenu": "gqsdgqzer"
@@ -25,7 +25,7 @@
       "contenu": "hello word"
     },
     {
-      "titre": "Bienvenue sur BTSMT Academy",
+      "titre": "Bienvenue sur BTS SMARTCAMPUS",
       "matiere": "General",
       "prof": "Administration",
       "date": "20/05/2026 12:00",
@@ -633,7 +633,7 @@
   ],
   "prof_accounts": {
     "admin@btsmtacademy.com": {
-      "name": "Administration BTSMT",
+      "name": "Administration BTS SMARTCAMPUS",
       "subject": "Toutes les matieres",
       "password": "pbkdf2_sha256$260000$a77f16130d1674e7475554f12ccff5c6$3b9572bfa7983e22bab87d826d0e6fd28409d0d9dd5548fc8ba5b8f25fcd1a89",
       "role": "admin"
@@ -733,7 +733,7 @@
       "titre": "devoity",
       "description": "adbnfgfsg  wfdgnwd wdfgnsfgns",
       "matiere": "Toutes les matieres",
-      "auteur": "Direction BTSMT",
+      "auteur": "Direction BTS SMARTCAMPUS",
       "role": "direction",
       "date": "20/05/2026 17:47",
       "filename": "Capture d’écran 2026-05-20 170649.jpg",
@@ -744,7 +744,7 @@
       "titre": "sdgfqsgqsq",
       "description": "gqsdgqzer",
       "matiere": "Toutes les matieres",
-      "auteur": "Direction BTSMT",
+      "auteur": "Direction BTS SMARTCAMPUS",
       "role": "direction",
       "date": "20/05/2026 17:46",
       "filename": "Capture d’écran 2026-05-20 170649.jpg",
@@ -777,5 +777,6 @@
     }
   },
   "support_tickets": [],
-  "direct_messages": []
+  "direct_messages": [],
+  "seen_updates": {}
 }

@@ -1,4 +1,4 @@
-# BTSMT Academy - Deploiement
+# BTS SMARTCAMPUS - Deploiement
 
 Ce projet est une plateforme Streamlit pour un centre de formation BTS Management Touristique.
 

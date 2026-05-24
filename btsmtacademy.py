@@ -16,7 +16,7 @@ from pathlib import Path
 import streamlit as st
 
 
-APP_TITLE = "BTSMT Academy"
+APP_TITLE = "BTS SMARTCAMPUS"
 DATA_FILE = Path("btsmtacademy_data.json")
 DATABASE_FILE = Path("btsmtacademy.db")
 BACKUP_DIR = Path("btsmtacademy_backups")
@@ -190,7 +190,7 @@ def subject_theme(subject):
 
 PROF_ACCOUNTS = {
     ADMIN_EMAIL: {
-        "name": "Administration BTSMT",
+        "name": "Administration BTS SMARTCAMPUS",
         "subject": "Toutes les matieres",
         "password": ADMIN_PASSWORD,
         "role": "admin",
@@ -302,9 +302,10 @@ def default_data():
         "student_contacts": [],
         "support_tickets": [],
         "direct_messages": [],
+        "seen_updates": {},
         "messages": [
             {
-                "titre": "Bienvenue sur BTSMT Academy",
+                "titre": "Bienvenue sur BTS SMARTCAMPUS",
                 "matiere": "General",
                 "prof": "Administration",
                 "date": "2026-05-20 12:00",
@@ -475,6 +476,20 @@ def save_data_to_database(data):
         connection.commit()
 
 
+def normalize_brand_text(value):
+    if not isinstance(value, str):
+        return value
+    replacements = {
+        "BTSMT Academy": "BTS SMARTCAMPUS",
+        "Administration BTSMT": "Administration BTS SMARTCAMPUS",
+        "Direction BTSMT": "Direction BTS SMARTCAMPUS",
+        "BTSMT": "BTS SMARTCAMPUS",
+    }
+    for old, new in replacements.items():
+        value = value.replace(old, new)
+    return value
+
+
 def load_data():
     data = load_data_from_database()
     if data is None:
@@ -490,6 +505,8 @@ def load_data():
         message.setdefault("prof", "Administration")
         message.setdefault("date", "Date non indiquee")
         message.setdefault("important", False)
+        for field in ("titre", "prof", "contenu"):
+            message[field] = normalize_brand_text(message.get(field, ""))
 
     for subject in SUBJECTS:
         data.setdefault("cours", {}).setdefault(subject, [])
@@ -498,6 +515,8 @@ def load_data():
             resource.setdefault("statut", "Disponible")
             resource.setdefault("date", "Date non indiquee")
             resource.setdefault("prof", "Administration")
+            for field in ("titre", "description", "prof"):
+                resource[field] = normalize_brand_text(resource.get(field, ""))
 
     for exam in data.get("examens", []):
         exam.setdefault("session", "Archive")
@@ -507,6 +526,9 @@ def load_data():
     data.setdefault("prof_accounts", PROF_ACCOUNTS)
     for email, account in PROF_ACCOUNTS.items():
         data["prof_accounts"].setdefault(email, account)
+        data["prof_accounts"][email]["name"] = normalize_brand_text(
+            data["prof_accounts"][email].get("name", "")
+        )
         env_var = ACCOUNT_PASSWORD_ENV.get(email)
         if env_var and os.getenv(env_var):
             data["prof_accounts"][email]["password"] = hash_password(os.getenv(env_var))
@@ -527,6 +549,9 @@ def load_data():
         account.setdefault("banned", False)
         account.setdefault("admin_messages", [])
         account["password"] = protect_password(account.get("password", ""))
+        for admin_message in account["admin_messages"]:
+            for field in ("titre", "contenu"):
+                admin_message[field] = normalize_brand_text(admin_message.get(field, ""))
 
     data.setdefault("devoirs", [])
     for devoir in data["devoirs"]:
@@ -537,6 +562,8 @@ def load_data():
         devoir.setdefault("lien", "")
         devoir.setdefault("prof", "Administration")
         devoir.setdefault("date_publication", "Date non indiquee")
+        for field in ("titre", "description", "prof"):
+            devoir[field] = normalize_brand_text(devoir.get(field, ""))
 
     data.setdefault("shared_files", [])
     for shared_file in data["shared_files"]:
@@ -549,6 +576,8 @@ def load_data():
         shared_file.setdefault("filename", "")
         shared_file.setdefault("path", "")
         shared_file.setdefault("mime", "application/octet-stream")
+        for field in ("titre", "description", "auteur"):
+            shared_file[field] = normalize_brand_text(shared_file.get(field, ""))
 
     data.setdefault("student_contacts", [])
     for contact in data["student_contacts"]:
@@ -575,11 +604,15 @@ def load_data():
         ticket.setdefault("screenshot_path", "")
         ticket.setdefault("screenshot_name", "")
         ticket.setdefault("screenshot_mime", "")
+        for field in ("sujet", "message", "reponse"):
+            ticket[field] = normalize_brand_text(ticket.get(field, ""))
+
+    data.setdefault("seen_updates", {})
 
     data.setdefault("direct_messages", [])
     for message in data["direct_messages"]:
         message.setdefault("from_email", ADMIN_EMAIL)
-        message.setdefault("from_name", "Administration BTSMT")
+        message.setdefault("from_name", "Administration BTS SMARTCAMPUS")
         message.setdefault("to_email", "")
         message.setdefault("to_name", "")
         message.setdefault("titre", "Message")
@@ -589,6 +622,8 @@ def load_data():
         message.setdefault("attachment_name", "")
         message.setdefault("attachment_mime", "application/octet-stream")
         message.setdefault("read", False)
+        for field in ("from_name", "to_name", "titre", "contenu"):
+            message[field] = normalize_brand_text(message.get(field, ""))
 
     save_data(data, create_backup=False)
     return data
@@ -645,7 +680,7 @@ def save_uploaded_file(uploaded_file, folder="general"):
 
 
 def render_shared_file(shared_file):
-    role_label = "Direction BTSMT" if shared_file.get("role") == "direction" else shared_file.get("auteur", "Professeur")
+    role_label = "Direction BTS SMARTCAMPUS" if shared_file.get("role") == "direction" else shared_file.get("auteur", "Professeur")
     st.markdown(
         f"""
         <div class="shared-file-card">
@@ -870,7 +905,7 @@ def platform_users_directory(data):
         },
         {
             "email": DIRECTION_EMAIL,
-            "name": "Direction BTSMT",
+            "name": "Direction BTS SMARTCAMPUS",
             "role": "Direction",
         },
     ]
@@ -954,6 +989,48 @@ def search_courses(data, query, resource_type="Tous", status="Tous"):
 def latest_updates(data, limit=8):
     items = all_course_items(data)
     return sorted(items, key=lambda item: parse_date(item.get("date")), reverse=True)[:limit]
+
+
+def update_identity(item):
+    parts = [
+        item.get("matiere", ""),
+        item.get("titre", ""),
+        item.get("type", ""),
+        item.get("statut", ""),
+        item.get("date", ""),
+        item.get("url", ""),
+    ]
+    return hashlib.sha256("|".join(parts).encode("utf-8")).hexdigest()
+
+
+def current_user_key():
+    email = st.session_state.get("platform_user_email", "").strip().lower()
+    role = st.session_state.get("platform_user_role", "student")
+    return email or f"session-{role}"
+
+
+def seen_update_ids(data):
+    seen = data.setdefault("seen_updates", {})
+    return set(seen.setdefault(current_user_key(), []))
+
+
+def unread_updates(data, limit=4):
+    seen_ids = seen_update_ids(data)
+    items = latest_updates(data, limit=50)
+    return [item for item in items if update_identity(item) not in seen_ids][:limit]
+
+
+def mark_updates_seen(data, items):
+    if not items:
+        return
+    seen = data.setdefault("seen_updates", {})
+    key = current_user_key()
+    current_seen = set(seen.setdefault(key, []))
+    before = len(current_seen)
+    current_seen.update(update_identity(item) for item in items)
+    if len(current_seen) != before:
+        seen[key] = sorted(current_seen)
+        save_data(data)
 
 
 def parse_deadline(value):
@@ -4863,14 +4940,14 @@ def show_header(data=None):
     st.markdown(
         f"""
         <div class="app-topbar">
-            <div class="app-brand">BTS<span>MT</span> Academy</div>
+            <div class="app-brand">BTS <span>SMART</span>CAMPUS</div>
             <div class="app-user">
                 <span>Bonjour, {user_label}</span>
                 <span class="app-user-avatar"></span>
             </div>
         </div>
         <div class="dashboard-hero">
-            <h1>Bienvenue sur<br>BTSMT <span>Academy</span></h1>
+            <h1>Bienvenue sur<br>BTS <span>SMARTCAMPUS</span></h1>
             <p>
                 Plateforme pour centraliser les cours, les fiches Drive, les examens
                 nationaux precedents et les messages destines aux etudiants.
@@ -4896,7 +4973,7 @@ def render_login_topbar(role_label):
     st.markdown(
         f"""
         <div class="login-topbar">
-            <div class="login-brand">BTS<span>MT</span> Academy</div>
+            <div class="login-brand">BTS <span>SMART</span>CAMPUS</div>
             <div class="login-user">
                 <span>Bonjour,<br><strong>{role_label}</strong></span>
                 <span class="login-avatar"></span>
@@ -5026,12 +5103,12 @@ def show_platform_login(data):
         """
         <div class="platform-login-shell">
             <div class="platform-login-top">
-                <div class="platform-login-brand">BTS<span>MT</span> Academy</div>
+                <div class="platform-login-brand">BTS <span>SMART</span>CAMPUS</div>
                 <div class="platform-login-pill">Acces securise a la plateforme</div>
             </div>
             <div class="platform-login-hero">
                 <div class="platform-login-copy">
-                    <h1>Connectez-vous a<br><span>BTSMT Academy</span></h1>
+                    <h1>Connectez-vous a<br><span>BTS SMARTCAMPUS</span></h1>
                     <p>
                         Accedez a vos cours, examens, fichiers partages, messages et planning
                         depuis un espace moderne pense pour accompagner votre reussite.
@@ -5121,8 +5198,8 @@ def show_welcome():
                 <div class="welcome-brand">
                     <span class="welcome-brand-mark"></span>
                     <span class="welcome-brand-text">
-                        <span class="welcome-brand-main">BTS<span>MT</span></span>
-                        <span class="welcome-brand-sub">ACADEMY</span>
+                        <span class="welcome-brand-main">BTS <span>SMART</span></span>
+                        <span class="welcome-brand-sub">CAMPUS</span>
                     </span>
                 </div>
             </div>
@@ -5131,7 +5208,7 @@ def show_welcome():
                 <div class="welcome-orbit orbit-two">+</div>
                 <div class="welcome-orbit orbit-three">BTS</div>
                 <div class="welcome-copy">
-                    <h1>Bienvenue sur<br>BTSMT <span>Academy</span></h1>
+                    <h1>Bienvenue sur<br>BTS <span>SMARTCAMPUS</span></h1>
                     <p>
                         Est une plateforme dediee aux etudiants souhaitant reviser efficacement.
                         Vous y trouverez tous les cours, exercices corriges et examens des annees
@@ -5177,7 +5254,7 @@ def show_welcome():
     st.markdown(
         """
         <div class="welcome-tags-outside">
-            <span class="welcome-tag tag-academy">Academy</span>
+            <span class="welcome-tag tag-academy">Smart Campus</span>
             <span class="welcome-tag tag-ressources">Ressources</span>
             <span class="welcome-tag tag-examens">Examens</span>
             <span class="welcome-tag tag-direction">Direction</span>
@@ -5193,7 +5270,7 @@ def show_entry_transition():
         """
         <div class="entry-transition">
             <div class="entry-transition-content">
-                <h2>BTSMT Academy</h2>
+                <h2>BTS SMARTCAMPUS</h2>
                 <p>Chargement de votre espace de travail...</p>
             </div>
         </div>
@@ -5208,8 +5285,8 @@ def show_login_to_welcome_transition():
         """
         <div class="login-gateway-transition">
             <div class="login-gateway-card">
-                <div class="login-gateway-mark">BT</div>
-                <h2>BTS<span>MT</span> Academy</h2>
+                <div class="login-gateway-mark">SC</div>
+                <h2>BTS <span>SMART</span>CAMPUS</h2>
                 <p>Connexion reussie. Preparation de votre espace...</p>
                 <div class="login-gateway-dots">
                     <span></span>
@@ -5267,7 +5344,8 @@ def show_home(data):
                 )
 
     total_courses = sum(len(resources) for resources in data["cours"].values())
-    new_courses = sum(1 for item in all_course_items(data) if is_new(item.get("date")))
+    dashboard_updates = unread_updates(data, limit=4)
+    new_courses = len(dashboard_updates)
     total_files = len(data.get("shared_files", []))
     total_exams = len(data.get("examens", []))
     st.markdown(
@@ -5289,7 +5367,7 @@ def show_home(data):
                 <div class="stat-icon">N</div>
                 <div class="label">Nouveautes</div>
                 <div class="value">{new_courses}</div>
-                <div class="hint">Cette semaine</div>
+                <div class="hint">Non lues</div>
             </div>
             <div class="dashboard-stat stat-violet">
                 <div class="stat-icon">F</div>
@@ -5301,6 +5379,9 @@ def show_home(data):
         """,
         unsafe_allow_html=True,
     )
+    if st.button("Historique des nouveautes", key="open_updates_history_from_dashboard", width="stretch"):
+        st.session_state.current_page = "Historique des nouveautes"
+        st.rerun()
 
     planned_exams = [
         devoir
@@ -5348,10 +5429,13 @@ def show_home(data):
 
     updates_left, messages_right = st.columns([1, 1])
     with updates_left:
-        st.subheader("Dernieres mises a jour")
-        for item in latest_updates(data, limit=4):
+        st.subheader("Nouveautes non lues")
+        if not dashboard_updates:
+            st.info("Aucune nouvelle nouveaute. Consultez l'historique pour revoir les anciennes publications.")
+        for item in dashboard_updates:
             extra = f"{item.get('matiere')} | {item.get('type')} | {item.get('statut')} | {item.get('date')}"
             show_resource_card(item, extra=extra)
+        mark_updates_seen(data, dashboard_updates)
 
     with messages_right:
         st.subheader("Messages aux etudiants")
@@ -5515,12 +5599,22 @@ def show_search(data):
 
 
 def show_updates(data):
-    st.subheader("Dernieres mises a jour")
-    st.write("Les derniers cours, fiches, exercices et corrections ajoutes par les professeurs.")
+    st.markdown(
+        """
+        <div class="courses-hero">
+            <div>
+                <h1>Historique des nouveautes</h1>
+                <p>Toutes les publications deja affichees sur le dashboard restent disponibles ici.</p>
+            </div>
+            <div class="courses-hero-art"></div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     items = latest_updates(data, limit=30)
     if not items:
-        st.info("Aucune mise a jour pour le moment.")
+        st.info("Aucune nouveaute pour le moment.")
         return
 
     for item in items:
@@ -6349,7 +6443,7 @@ def user_management_admin(data):
     })
     users.append({
         "email": DIRECTION_EMAIL,
-        "name": "Direction BTSMT",
+        "name": "Direction BTS SMARTCAMPUS",
         "role": "Direction",
         "password": "Protege par configuration",
         "status": "Actif",
@@ -6483,7 +6577,7 @@ def user_management_admin(data):
                     {
                         "titre": msg_title.strip(),
                         "matiere": data["prof_accounts"][selected_user["email"]].get("subject", "General"),
-                        "prof": "Administration BTSMT",
+                        "prof": "Administration BTS SMARTCAMPUS",
                         "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
                         "important": True,
                         "contenu": f"Message destine a {selected_user['name']}: {msg_content.strip()}",
@@ -6533,7 +6627,7 @@ def user_management_admin(data):
 
 
 def show_admin_space(data):
-    st.success("Connecte: Administration BTSMT | Acces complet")
+    st.success("Connecte: Administration BTS SMARTCAMPUS | Acces complet")
 
     section = st.radio(
         "Choisir une section",
@@ -6544,7 +6638,7 @@ def show_admin_space(data):
 
     if section == "Cours":
         subject = st.selectbox("Matiere a gerer", SUBJECTS, key="admin_course_subject")
-        add_course_form(data, subject, "Administration BTSMT")
+        add_course_form(data, subject, "Administration BTS SMARTCAMPUS")
         st.divider()
         delete_course_form(data, subject)
 
@@ -6556,15 +6650,15 @@ def show_admin_space(data):
 
     elif section == "Messages":
         subject = st.selectbox("Matiere du message", SUBJECTS, key="admin_message_subject")
-        message_admin(data, subject, "Administration BTSMT")
+        message_admin(data, subject, "Administration BTS SMARTCAMPUS")
 
     elif section == "Planning examens":
         subject = st.selectbox("Matiere de l'examen", SUBJECTS, key="admin_homework_subject")
-        homework_admin(data, subject, "Administration BTSMT")
+        homework_admin(data, subject, "Administration BTS SMARTCAMPUS")
 
     elif section == "Fichiers":
         subject = st.selectbox("Matiere du fichier", SUBJECTS, key="admin_file_subject")
-        shared_file_admin(data, subject, "Administration BTSMT", "direction")
+        shared_file_admin(data, subject, "Administration BTS SMARTCAMPUS", "direction")
 
     elif section == "Discussion":
         subject = st.selectbox("Matiere des messages", SUBJECTS, key="admin_contact_subject")
@@ -6637,7 +6731,7 @@ def show_direction_space(data):
         return
 
     st.subheader("Espace direction")
-    st.success("Connecte: Direction BTSMT")
+    st.success("Connecte: Direction BTS SMARTCAMPUS")
 
     section = st.radio(
         "Choisir une section",
@@ -6673,7 +6767,7 @@ def show_direction_space(data):
                 {
                     "titre": title,
                     "matiere": target_subject,
-                    "prof": "Direction BTSMT",
+                    "prof": "Direction BTS SMARTCAMPUS",
                     "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
                     "important": important,
                     "contenu": content,
@@ -6688,7 +6782,7 @@ def show_direction_space(data):
                         "titre": title,
                         "description": content,
                         "matiere": target_subject,
-                        "auteur": "Direction BTSMT",
+                        "auteur": "Direction BTS SMARTCAMPUS",
                         "role": "direction",
                         "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
                         "filename": uploaded_file.name,
@@ -6702,7 +6796,7 @@ def show_direction_space(data):
             st.rerun()
 
     elif section == "Fichiers partages":
-        shared_file_admin(data, "Toutes les matieres", "Direction BTSMT", "direction")
+        shared_file_admin(data, "Toutes les matieres", "Direction BTS SMARTCAMPUS", "direction")
     elif section == "Comptes etudiants":
         student_accounts_admin(data)
 
@@ -6715,7 +6809,7 @@ def show_contact(data):
     st.markdown(
         """
         <div class="contact-topbar">
-            <div class="contact-brand">BTS<span>MT</span> Academy</div>
+            <div class="contact-brand">BTS <span>SMART</span>CAMPUS</div>
             <div class="contact-user">
                 <span>Bonjour,<br><strong>Etudiant</strong></span>
                 <span class="contact-avatar"></span>
@@ -6790,7 +6884,7 @@ def show_support(data):
     st.markdown(
         """
         <div class="contact-topbar">
-            <div class="contact-brand">BTS<span>MT</span> Academy</div>
+            <div class="contact-brand">BTS <span>SMART</span>CAMPUS</div>
             <div class="contact-user">
                 <span>Centre<br><strong>Support</strong></span>
                 <span class="contact-avatar"></span>
@@ -6925,7 +7019,7 @@ def show_direct_messages(data):
     st.markdown(
         """
         <div class="contact-topbar">
-            <div class="contact-brand">BTS<span>MT</span> Academy</div>
+            <div class="contact-brand">BTS <span>SMART</span>CAMPUS</div>
             <div class="contact-user">
                 <span>Boite<br><strong>Messages</strong></span>
                 <span class="contact-avatar"></span>
@@ -6986,7 +7080,7 @@ def show_direct_messages(data):
                     0,
                     {
                         "from_email": current_email or ADMIN_EMAIL,
-                        "from_name": current_name or "Administration BTSMT",
+                        "from_name": current_name or "Administration BTS SMARTCAMPUS",
                         "to_email": recipient["email"],
                         "to_name": recipient["name"],
                         "titre": title.strip(),
@@ -7025,7 +7119,7 @@ def show_direct_messages(data):
             <div class="message">
                 <div class="message-title">{message.get("titre", "Message")}</div>
                 <div class="message-meta">
-                    De: {message.get("from_name", "Administration BTSMT")} | Date: {message.get("date", "Date non indiquee")}{target_line}
+                    De: {message.get("from_name", "Administration BTS SMARTCAMPUS")} | Date: {message.get("date", "Date non indiquee")}{target_line}
                 </div>
                 <div class="message-content">{message.get("contenu", "")}</div>
             </div>
@@ -7064,7 +7158,6 @@ def sidebar_navigation():
             ("Accueil", "Accueil"),
             ("Espace professeur", "Professeurs"),
             ("Messages directs", "Messages"),
-            ("Contact", "Contact"),
             ("Contact et support", "Support"),
         ]
     elif user_role == "admin":
@@ -7078,7 +7171,6 @@ def sidebar_navigation():
             ("Espace direction", "Direction"),
             ("Utilisateurs", "Utilisateurs"),
             ("Messages directs", "Messages"),
-            ("Contact", "Contact"),
             ("Contact et support", "Support"),
         ]
     elif user_role == "direction":
@@ -7086,7 +7178,6 @@ def sidebar_navigation():
             ("Accueil", "Accueil"),
             ("Espace direction", "Direction"),
             ("Messages directs", "Messages"),
-            ("Contact", "Contact"),
             ("Contact et support", "Support"),
         ]
     else:
@@ -7094,10 +7185,11 @@ def sidebar_navigation():
 
     if "current_page" not in st.session_state:
         st.session_state.current_page = "Accueil"
-    if st.session_state.current_page not in [page_name for page_name, _ in pages]:
+    allowed_pages = [page_name for page_name, _ in pages] + ["Historique des nouveautes"]
+    if st.session_state.current_page not in allowed_pages:
         st.session_state.current_page = "Accueil"
 
-    st.sidebar.markdown("### BTSMT Academy")
+    st.sidebar.markdown("### BTS SMARTCAMPUS")
     st.sidebar.caption("Navigation")
 
     for page_name, label in pages:
@@ -7116,7 +7208,7 @@ def sidebar_navigation():
 
 
 def main():
-    st.set_page_config(page_title=APP_TITLE, page_icon="BT", layout="wide")
+    st.set_page_config(page_title=APP_TITLE, page_icon="SC", layout="wide")
     inject_style()
     data = load_data()
 
@@ -7172,7 +7264,7 @@ def main():
         show_home(data)
     elif page == "Recherche rapide":
         show_search(data)
-    elif page == "Dernieres mises a jour":
+    elif page in ("Dernieres mises a jour", "Historique des nouveautes"):
         show_updates(data)
     elif page == "Cours":
         show_courses(data)
