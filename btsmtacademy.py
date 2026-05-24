@@ -991,6 +991,11 @@ def latest_updates(data, limit=8):
     return sorted(items, key=lambda item: parse_date(item.get("date")), reverse=True)[:limit]
 
 
+def recent_update_items(data, days=7, limit=50):
+    items = [item for item in all_course_items(data) if is_new(item.get("date"), days=days)]
+    return sorted(items, key=lambda item: parse_date(item.get("date")), reverse=True)[:limit]
+
+
 def update_identity(item):
     parts = [
         item.get("matiere", ""),
@@ -1020,7 +1025,7 @@ def seen_update_ids(data):
 
 def unread_updates(data, limit=4):
     seen_ids = seen_update_ids(data)
-    items = latest_updates(data, limit=50)
+    items = recent_update_items(data, days=7, limit=50)
     return [item for item in items if update_identity(item) not in seen_ids][:limit]
 
 
@@ -5391,6 +5396,14 @@ def show_home(data):
     if st.button("Historique des nouveautes", key="open_updates_history_from_dashboard", width="stretch"):
         st.session_state.current_page = "Historique des nouveautes"
         st.rerun()
+    if st.session_state.get("platform_user_role") == "admin":
+        if st.button("Reinitialiser mes nouveautes vues", key="reset_seen_updates_admin", width="stretch"):
+            seen = data.setdefault("seen_updates", {})
+            seen.pop(current_user_key(), None)
+            st.session_state.setdefault("seen_updates_session", {}).pop(current_user_key(), None)
+            save_data(data)
+            st.success("Historique de lecture reinitialise pour votre compte.")
+            st.rerun()
 
     planned_exams = [
         devoir
