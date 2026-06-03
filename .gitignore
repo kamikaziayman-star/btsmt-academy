@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
+
+btsmtacademy_backups/
+btsmtacademy_uploads/
+btsmtacademy.db
+btsmtacademy.db-*
+
+.streamlit/secrets.toml
