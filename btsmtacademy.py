@@ -988,24 +988,86 @@ def search_courses(data, query, resource_type="Tous", status="Tous"):
     return sorted(results, key=lambda item: parse_date(item.get("date")), reverse=True)
 
 
+def item_update_date(item):
+    return (
+        item.get("date")
+        or item.get("date_publication")
+        or item.get("date_limite")
+        or "Date non indiquee"
+    )
+
+
 def latest_updates(data, limit=8):
-    items = all_course_items(data)
-    return sorted(items, key=lambda item: parse_date(item.get("date")), reverse=True)[:limit]
+    items = []
+    for item in all_course_items(data):
+        items.append({**item, "_update_category": "courses", "_update_label": "Cours"})
+    for message in data.get("messages", []):
+        items.append(
+            {
+                **message,
+                "type": "Message",
+                "statut": "Publie",
+                "_update_category": "messages",
+                "_update_label": "Message",
+            }
+        )
+    for shared_file in data.get("shared_files", []):
+        items.append(
+            {
+                **shared_file,
+                "type": "Fichier",
+                "statut": "Partage",
+                "url": shared_file.get("path", ""),
+                "_update_category": "files",
+                "_update_label": "Fichier",
+            }
+        )
+    for devoir in data.get("devoirs", []):
+        items.append(
+            {
+                **devoir,
+                "titre": devoir.get("titre") or f"Examen - {devoir.get('matiere', 'General')}",
+                "date": devoir.get("date_publication") or devoir.get("date_limite", ""),
+                "type": "Planning",
+                "statut": "Planifie",
+                "_update_category": "planning",
+                "_update_label": "Planning",
+            }
+        )
+    for exam in data.get("examens", []):
+        items.append(
+            {
+                **exam,
+                "type": "Examen",
+                "statut": exam.get("session", "Disponible"),
+                "_update_category": "exams",
+                "_update_label": "Examen",
+            }
+        )
+    return sorted(items, key=lambda item: parse_date(item_update_date(item)), reverse=True)[:limit]
 
 
 def recent_update_items(data, days=7, limit=50):
-    items = [item for item in all_course_items(data) if is_new(item.get("date"), days=days)]
-    return sorted(items, key=lambda item: parse_date(item.get("date")), reverse=True)[:limit]
+    items = [item for item in latest_updates(data, limit=200) if is_new(item_update_date(item), days=days)]
+    return sorted(items, key=lambda item: parse_date(item_update_date(item)), reverse=True)[:limit]
 
 
 def update_identity(item):
     parts = [
+        item.get("_update_category", ""),
         item.get("matiere", ""),
         item.get("titre", ""),
         item.get("type", ""),
         item.get("statut", ""),
         item.get("date", ""),
+        item.get("date_limite", ""),
+        item.get("date_publication", ""),
         item.get("url", ""),
+        item.get("path", ""),
+        item.get("filename", ""),
+        item.get("prof", ""),
+        item.get("auteur", ""),
+        item.get("contenu", ""),
     ]
     return hashlib.sha256("|".join(parts).encode("utf-8")).hexdigest()
 
@@ -5027,21 +5089,29 @@ def inject_style():
 
 def show_header(data=None):
     user_label = st.session_state.get("platform_user_label", "Etudiant")
+    initial = (user_label.strip()[:1] or "A").upper()
     st.markdown(
         f"""
-        <div class="app-topbar">
-            <div class="app-brand">BTS <span>SMART</span>CAMPUS</div>
-            <div class="app-user">
+        <div class="academic-dashboard-topbar">
+            <div class="academic-dashboard-brand">BTS <span>SMART</span> CAMPUS</div>
+            <div class="academic-dashboard-user">
                 <span>Bonjour, {user_label}</span>
-                <span class="app-user-avatar"></span>
+                <strong>{initial}</strong>
             </div>
         </div>
-        <div class="dashboard-hero">
-            <h1>Bienvenue sur<br>BTS <span>SMARTCAMPUS</span></h1>
-            <p>
-                Plateforme pour centraliser les cours, les fiches Drive, les examens
-                nationaux precedents et les messages destines aux etudiants.
-            </p>
+        <div class="academic-dashboard-hero">
+            <div>
+                <h1>Bienvenue sur<br><span>BTS SMARTCAMPUS</span></h1>
+                <p>
+                    Plateforme pour centraliser les cours, les fiches Drive, les examens
+                    nationaux precedents et les messages destines aux etudiants.
+                </p>
+            </div>
+            <div class="academic-dashboard-illustration">
+                <div class="dash-cap"></div>
+                <div class="dash-books"></div>
+                <div class="dash-screen"></div>
+            </div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -5053,6 +5123,30 @@ def show_creator_footer():
         """
         <div class="creator-footer">
             Plateforme creee par <strong>Ayman Marzagui</strong>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def dashboard_empty_card(icon, message):
+    st.markdown(
+        f"""
+        <div class="academic-empty-card">
+            <span>{icon}</span>
+            <strong>{message}</strong>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def dashboard_section_title(icon, title):
+    st.markdown(
+        f"""
+        <div class="academic-section-title">
+            <span>{icon}</span>
+            <h3>{title}</h3>
         </div>
         """,
         unsafe_allow_html=True,
@@ -5193,19 +5287,28 @@ def show_platform_login(data):
         """
         <div class="platform-login-shell">
             <div class="platform-login-top">
-                <div class="platform-login-brand">BTS <span>SMART</span>CAMPUS</div>
-                <div class="platform-login-pill">Acces securise a la plateforme</div>
+                <div class="platform-login-brand">
+                    <span class="platform-login-crest">BTS</span>
+                    <span class="platform-login-brand-text">BTS SMARTCAMPUS</span>
+                </div>
+                <div class="platform-login-actions">
+                    <div class="platform-login-pill">Acces securise a la plateforme</div>
+                    <div class="platform-login-help">?</div>
+                </div>
             </div>
             <div class="platform-login-hero">
                 <div class="platform-login-copy">
                     <h1>Connectez-vous a<br><span>BTS SMARTCAMPUS</span></h1>
+                    <div class="platform-login-gold-line"></div>
                     <p>
                         Accedez a vos cours, examens, fichiers partages, messages et planning
                         depuis un espace moderne pense pour accompagner votre reussite.
                     </p>
                 </div>
                 <div class="platform-login-card">
+                    <div class="platform-login-card-icon">▰</div>
                     <div class="platform-login-card-title">Connexion</div>
+                    <div class="platform-login-card-line"></div>
                     <div class="platform-login-card-subtitle">Entrez vos identifiants pour continuer.</div>
         """,
         unsafe_allow_html=True,
@@ -5355,6 +5458,85 @@ def show_welcome():
     show_creator_footer()
 
 
+def show_welcome_academic():
+    st.markdown(
+        """
+        <div class="welcome-shell academic-welcome-shell">
+            <div class="welcome-topbar academic-welcome-topbar">
+                <div class="welcome-brand academic-welcome-brand">
+                    <span class="welcome-brand-mark academic-welcome-crest">BTS</span>
+                    <span class="welcome-brand-text">
+                        <span class="welcome-brand-main">BTS SMARTCAMPUS</span>
+                        <span class="welcome-brand-sub">PLATEFORME ACADEMIQUE</span>
+                    </span>
+                </div>
+                <div class="welcome-header-actions">
+                    <span class="welcome-dashboard-pill">Tableau de bord</span>
+                    <span class="welcome-help-pill">Aide</span>
+                </div>
+            </div>
+            <div class="academic-welcome-panel">
+                <div class="welcome-copy academic-welcome-copy">
+                    <div class="welcome-eyebrow">PLATEFORME DE REVISION INTELLIGENTE</div>
+                    <h1>Bienvenue sur<br>BTS <span>SMARTCAMPUS</span></h1>
+                    <div class="welcome-gold-line"></div>
+                    <p>
+                        Est une plateforme dediee aux etudiants souhaitant reviser efficacement.
+                        Vous y trouverez tous les cours, exercices corriges et examens des annees
+                        precedentes, organises et accessibles en un seul endroit. Un espace simple,
+                        moderne et complet pour accompagner votre reussite tout au long de l'annee.
+                    </p>
+                    <div class="welcome-feature-row">
+                        <span class="welcome-feature"><b>II</b>Cours de qualite</span>
+                        <span class="welcome-feature"><b>[]</b>Ressources Drive</span>
+                        <span class="welcome-feature"><b>*</b>Examens precedents</span>
+                    </div>
+                </div>
+                <div class="welcome-visual academic-welcome-grid">
+                    <div class="welcome-mini-card mini-cours">
+                        <strong>PDF</strong>
+                        <span><b>Matieres organisees</b>Tous vos cours classes par matiere.</span>
+                    </div>
+                    <div class="welcome-mini-card mini-examens">
+                        <strong>PDF</strong>
+                        <span><b>Cours et fiches Drive</b>Accedez aux cours et fiches partages.</span>
+                    </div>
+                    <div class="welcome-mini-card mini-drive">
+                        <strong>Exam</strong>
+                        <span><b>Exam</b>Preparation nationale, sujets et annales corriges.</span>
+                    </div>
+                    <div class="welcome-mini-card mini-profs">
+                        <strong>Prof</strong>
+                        <span><b>Prof</b>Messages et partage avec vos enseignants.</span>
+                    </div>
+                    <div class="welcome-floating-badge">BTS</div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown('<div class="welcome-actions academic-welcome-actions">', unsafe_allow_html=True)
+    if st.button("Commencer maintenant", width="stretch"):
+        st.session_state.platform_started = True
+        st.session_state.entry_animation = True
+        st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="welcome-tags-outside academic-welcome-links">
+            <span class="welcome-tag tag-academy"><b>SMART CAMPUS</b><small>Accueil et actualites</small></span>
+            <span class="welcome-tag tag-ressources"><b>RESSOURCES</b><small>Cours et documents</small></span>
+            <span class="welcome-tag tag-examens"><b>EXAMENS</b><small>Annales et corriges</small></span>
+            <span class="welcome-tag tag-direction"><b>DIRECTION</b><small>Informations et annonces</small></span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    show_creator_footer()
+
+
 def show_entry_transition():
     st.markdown(
         """
@@ -5435,8 +5617,7 @@ def show_home(data):
 
     total_courses = sum(len(resources) for resources in data["cours"].values())
     dashboard_updates = unread_updates(data, limit=4)
-    new_courses = len(dashboard_updates)
-    mark_updates_seen(data, dashboard_updates)
+    unread_total = len(unread_updates(data, limit=50))
     total_files = len(data.get("shared_files", []))
     total_exams = len(data.get("examens", []))
     st.markdown(
@@ -5447,33 +5628,40 @@ def show_home(data):
                 <div class="label">Matieres</div>
                 <div class="value">{len(SUBJECTS)}</div>
                 <div class="hint">Toutes les matieres</div>
+                <div class="stat-corner-icon">▱</div>
             </div>
             <div class="dashboard-stat stat-teal">
                 <div class="stat-icon">C</div>
                 <div class="label">Cours disponibles</div>
                 <div class="value">{total_courses}</div>
                 <div class="hint">Cours a votre disposition</div>
+                <div class="stat-corner-icon">□</div>
             </div>
             <div class="dashboard-stat stat-amber">
                 <div class="stat-icon">N</div>
                 <div class="label">Nouveautes</div>
-                <div class="value">{new_courses}</div>
+                <div class="value">{unread_total}</div>
                 <div class="hint">Non lues</div>
+                <div class="stat-corner-icon">!</div>
             </div>
             <div class="dashboard-stat stat-violet">
                 <div class="stat-icon">F</div>
                 <div class="label">Fichiers & examens</div>
                 <div class="value">{total_files + total_exams}</div>
                 <div class="hint">Fichiers disponibles</div>
+                <div class="stat-corner-icon">▭</div>
             </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
+    st.markdown('<div class="academic-dashboard-action">', unsafe_allow_html=True)
     if st.button("Historique des nouveautes", key="open_updates_history_from_dashboard", width="stretch"):
         st.session_state.current_page = "Historique des nouveautes"
         st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
     if st.session_state.get("platform_user_role") == "admin":
+        st.markdown('<div class="academic-dashboard-action">', unsafe_allow_html=True)
         if st.button("Reinitialiser mes nouveautes vues", key="reset_seen_updates_admin", width="stretch"):
             seen = data.setdefault("seen_updates", {})
             seen.pop(current_user_key(), None)
@@ -5483,6 +5671,7 @@ def show_home(data):
             save_data(data)
             st.success("Historique de lecture reinitialise pour votre compte.")
             st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
 
     planned_exams = [
         devoir
@@ -5509,20 +5698,28 @@ def show_home(data):
     )
     messages = unseen_dashboard_items(data, "messages", messages, limit=5)
 
-    mark_many_dashboard_items_seen(
-        data,
-        {
-            "planning": planned_exams,
-            "files": recent_files,
-            "messages": messages,
-        },
-    )
+    if unread_total or planned_exams or recent_files or messages:
+        st.markdown('<div class="academic-dashboard-action">', unsafe_allow_html=True)
+        if st.button("Marquer toutes les nouveautes comme vues", key="mark_all_dashboard_news_seen", width="stretch"):
+            mark_updates_seen(data, unread_updates(data, limit=100))
+            mark_many_dashboard_items_seen(
+                data,
+                {
+                    "planning": planned_exams,
+                    "files": recent_files,
+                    "messages": messages,
+                },
+            )
+            st.success("Toutes les nouveautes visibles sont marquees comme vues.")
+            st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
 
     dash_left, dash_right = st.columns(2)
     with dash_left:
-        st.subheader("Planification des examens")
+        st.markdown('<div class="academic-dashboard-panel">', unsafe_allow_html=True)
+        dashboard_section_title("▦", "Planification des examens")
         if not planned_exams:
-            st.info("Aucun nouvel examen planifie a afficher.")
+            dashboard_empty_card("▣", "Aucun nouvel examen planifie a afficher.")
         else:
             for devoir in planned_exams:
                 exam_date = devoir.get("date_limite", "")
@@ -5537,28 +5734,38 @@ def show_home(data):
                     """,
                     unsafe_allow_html=True,
                 )
+        st.markdown("</div>", unsafe_allow_html=True)
 
     with dash_right:
-        st.subheader("Fichiers partages recents")
+        st.markdown('<div class="academic-dashboard-panel">', unsafe_allow_html=True)
+        dashboard_section_title("□", "Fichiers partages recents")
         if not recent_files:
-            st.info("Aucun nouveau fichier partage a afficher.")
+            dashboard_empty_card("▭", "Aucun nouveau fichier partage a afficher.")
         else:
             for shared_file in recent_files:
                 render_shared_file(shared_file)
+        st.markdown("</div>", unsafe_allow_html=True)
 
     updates_left, messages_right = st.columns([1, 1])
     with updates_left:
-        st.subheader("Nouveautes non lues")
+        st.markdown('<div class="academic-dashboard-panel">', unsafe_allow_html=True)
+        dashboard_section_title("!", "Nouveautes non lues")
         if not dashboard_updates:
-            st.info("Aucune nouvelle nouveaute. Consultez l'historique pour revoir les anciennes publications.")
+            dashboard_empty_card("▤", "Aucune nouvelle nouveaute. Consultez l'historique pour revoir les anciennes publications.")
         for item in dashboard_updates:
-            extra = f"{item.get('matiere')} | {item.get('type')} | {item.get('statut')} | {item.get('date')}"
+            extra = (
+                f"{item.get('_update_label', 'Nouveaute')} | "
+                f"{item.get('matiere', 'General')} | {item.get('type', '')} | "
+                f"{item.get('statut', '')} | {item_update_date(item)}"
+            )
             show_resource_card(item, extra=extra)
+        st.markdown("</div>", unsafe_allow_html=True)
 
     with messages_right:
-        st.subheader("Messages aux etudiants")
+        st.markdown('<div class="academic-dashboard-panel">', unsafe_allow_html=True)
+        dashboard_section_title("○", "Messages aux etudiants")
         if not messages:
-            st.info("Aucun nouveau message a afficher.")
+            dashboard_empty_card("▱", "Aucun nouveau message a afficher.")
 
         for message in messages:
             subject_label = message.get("matiere", "General")
@@ -5589,6 +5796,7 @@ def show_home(data):
                 """,
                 unsafe_allow_html=True,
             )
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
 def show_courses(data):
@@ -5731,8 +5939,9 @@ def show_updates(data):
 
     for item in items:
         extra = (
-            f"{item.get('matiere')} | {item.get('type')} | "
-            f"{item.get('statut')} | {item.get('prof')} | {item.get('date')}"
+            f"{item.get('_update_label', 'Nouveaute')} | {item.get('matiere', 'General')} | "
+            f"{item.get('type', '')} | {item.get('statut', '')} | "
+            f"{item.get('prof') or item.get('auteur', '')} | {item_update_date(item)}"
         )
         show_resource_card(item, extra=extra)
 
@@ -7255,42 +7464,42 @@ def show_direct_messages(data):
 
 def sidebar_navigation():
     student_pages = [
-        ("Accueil", "Accueil"),
-        ("Cours", "Cours"),
-        ("Fichiers partages", "Fichiers Drive"),
-        ("Examens nationaux", "Examens"),
-        ("Planification des examens", "Calendrier"),
-        ("Messages directs", "Messages"),
-        ("Contact", "Contact"),
-        ("Contact et support", "Support"),
+        ("Accueil", "⌂ Accueil"),
+        ("Cours", "▤ Cours"),
+        ("Fichiers partages", "□ Fichiers Drive"),
+        ("Examens nationaux", "▣ Examens"),
+        ("Planification des examens", "▦ Calendrier"),
+        ("Messages directs", "▱ Messages"),
+        ("Contact", "○ Contact"),
+        ("Contact et support", "? Aide & Support"),
     ]
     user_role = st.session_state.get("platform_user_role", "student")
     if user_role == "prof":
         pages = [
-            ("Accueil", "Accueil"),
-            ("Espace professeur", "Professeurs"),
-            ("Messages directs", "Messages"),
-            ("Contact et support", "Support"),
+            ("Accueil", "⌂ Accueil"),
+            ("Espace professeur", "◉ Professeurs"),
+            ("Messages directs", "▱ Messages"),
+            ("Contact et support", "? Aide & Support"),
         ]
     elif user_role == "admin":
         pages = [
-            ("Accueil", "Accueil"),
-            ("Cours", "Cours"),
-            ("Fichiers partages", "Fichiers Drive"),
-            ("Examens nationaux", "Examens"),
-            ("Planification des examens", "Calendrier"),
-            ("Espace professeur", "Professeurs"),
-            ("Espace direction", "Direction"),
-            ("Utilisateurs", "Utilisateurs"),
-            ("Messages directs", "Messages"),
-            ("Contact et support", "Support"),
+            ("Accueil", "⌂ Accueil"),
+            ("Cours", "▤ Cours"),
+            ("Fichiers partages", "□ Fichiers Drive"),
+            ("Examens nationaux", "▣ Examens"),
+            ("Planification des examens", "▦ Calendrier"),
+            ("Espace professeur", "◉ Professeurs"),
+            ("Espace direction", "◇ Direction"),
+            ("Utilisateurs", "◎ Utilisateurs"),
+            ("Messages directs", "▱ Messages"),
+            ("Contact et support", "? Aide & Support"),
         ]
     elif user_role == "direction":
         pages = [
-            ("Accueil", "Accueil"),
-            ("Espace direction", "Direction"),
-            ("Messages directs", "Messages"),
-            ("Contact et support", "Support"),
+            ("Accueil", "⌂ Accueil"),
+            ("Espace direction", "◇ Direction"),
+            ("Messages directs", "▱ Messages"),
+            ("Contact et support", "? Aide & Support"),
         ]
     else:
         pages = list(student_pages)
@@ -7301,8 +7510,16 @@ def sidebar_navigation():
     if st.session_state.current_page not in allowed_pages:
         st.session_state.current_page = "Accueil"
 
-    st.sidebar.markdown("### BTS SMARTCAMPUS")
-    st.sidebar.caption("Navigation")
+    st.sidebar.markdown(
+        """
+        <div class="academic-sidebar-brand">
+            <div class="academic-sidebar-crest">SC</div>
+            <h2>BTS SMARTCAMPUS</h2>
+        </div>
+        <div class="academic-sidebar-label">Navigation</div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     for page_name, label in pages:
         is_active = st.session_state.current_page == page_name
@@ -7346,7 +7563,7 @@ def main():
     if not st.session_state.platform_started:
         if st.session_state.login_transition:
             show_login_to_welcome_transition()
-        show_welcome()
+        show_welcome_academic()
         return
 
     if st.session_state.entry_animation:
