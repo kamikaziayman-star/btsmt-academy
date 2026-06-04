@@ -5742,81 +5742,77 @@ def show_home(data):
             st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
 
-    dash_left, dash_right = st.columns(2)
-    with dash_left:
-        dashboard_section_title("P", "Planification des examens")
-        if not planned_exams:
-            dashboard_empty_card("P", "Aucun nouvel examen planifie a afficher.")
-        else:
-            for devoir in planned_exams:
-                exam_date = devoir.get("date_limite", "")
-                st.markdown(
-                    f"""
-                    <div class="homework-card">
-                        <h3>{devoir.get("matiere", "General")}</h3>
-                        <div class="homework-meta">
-                            Date d'examen: {exam_date or "Non indiquee"}
-                        </div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
-
-    with dash_right:
-        dashboard_section_title("F", "Fichiers partages recents")
-        if not recent_files:
-            dashboard_empty_card("F", "Aucun nouveau fichier partage a afficher.")
-        else:
-            for shared_file in recent_files:
-                render_shared_file(shared_file)
-
-    updates_left, messages_right = st.columns([1, 1])
-    with updates_left:
-        dashboard_section_title("!", "Nouveautes non lues")
-        if not dashboard_updates:
-            dashboard_empty_card("N", "Aucune nouvelle nouveaute. Consultez l'historique pour revoir les anciennes publications.")
-        for item in dashboard_updates:
-            extra = (
-                f"{item.get('_update_label', 'Nouveaute')} | "
-                f"{item.get('matiere', 'General')} | {item.get('type', '')} | "
-                f"{item.get('statut', '')} | {item_update_date(item)}"
-            )
-            show_resource_card(item, extra=extra)
-
-    with messages_right:
-        dashboard_section_title("M", "Messages aux etudiants")
-        if not messages:
-            dashboard_empty_card("M", "Aucun nouveau message a afficher.")
-
-        for message in messages:
-            subject_label = message.get("matiere", "General")
-            prof_label = message.get("prof", "Administration")
-            is_direction_message = "direction" in prof_label.lower()
-            author_label = (
-                "Message officiel de la direction"
-                if is_direction_message
-                else f"Prof: {prof_label}"
-            )
-            date_label = message.get("date", "Date non indiquee")
-            important_class = " message-important" if message.get("important") else ""
-            important_badge = (
-                '<span class="badge badge-important">Important</span>' if message.get("important") else ""
-            )
-            direction_badge = (
-                '<span class="badge badge-important">Direction</span>' if is_direction_message else ""
-            )
+    st.markdown('<div class="dashboard-section-stack">', unsafe_allow_html=True)
+    dashboard_section_title("P", "Planification des examens")
+    if not planned_exams:
+        dashboard_empty_card("P", "Aucun nouvel examen planifie a afficher.")
+    else:
+        for devoir in planned_exams:
+            exam_date = devoir.get("date_limite", "")
             st.markdown(
                 f"""
-                <div class="message{important_class}">
-                    <div class="message-title">{direction_badge}{important_badge}{message["titre"]}</div>
-                    <div class="message-meta">
-                        {author_label} | Matiere: {subject_label} | Date: {date_label}
+                <div class="homework-card">
+                    <h3>{devoir.get("matiere", "General")}</h3>
+                    <div class="homework-meta">
+                        Date d'examen: {exam_date or "Non indiquee"}
                     </div>
-                    <div class="message-content">{message["contenu"]}</div>
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
+
+    dashboard_section_title("F", "Fichiers partages recents")
+    if not recent_files:
+        dashboard_empty_card("F", "Aucun nouveau fichier partage a afficher.")
+    else:
+        for shared_file in recent_files:
+            render_shared_file(shared_file)
+
+    dashboard_section_title("!", "Nouveautes non lues")
+    if not dashboard_updates:
+        dashboard_empty_card("N", "Aucune nouvelle nouveaute. Consultez l'historique pour revoir les anciennes publications.")
+    for item in dashboard_updates:
+        extra = (
+            f"{item.get('_update_label', 'Nouveaute')} | "
+            f"{item.get('matiere', 'General')} | {item.get('type', '')} | "
+            f"{item.get('statut', '')} | {item_update_date(item)}"
+        )
+        show_resource_card(item, extra=extra)
+
+    dashboard_section_title("M", "Messages aux etudiants")
+    if not messages:
+        dashboard_empty_card("M", "Aucun nouveau message a afficher.")
+
+    for message in messages:
+        subject_label = message.get("matiere", "General")
+        prof_label = message.get("prof", "Administration")
+        is_direction_message = "direction" in prof_label.lower()
+        author_label = (
+            "Message officiel de la direction"
+            if is_direction_message
+            else f"Prof: {prof_label}"
+        )
+        date_label = message.get("date", "Date non indiquee")
+        important_class = " message-important" if message.get("important") else ""
+        important_badge = (
+            '<span class="badge badge-important">Important</span>' if message.get("important") else ""
+        )
+        direction_badge = (
+            '<span class="badge badge-important">Direction</span>' if is_direction_message else ""
+        )
+        st.markdown(
+            f"""
+            <div class="message{important_class}">
+                <div class="message-title">{direction_badge}{important_badge}{message["titre"]}</div>
+                <div class="message-meta">
+                    {author_label} | Matiere: {subject_label} | Date: {date_label}
+                </div>
+                <div class="message-content">{message["contenu"]}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    st.markdown("</div>", unsafe_allow_html=True)
 
 
 def show_courses(data):
