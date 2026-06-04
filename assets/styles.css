@@ -9349,3 +9349,383 @@ div[data-testid="stFormSubmitButton"] > button:hover {
         grid-template-columns: 1fr !important;
     }
 }
+
+/* Platform-wide university style: apply the reference visual language everywhere. */
+.page-transition {
+    padding-bottom: 1.5rem !important;
+}
+
+.synced-page-hero,
+.courses-hero,
+.files-hero,
+.exam-hero,
+.planning-hero,
+.contact-hero {
+    min-height: 245px !important;
+    margin: 0 -2.75rem 30px !important;
+    padding: 58px 2.75rem 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 22px !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: var(--ref-text) !important;
+    background:
+        linear-gradient(90deg, rgba(245,249,255,0.99) 0%, rgba(245,249,255,0.92) 46%, rgba(245,249,255,0.56) 72%, rgba(245,249,255,0.16) 100%),
+        url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=80") center right / cover no-repeat !important;
+}
+
+.synced-page-hero::before,
+.synced-page-hero::after,
+.courses-hero::before,
+.courses-hero::after,
+.files-hero::before,
+.files-hero::after,
+.exam-hero::before,
+.exam-hero::after,
+.planning-hero::before,
+.planning-hero::after,
+.contact-hero::before,
+.contact-hero::after {
+    display: none !important;
+}
+
+.synced-page-icon,
+.exam-icon-main,
+.planning-icon-main,
+.files-icon,
+.contact-icon {
+    width: 58px !important;
+    height: 58px !important;
+    min-width: 58px !important;
+    border-radius: 14px !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #2b83ff, #1468f6) !important;
+    box-shadow: 0 16px 32px rgba(20,104,246,0.24) !important;
+}
+
+.synced-page-hero h1,
+.courses-hero h1,
+.files-hero h1,
+.exam-hero h1,
+.planning-hero h1,
+.contact-hero h1 {
+    max-width: 720px !important;
+    margin: 0 0 14px !important;
+    color: var(--ref-text) !important;
+    font-size: clamp(32px, 4vw, 46px) !important;
+    line-height: 1.16 !important;
+    font-weight: 950 !important;
+}
+
+.synced-page-hero p,
+.courses-hero p,
+.files-hero p,
+.exam-hero p,
+.planning-hero p,
+.planning-hero strong,
+.contact-hero p {
+    max-width: 680px !important;
+    margin: 0 !important;
+    color: #284267 !important;
+    font-size: 16px !important;
+    line-height: 1.85 !important;
+    font-weight: 650 !important;
+}
+
+.contact-topbar {
+    min-height: 74px !important;
+    margin: 0 -2.75rem !important;
+    padding: 0 2.75rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background: rgba(255,255,255,0.96) !important;
+    border: 0 !important;
+    border-bottom: 1px solid #e5edf7 !important;
+    border-radius: 0 !important;
+    box-shadow: 0 8px 26px rgba(8,37,84,0.05) !important;
+}
+
+.contact-brand {
+    color: var(--ref-text) !important;
+    font-size: 22px !important;
+    font-weight: 950 !important;
+}
+
+.contact-brand span {
+    color: var(--ref-blue) !important;
+}
+
+.contact-user,
+.contact-user * {
+    color: var(--ref-text) !important;
+}
+
+.subject-card,
+.course-row,
+.card,
+.exam-card,
+.planning-card,
+.planning-empty,
+.shared-file-card,
+.message,
+.homework-card,
+.user-card,
+.contact-help,
+.support-assistant,
+.chat-message,
+div[data-testid="stForm"],
+div[data-testid="stExpander"],
+div[data-testid="stDataFrame"] {
+    border-radius: 16px !important;
+    border: 1px solid var(--ref-border) !important;
+    background: #ffffff !important;
+    box-shadow: var(--ref-shadow) !important;
+}
+
+.subject-card,
+.course-row,
+.card,
+.exam-card,
+.planning-card,
+.shared-file-card,
+.message,
+.homework-card,
+.user-card,
+div[data-testid="stForm"] {
+    padding: 24px !important;
+    margin-bottom: 18px !important;
+}
+
+.subject-card:hover,
+.course-row:hover,
+.card:hover,
+.exam-card:hover,
+.planning-card:hover,
+.shared-file-card:hover,
+.message:hover,
+.homework-card:hover,
+.user-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 24px 54px rgba(8,37,84,0.13) !important;
+}
+
+.subject-card {
+    display: grid !important;
+    grid-template-columns: 64px 1fr !important;
+    align-items: start !important;
+    gap: 18px !important;
+}
+
+.subject-icon,
+.exam-card-icon,
+.planning-card-icon {
+    width: 54px !important;
+    height: 54px !important;
+    border-radius: 14px !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #2b83ff, #1468f6) !important;
+    box-shadow: 0 14px 28px rgba(20,104,246,0.22) !important;
+}
+
+.subject-card:nth-of-type(3n + 2) .subject-icon,
+.exam-card:nth-of-type(3n + 2) .exam-card-icon {
+    background: linear-gradient(135deg, #7c3aed, #5b21b6) !important;
+}
+
+.subject-card:nth-of-type(3n) .subject-icon,
+.planning-card:nth-of-type(3n) .planning-card-icon {
+    background: linear-gradient(135deg, #22a65a, #15803d) !important;
+}
+
+.subject-card strong,
+.course-row h3,
+.card h3,
+.exam-card h3,
+.planning-card h3,
+.shared-file-card h3,
+.message-title,
+.homework-card h3,
+.contact-form-title,
+.section-title {
+    color: var(--ref-text) !important;
+    font-weight: 950 !important;
+    letter-spacing: 0 !important;
+}
+
+.subject-count,
+.subject-action,
+.subject-label,
+.muted,
+.exam-meta,
+.exam-description,
+.planning-date,
+.shared-file-meta,
+.shared-file-card p,
+.message-meta,
+.message-content,
+.homework-meta,
+.card p,
+.contact-help,
+.contact-help * {
+    color: var(--ref-muted) !important;
+    line-height: 1.7 !important;
+}
+
+.badge,
+.badge-new,
+.badge-important {
+    display: inline-flex !important;
+    align-items: center !important;
+    margin: 3px 5px 3px 0 !important;
+    padding: 6px 11px !important;
+    border-radius: 999px !important;
+    border: 1px solid #dbe7f6 !important;
+    background: #eef5ff !important;
+    color: #1559db !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+}
+
+.badge-new {
+    background: #eaf8f0 !important;
+    border-color: #c7efd8 !important;
+    color: #168044 !important;
+}
+
+.badge-important {
+    background: #fff2e5 !important;
+    border-color: #ffd7ad !important;
+    color: #d65f00 !important;
+}
+
+label,
+div[data-testid="stWidgetLabel"] p {
+    color: var(--ref-text) !important;
+    font-weight: 850 !important;
+}
+
+input,
+textarea,
+div[data-baseweb="select"] > div,
+div[data-baseweb="input"] > div,
+div[data-baseweb="textarea"] > div {
+    border-radius: 10px !important;
+    border-color: #d8e3f1 !important;
+    background: #fbfdff !important;
+    color: var(--ref-text) !important;
+}
+
+input:focus,
+textarea:focus,
+div[data-baseweb="select"] > div:focus-within,
+div[data-baseweb="input"] > div:focus-within,
+div[data-baseweb="textarea"] > div:focus-within {
+    border-color: #2b83ff !important;
+    box-shadow: 0 0 0 3px rgba(43,131,255,0.14) !important;
+}
+
+div[data-testid="stRadio"] label {
+    border-radius: 999px !important;
+    border: 1px solid #dbe7f6 !important;
+    background: #ffffff !important;
+    box-shadow: 0 8px 20px rgba(8,37,84,0.06) !important;
+}
+
+div[data-testid="stTabs"] button {
+    color: #526a8d !important;
+    font-weight: 900 !important;
+}
+
+div[data-testid="stTabs"] button[aria-selected="true"] {
+    color: var(--ref-blue) !important;
+}
+
+div[data-testid="stButton"] > button,
+div[data-testid="stLinkButton"] > a,
+div[data-testid="stDownloadButton"] > button,
+div[data-testid="stFormSubmitButton"] > button {
+    min-height: 46px !important;
+    padding: 0.62rem 1rem !important;
+    border-radius: 9px !important;
+    border: 1px solid #d5dfec !important;
+    background: #ffffff !important;
+    color: var(--ref-blue) !important;
+    box-shadow: 0 10px 22px rgba(8,37,84,0.06) !important;
+    font-weight: 950 !important;
+    white-space: normal !important;
+}
+
+div[data-testid="stButton"] > button *,
+div[data-testid="stLinkButton"] > a *,
+div[data-testid="stDownloadButton"] > button *,
+div[data-testid="stFormSubmitButton"] > button * {
+    color: inherit !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+}
+
+div[data-testid="stLinkButton"] > a,
+div[data-testid="stDownloadButton"] > button,
+div[data-testid="stFormSubmitButton"] > button[kind="primary"],
+div[data-testid="stButton"] > button[kind="primary"] {
+    color: #ffffff !important;
+    border-color: transparent !important;
+    background: linear-gradient(135deg, #2b83ff 0%, #1468f6 100%) !important;
+    box-shadow: 0 16px 32px rgba(20,104,246,0.22) !important;
+}
+
+div[data-testid="stAlert"] {
+    border-radius: 12px !important;
+    border: 1px solid #dbe7f6 !important;
+}
+
+@media (max-width: 1100px) {
+    .synced-page-hero,
+    .courses-hero,
+    .files-hero,
+    .exam-hero,
+    .planning-hero,
+    .contact-hero,
+    .contact-topbar {
+        margin-left: -1.5rem !important;
+        margin-right: -1.5rem !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+
+@media (max-width: 760px) {
+    .synced-page-hero,
+    .courses-hero,
+    .files-hero,
+    .exam-hero,
+    .planning-hero,
+    .contact-hero,
+    .contact-topbar {
+        margin-left: -1rem !important;
+        margin-right: -1rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    .synced-page-hero,
+    .courses-hero,
+    .files-hero,
+    .exam-hero,
+    .planning-hero,
+    .contact-hero {
+        min-height: 270px !important;
+        background:
+            linear-gradient(180deg, rgba(245,249,255,0.99) 0%, rgba(245,249,255,0.89) 72%, rgba(245,249,255,0.74) 100%),
+            url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=80") center / cover no-repeat !important;
+    }
+
+    .subject-card {
+        grid-template-columns: 1fr !important;
+    }
+}
