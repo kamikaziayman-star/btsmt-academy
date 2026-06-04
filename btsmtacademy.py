@@ -5085,13 +5085,17 @@ def inject_style():
         """,
         unsafe_allow_html=True,
     )
-    try:
-        from embedded_styles import get_embedded_styles
+    style_path = Path(__file__).resolve().parent / "assets" / "styles.css"
+    final_css = ""
+    if style_path.exists():
+        final_css = style_path.read_text(encoding="utf-8")
+    else:
+        try:
+            from embedded_styles import get_embedded_styles
 
-        final_css = get_embedded_styles()
-    except Exception:
-        style_path = Path("assets/styles.css")
-        final_css = style_path.read_text(encoding="utf-8") if style_path.exists() else ""
+            final_css = get_embedded_styles()
+        except Exception:
+            final_css = ""
 
     if final_css:
         st.markdown(
