@@ -8865,3 +8865,487 @@ section[data-testid="stSidebar"] div[data-testid="stButton"] > button[kind="prim
         border-radius: 12px !important;
     }
 }
+
+/* Return to the clean university dashboard reference design. */
+:root {
+    --ref-navy: #06275a;
+    --ref-navy-dark: #021a40;
+    --ref-blue: #1d6fff;
+    --ref-text: #082554;
+    --ref-muted: #405a80;
+    --ref-soft: #f4f8ff;
+    --ref-border: #e1eaf6;
+    --ref-shadow: 0 18px 44px rgba(8, 37, 84, 0.10);
+}
+
+.stApp {
+    background:
+        linear-gradient(90deg, rgba(6, 39, 90, 0.035), transparent 260px),
+        radial-gradient(circle at 80% 0%, rgba(29,111,255,0.09), transparent 36%),
+        #f5f9ff !important;
+    color: var(--ref-text) !important;
+}
+
+.main .block-container {
+    max-width: 1120px !important;
+    padding: 0 2.75rem 2rem !important;
+}
+
+section[data-testid="stSidebar"] {
+    width: 285px !important;
+    min-width: 285px !important;
+    max-width: 285px !important;
+    background:
+        radial-gradient(circle at 24% 8%, rgba(49, 142, 255, 0.22), transparent 26%),
+        linear-gradient(180deg, #062b63 0%, #041f4a 54%, #021738 100%) !important;
+    box-shadow: 18px 0 46px rgba(2, 23, 56, 0.22) !important;
+    border-right: 0 !important;
+}
+
+section[data-testid="stSidebar"] > div {
+    padding: 34px 20px 26px !important;
+}
+
+.academic-sidebar-brand {
+    display: block !important;
+    text-align: left !important;
+    margin: 8px 0 48px !important;
+    color: #ffffff !important;
+}
+
+.academic-sidebar-crest {
+    width: 58px !important;
+    height: 58px !important;
+    border-radius: 50% !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    margin: 0 12px 0 0 !important;
+    vertical-align: middle !important;
+    color: #06275a !important;
+    background: #ffffff !important;
+    font-weight: 950 !important;
+}
+
+.academic-sidebar-brand h2 {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 !important;
+    color: #ffffff !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+}
+
+.academic-sidebar-brand p {
+    margin: 5px 0 0 72px !important;
+    color: rgba(255,255,255,0.84) !important;
+    font-size: 12px !important;
+    font-weight: 850 !important;
+    letter-spacing: 0.06em !important;
+}
+
+.academic-sidebar-label {
+    margin: 0 10px 14px !important;
+    color: rgba(203, 220, 246, 0.70) !important;
+    font-size: 11px !important;
+    font-weight: 850 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button {
+    min-height: 58px !important;
+    justify-content: flex-start !important;
+    padding: 0 18px !important;
+    margin: 7px 0 !important;
+    border-radius: 9px !important;
+    border: 1px solid transparent !important;
+    background: transparent !important;
+    color: rgba(255,255,255,0.93) !important;
+    box-shadow: none !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button *,
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button p,
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button span {
+    color: inherit !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button[kind="primary"] {
+    background: linear-gradient(135deg, #2b83ff 0%, #1468f6 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 16px 34px rgba(20, 104, 246, 0.38) !important;
+}
+
+.sidebar-study-card {
+    margin: 56px 8px 0 !important;
+    padding: 24px 18px !important;
+    border-radius: 12px !important;
+    color: #ffffff !important;
+    background: rgba(255,255,255,0.07) !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    box-shadow: none !important;
+}
+
+.sidebar-study-icon {
+    width: 52px !important;
+    height: 52px !important;
+    margin-bottom: 18px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 13px !important;
+    color: rgba(255,255,255,0.72) !important;
+    background: rgba(255,255,255,0.10) !important;
+    font-weight: 950 !important;
+}
+
+.sidebar-study-card strong {
+    display: block !important;
+    color: #ffffff !important;
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+}
+
+.sidebar-progress {
+    height: 8px !important;
+    margin: 24px 0 16px !important;
+    border-radius: 999px !important;
+    background: rgba(255,255,255,0.10) !important;
+    overflow: hidden !important;
+}
+
+.sidebar-progress span {
+    display: block !important;
+    width: 64% !important;
+    height: 100% !important;
+    border-radius: inherit !important;
+    background: linear-gradient(90deg, #45d5ff, #1d6fff) !important;
+}
+
+.sidebar-study-card small,
+.sidebar-study-card b {
+    display: block !important;
+    color: rgba(255,255,255,0.82) !important;
+    line-height: 1.8 !important;
+}
+
+.sidebar-study-card b {
+    color: #ffffff !important;
+    font-weight: 950 !important;
+}
+
+.university-topbar {
+    min-height: 80px !important;
+    margin: 0 -2.75rem !important;
+    padding: 0 2.75rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background: rgba(255,255,255,0.96) !important;
+    border-bottom: 1px solid #e5edf7 !important;
+    box-shadow: 0 8px 26px rgba(8, 37, 84, 0.05) !important;
+}
+
+.university-menu-icon {
+    width: 42px !important;
+    height: 42px !important;
+    display: grid !important;
+    place-items: center !important;
+    gap: 5px !important;
+}
+
+.university-menu-icon span {
+    display: block !important;
+    width: 22px !important;
+    height: 2px !important;
+    border-radius: 99px !important;
+    background: var(--ref-text) !important;
+}
+
+.university-user {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    color: var(--ref-text) !important;
+}
+
+.university-user span {
+    display: grid !important;
+    gap: 2px !important;
+    text-align: right !important;
+    color: #627491 !important;
+    font-size: 13px !important;
+}
+
+.university-user strong {
+    color: var(--ref-text) !important;
+    font-size: 15px !important;
+}
+
+.university-user b {
+    width: 46px !important;
+    height: 46px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #08275a, #041c44) !important;
+}
+
+.university-hero {
+    min-height: 300px !important;
+    margin: 0 -2.75rem 0 !important;
+    padding: 76px 2.75rem 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    background:
+        linear-gradient(90deg, rgba(245,249,255,0.99) 0%, rgba(245,249,255,0.91) 42%, rgba(245,249,255,0.38) 68%, rgba(245,249,255,0.06) 100%),
+        url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=80") center right / cover no-repeat !important;
+}
+
+.university-hero h1 {
+    margin: 0 0 22px !important;
+    color: var(--ref-text) !important;
+    font-size: clamp(34px, 4.2vw, 48px) !important;
+    line-height: 1.18 !important;
+    font-weight: 950 !important;
+}
+
+.university-hero h1 span {
+    color: var(--ref-blue) !important;
+}
+
+.university-hero p {
+    max-width: 560px !important;
+    margin: 0 !important;
+    color: #284267 !important;
+    font-size: 16px !important;
+    line-height: 1.85 !important;
+    font-weight: 650 !important;
+}
+
+.dashboard-stat-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+    margin: -4px 0 30px !important;
+}
+
+.dashboard-stat {
+    min-height: 178px !important;
+    padding: 22px !important;
+    border-radius: 14px !important;
+    border: 1px solid var(--ref-border) !important;
+    background: #ffffff !important;
+    box-shadow: var(--ref-shadow) !important;
+}
+
+.dashboard-stat .stat-icon {
+    width: 50px !important;
+    height: 50px !important;
+    margin-bottom: 18px !important;
+    border-radius: 9px !important;
+}
+
+.dashboard-stat .label {
+    color: #50658a !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    font-weight: 950 !important;
+}
+
+.dashboard-stat .value {
+    margin: 14px 0 8px !important;
+    color: var(--ref-text) !important;
+    font-size: 36px !important;
+}
+
+.dashboard-stat .hint {
+    color: #425b7d !important;
+    font-size: 14px !important;
+}
+
+.university-announcement {
+    min-height: 92px !important;
+    margin: 0 0 34px !important;
+    padding: 18px 26px !important;
+    display: grid !important;
+    grid-template-columns: 58px 1fr auto !important;
+    align-items: center !important;
+    gap: 18px !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--ref-border) !important;
+    background: #ffffff !important;
+    box-shadow: var(--ref-shadow) !important;
+}
+
+.university-announcement-icon {
+    width: 52px !important;
+    height: 52px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #2b83ff, #1468f6) !important;
+    font-weight: 950 !important;
+}
+
+.university-announcement strong {
+    color: var(--ref-text) !important;
+    font-size: 16px !important;
+}
+
+.university-announcement p {
+    margin: 6px 0 0 !important;
+    color: #425b7d !important;
+    line-height: 1.55 !important;
+}
+
+.university-announcement span {
+    color: var(--ref-blue) !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+}
+
+.university-feature-card {
+    min-height: 205px !important;
+    margin: 0 0 26px !important;
+    padding: 34px 32px !important;
+    display: grid !important;
+    grid-template-columns: 70px 1fr !important;
+    gap: 22px !important;
+    align-items: start !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--ref-border) !important;
+    background: #ffffff !important;
+    box-shadow: var(--ref-shadow) !important;
+}
+
+.university-feature-icon {
+    width: 62px !important;
+    height: 62px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    color: #1468f6 !important;
+    background: #eaf3ff !important;
+    font-weight: 950 !important;
+}
+
+.university-feature-card h3 {
+    margin: 0 0 14px !important;
+    color: var(--ref-text) !important;
+    font-size: 20px !important;
+    font-weight: 950 !important;
+}
+
+.university-feature-card p {
+    margin: 0 !important;
+    color: #425b7d !important;
+    line-height: 1.75 !important;
+}
+
+div[data-testid="stButton"] > button,
+div[data-testid="stLinkButton"] > a,
+div[data-testid="stDownloadButton"] > button,
+div[data-testid="stFormSubmitButton"] > button {
+    border-radius: 8px !important;
+    min-height: 44px !important;
+    background: #ffffff !important;
+    border: 1px solid #d5dfec !important;
+    color: var(--ref-blue) !important;
+    box-shadow: none !important;
+    font-weight: 900 !important;
+}
+
+div[data-testid="stButton"] > button:hover,
+div[data-testid="stLinkButton"] > a:hover,
+div[data-testid="stDownloadButton"] > button:hover,
+div[data-testid="stFormSubmitButton"] > button:hover {
+    background: #f4f8ff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 14px 28px rgba(8,37,84,0.10) !important;
+}
+
+.creator-footer {
+    width: 100% !important;
+    margin-top: 26px !important;
+    padding: 20px 0 26px !important;
+    color: #526a8d !important;
+    text-align: right !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 1100px) {
+    section[data-testid="stSidebar"] {
+        width: 235px !important;
+        min-width: 235px !important;
+        max-width: 235px !important;
+    }
+
+    .main .block-container {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    .university-topbar,
+    .university-hero {
+        margin-left: -1.5rem !important;
+        margin-right: -1.5rem !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    .dashboard-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 760px) {
+    section[data-testid="stSidebar"] {
+        width: 78vw !important;
+        min-width: 240px !important;
+        max-width: 320px !important;
+    }
+
+    .main .block-container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    .university-topbar,
+    .university-hero {
+        margin-left: -1rem !important;
+        margin-right: -1rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    .university-hero {
+        min-height: 330px !important;
+        background:
+            linear-gradient(180deg, rgba(245,249,255,0.99) 0%, rgba(245,249,255,0.86) 70%, rgba(245,249,255,0.70) 100%),
+            url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=80") center / cover no-repeat !important;
+    }
+
+    .dashboard-stat-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .university-announcement {
+        grid-template-columns: 52px 1fr !important;
+    }
+
+    .university-announcement span {
+        grid-column: 2 !important;
+    }
+
+    .university-feature-card {
+        grid-template-columns: 1fr !important;
+    }
+}

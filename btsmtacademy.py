@@ -5105,6 +5105,71 @@ def show_header(data=None):
     initial = (user_label.strip()[:1] or "A").upper()
     st.markdown(
         f"""
+        <div class="university-topbar">
+            <div class="university-menu-icon"><span></span><span></span><span></span></div>
+            <div class="university-user">
+                <span>Bonjour,<strong>{user_label}</strong></span>
+                <b>{initial}</b>
+            </div>
+        </div>
+        <div class="university-hero">
+            <div>
+                <h1>Bienvenue sur<br><span>la plateforme academique</span></h1>
+                <p>
+                    Plateforme centralisee pour gerer vos cours, vos fichiers,
+                    vos examens et echanger avec la communaute universitaire.
+                </p>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def dashboard_feature_card(icon, title, text):
+    st.markdown(
+        f"""
+        <div class="university-feature-card">
+            <div class="university-feature-icon">{icon}</div>
+            <div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def dashboard_announcement(data, admin_messages):
+    message_text = "Reunion pedagogique le 15 mai a 10h en salle 204."
+    if admin_messages:
+        latest_message = sorted(admin_messages, key=lambda item: parse_date(item.get("date")), reverse=True)[0]
+        message_text = latest_message.get("contenu") or latest_message.get("titre", message_text)
+    elif data.get("messages"):
+        latest_message = sorted(data["messages"], key=lambda item: parse_date(item.get("date")), reverse=True)[0]
+        message_text = latest_message.get("titre", message_text)
+
+    st.markdown(
+        f"""
+        <div class="university-announcement">
+            <div class="university-announcement-icon">i</div>
+            <div>
+                <strong>Annonces importantes</strong>
+                <p>{message_text}</p>
+            </div>
+            <span>Voir toutes les annonces -></span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def show_legacy_header(data=None):
+    user_label = st.session_state.get("platform_user_label", "Etudiant")
+    initial = (user_label.strip()[:1] or "A").upper()
+    st.markdown(
+        f"""
         <div class="academic-dashboard-topbar">
             <div class="academic-dashboard-brand">BTS <span>SMART</span> CAMPUS</div>
             <div class="academic-dashboard-user">
@@ -5627,21 +5692,9 @@ def show_home(data):
     show_header(data)
     current_email = st.session_state.get("platform_user_email", "")
     student_account = data.get("student_accounts", {}).get(current_email)
+    admin_messages = []
     if student_account:
         admin_messages = student_account.get("admin_messages", [])
-        if admin_messages:
-            st.subheader("Messages de l'administration")
-            for message in sorted(admin_messages, key=lambda item: parse_date(item.get("date")), reverse=True)[:3]:
-                st.markdown(
-                    f"""
-                    <div class="message message-important">
-                        <div class="message-title">{message.get("titre", "Message administration")}</div>
-                        <div class="message-meta">Admin | Date: {message.get("date", "Date non indiquee")}</div>
-                        <div class="message-content">{message.get("contenu", "")}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
 
     total_courses = sum(len(resources) for resources in data["cours"].values())
     dashboard_updates = unread_updates(data, limit=4)
@@ -5652,54 +5705,34 @@ def show_home(data):
         f"""
         <div class="dashboard-stat-grid">
             <div class="dashboard-stat stat-blue">
-                <div class="stat-icon">M</div>
+                <div class="stat-icon">B</div>
                 <div class="label">Matieres</div>
                 <div class="value">{len(SUBJECTS)}</div>
                 <div class="hint">Toutes les matieres</div>
-                <div class="stat-corner-icon">B</div>
             </div>
             <div class="dashboard-stat stat-teal">
                 <div class="stat-icon">C</div>
                 <div class="label">Cours disponibles</div>
                 <div class="value">{total_courses}</div>
                 <div class="hint">Cours a votre disposition</div>
-                <div class="stat-corner-icon">C</div>
             </div>
             <div class="dashboard-stat stat-amber">
                 <div class="stat-icon">N</div>
                 <div class="label">Nouveautes</div>
                 <div class="value">{unread_total}</div>
                 <div class="hint">Non lues</div>
-                <div class="stat-corner-icon">!</div>
             </div>
             <div class="dashboard-stat stat-violet">
                 <div class="stat-icon">F</div>
                 <div class="label">Fichiers & examens</div>
                 <div class="value">{total_files + total_exams}</div>
                 <div class="hint">Fichiers disponibles</div>
-                <div class="stat-corner-icon">F</div>
             </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
-    st.markdown('<div class="academic-dashboard-action">', unsafe_allow_html=True)
-    if st.button("Historique des nouveautes", key="open_updates_history_from_dashboard", width="stretch"):
-        st.session_state.current_page = "Historique des nouveautes"
-        st.rerun()
-    st.markdown("</div>", unsafe_allow_html=True)
-    if st.session_state.get("platform_user_role") == "admin":
-        st.markdown('<div class="academic-dashboard-action">', unsafe_allow_html=True)
-        if st.button("Reinitialiser mes nouveautes vues", key="reset_seen_updates_admin", width="stretch"):
-            seen = data.setdefault("seen_updates", {})
-            seen.pop(current_user_key(), None)
-            data.setdefault("seen_dashboard", {}).pop(current_user_key(), None)
-            st.session_state.setdefault("seen_updates_session", {}).pop(current_user_key(), None)
-            st.session_state.setdefault("seen_dashboard_session", {}).pop(current_user_key(), None)
-            save_data(data)
-            st.success("Historique de lecture reinitialise pour votre compte.")
-            st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
+    dashboard_announcement(data, admin_messages)
 
     planned_exams = [
         devoir
@@ -5726,9 +5759,32 @@ def show_home(data):
     )
     messages = unseen_dashboard_items(data, "messages", messages, limit=5)
 
+    action_left, action_right = st.columns(2)
+    with action_left:
+        dashboard_feature_card("P", "Planification des examens", "Consultez votre planning d'examens et restez informe des prochaines sessions.")
+        if st.button("Voir le planning ->", key="dashboard_open_planning"):
+            st.session_state.current_page = "Planification des examens"
+            st.rerun()
+    with action_right:
+        dashboard_feature_card("F", "Fichiers partages recents", "Accedez rapidement aux derniers fichiers partages par vos enseignants.")
+        if st.button("Voir les fichiers ->", key="dashboard_open_files"):
+            st.session_state.current_page = "Fichiers partages"
+            st.rerun()
+
+    action_left, action_right = st.columns(2)
+    with action_left:
+        dashboard_feature_card("N", "Nouveautes non lues", "Consultez les annonces et nouveautes publiees recemment.")
+        if st.button("Voir les nouveautes ->", key="open_updates_history_from_dashboard"):
+            st.session_state.current_page = "Historique des nouveautes"
+            st.rerun()
+    with action_right:
+        dashboard_feature_card("M", "Messages aux etudiants", "Envoyez et recevez des messages avec vos enseignants et camarades.")
+        if st.button("Voir les messages ->", key="dashboard_open_messages"):
+            st.session_state.current_page = "Messages directs"
+            st.rerun()
+
     if unread_total or planned_exams or recent_files or messages:
-        st.markdown('<div class="academic-dashboard-action">', unsafe_allow_html=True)
-        if st.button("Marquer toutes les nouveautes comme vues", key="mark_all_dashboard_news_seen", width="stretch"):
+        if st.button("Marquer toutes les nouveautes comme vues", key="mark_all_dashboard_news_seen"):
             mark_updates_seen(data, unread_updates(data, limit=100))
             mark_many_dashboard_items_seen(
                 data,
@@ -5740,79 +5796,17 @@ def show_home(data):
             )
             st.success("Toutes les nouveautes visibles sont marquees comme vues.")
             st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown('<div class="dashboard-section-stack">', unsafe_allow_html=True)
-    dashboard_section_title("P", "Planification des examens")
-    if not planned_exams:
-        dashboard_empty_card("P", "Aucun nouvel examen planifie a afficher.")
-    else:
-        for devoir in planned_exams:
-            exam_date = devoir.get("date_limite", "")
-            st.markdown(
-                f"""
-                <div class="homework-card">
-                    <h3>{devoir.get("matiere", "General")}</h3>
-                    <div class="homework-meta">
-                        Date d'examen: {exam_date or "Non indiquee"}
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-    dashboard_section_title("F", "Fichiers partages recents")
-    if not recent_files:
-        dashboard_empty_card("F", "Aucun nouveau fichier partage a afficher.")
-    else:
-        for shared_file in recent_files:
-            render_shared_file(shared_file)
-
-    dashboard_section_title("!", "Nouveautes non lues")
-    if not dashboard_updates:
-        dashboard_empty_card("N", "Aucune nouvelle nouveaute. Consultez l'historique pour revoir les anciennes publications.")
-    for item in dashboard_updates:
-        extra = (
-            f"{item.get('_update_label', 'Nouveaute')} | "
-            f"{item.get('matiere', 'General')} | {item.get('type', '')} | "
-            f"{item.get('statut', '')} | {item_update_date(item)}"
-        )
-        show_resource_card(item, extra=extra)
-
-    dashboard_section_title("M", "Messages aux etudiants")
-    if not messages:
-        dashboard_empty_card("M", "Aucun nouveau message a afficher.")
-
-    for message in messages:
-        subject_label = message.get("matiere", "General")
-        prof_label = message.get("prof", "Administration")
-        is_direction_message = "direction" in prof_label.lower()
-        author_label = (
-            "Message officiel de la direction"
-            if is_direction_message
-            else f"Prof: {prof_label}"
-        )
-        date_label = message.get("date", "Date non indiquee")
-        important_class = " message-important" if message.get("important") else ""
-        important_badge = (
-            '<span class="badge badge-important">Important</span>' if message.get("important") else ""
-        )
-        direction_badge = (
-            '<span class="badge badge-important">Direction</span>' if is_direction_message else ""
-        )
-        st.markdown(
-            f"""
-            <div class="message{important_class}">
-                <div class="message-title">{direction_badge}{important_badge}{message["titre"]}</div>
-                <div class="message-meta">
-                    {author_label} | Matiere: {subject_label} | Date: {date_label}
-                </div>
-                <div class="message-content">{message["contenu"]}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    st.markdown("</div>", unsafe_allow_html=True)
+    if st.session_state.get("platform_user_role") == "admin":
+        if st.button("Reinitialiser mes nouveautes vues", key="reset_seen_updates_admin"):
+            seen = data.setdefault("seen_updates", {})
+            seen.pop(current_user_key(), None)
+            data.setdefault("seen_dashboard", {}).pop(current_user_key(), None)
+            st.session_state.setdefault("seen_updates_session", {}).pop(current_user_key(), None)
+            st.session_state.setdefault("seen_dashboard_session", {}).pop(current_user_key(), None)
+            save_data(data)
+            st.success("Historique de lecture reinitialise pour votre compte.")
+            st.rerun()
 
 
 def show_courses(data):
@@ -7500,42 +7494,42 @@ def show_direct_messages(data):
 
 def sidebar_navigation():
     student_pages = [
-        ("Accueil", "[H] Accueil"),
-        ("Cours", "[C] Cours"),
-        ("Fichiers partages", "[F] Fichiers Drive"),
-        ("Examens nationaux", "[E] Examens"),
-        ("Planification des examens", "[P] Calendrier"),
-        ("Messages directs", "[M] Messages"),
-        ("Contact", "[D] Contact"),
-        ("Contact et support", "? Aide & Support"),
+        ("Accueil", "Accueil"),
+        ("Cours", "Cours"),
+        ("Fichiers partages", "Fichiers Drive"),
+        ("Examens nationaux", "Examens"),
+        ("Planification des examens", "Calendrier"),
+        ("Messages directs", "Messages"),
+        ("Contact", "Profil"),
+        ("Contact et support", "Parametres"),
     ]
     user_role = st.session_state.get("platform_user_role", "student")
     if user_role == "prof":
         pages = [
-            ("Accueil", "[H] Accueil"),
-            ("Espace professeur", "[P] Professeurs"),
-            ("Messages directs", "[M] Messages"),
-            ("Contact et support", "? Aide & Support"),
+            ("Accueil", "Accueil"),
+            ("Espace professeur", "Professeurs"),
+            ("Messages directs", "Messages"),
+            ("Contact et support", "Parametres"),
         ]
     elif user_role == "admin":
         pages = [
-            ("Accueil", "[H] Accueil"),
-            ("Cours", "[C] Cours"),
-            ("Fichiers partages", "[F] Fichiers Drive"),
-            ("Examens nationaux", "[E] Examens"),
-            ("Planification des examens", "[P] Calendrier"),
-            ("Espace professeur", "[P] Professeurs"),
-            ("Espace direction", "[D] Direction"),
-            ("Utilisateurs", "[U] Utilisateurs"),
-            ("Messages directs", "[M] Messages"),
-            ("Contact et support", "? Aide & Support"),
+            ("Accueil", "Accueil"),
+            ("Cours", "Cours"),
+            ("Fichiers partages", "Fichiers Drive"),
+            ("Examens nationaux", "Examens"),
+            ("Planification des examens", "Calendrier"),
+            ("Espace professeur", "Professeurs"),
+            ("Espace direction", "Annonces"),
+            ("Utilisateurs", "Profil"),
+            ("Messages directs", "Messages"),
+            ("Contact et support", "Parametres"),
         ]
     elif user_role == "direction":
         pages = [
-            ("Accueil", "[H] Accueil"),
-            ("Espace direction", "[D] Direction"),
-            ("Messages directs", "[M] Messages"),
-            ("Contact et support", "? Aide & Support"),
+            ("Accueil", "Accueil"),
+            ("Espace direction", "Annonces"),
+            ("Messages directs", "Messages"),
+            ("Contact et support", "Parametres"),
         ]
     else:
         pages = list(student_pages)
@@ -7549,8 +7543,9 @@ def sidebar_navigation():
     st.sidebar.markdown(
         """
         <div class="academic-sidebar-brand">
-            <div class="academic-sidebar-crest">SC</div>
-            <h2>BTS SMARTCAMPUS</h2>
+            <div class="academic-sidebar-crest">U</div>
+            <h2>UNIVERSITE</h2>
+            <p>EXCELLENCE & SAVOIR</p>
         </div>
         <div class="academic-sidebar-label">Navigation</div>
         """,
@@ -7568,6 +7563,19 @@ def sidebar_navigation():
         ):
             st.session_state.current_page = page_name
             st.rerun()
+
+    st.sidebar.markdown(
+        """
+        <div class="sidebar-study-card">
+            <div class="sidebar-study-icon">BTS</div>
+            <strong>Restez organise,<br>reussissez vos etudes.</strong>
+            <div class="sidebar-progress"><span></span></div>
+            <small>Annee universitaire</small>
+            <b>2024 - 2025</b>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     return st.session_state.current_page
 
