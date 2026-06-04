@@ -5085,6 +5085,19 @@ def inject_style():
         """,
         unsafe_allow_html=True,
     )
+    try:
+        from embedded_styles import get_embedded_styles
+
+        final_css = get_embedded_styles()
+    except Exception:
+        style_path = Path("assets/styles.css")
+        final_css = style_path.read_text(encoding="utf-8") if style_path.exists() else ""
+
+    if final_css:
+        st.markdown(
+            "<style>\n" + final_css + "\n</style>",
+            unsafe_allow_html=True,
+        )
 
 
 def show_header(data=None):
