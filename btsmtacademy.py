@@ -5417,8 +5417,8 @@ def show_platform_login(data):
 
     with login_tab:
         with st.form("platform_login_form"):
-            email = st.text_input("Email")
-            password = st.text_input("Mot de passe", type="password")
+            email = st.text_input("Email", placeholder="Entrez votre adresse email")
+            password = st.text_input("Mot de passe", type="password", placeholder="Entrez votre mot de passe")
             submitted = st.form_submit_button("Acceder a la plateforme")
 
     with signup_tab:

@@ -9729,3 +9729,378 @@ div[data-testid="stAlert"] {
         grid-template-columns: 1fr !important;
     }
 }
+
+/* Login page exact academic reference design. */
+.platform-login-shell {
+    width: min(1540px, calc(100vw - 18px)) !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border-radius: 6px !important;
+    overflow: hidden !important;
+    color: #082554 !important;
+    background: #ffffff !important;
+    border: 1px solid #d7e1ee !important;
+    box-shadow: 0 24px 70px rgba(8, 37, 84, 0.10) !important;
+}
+
+.platform-login-shell::before,
+.platform-login-shell::after {
+    display: none !important;
+}
+
+.platform-login-top {
+    min-height: 122px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 22px 46px !important;
+    background: #ffffff !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.platform-login-brand {
+    display: flex !important;
+    align-items: center !important;
+    gap: 22px !important;
+}
+
+.platform-login-crest {
+    width: 76px !important;
+    height: 76px !important;
+    min-width: 76px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    color: #082554 !important;
+    background:
+        radial-gradient(circle, #ffffff 42%, transparent 43%),
+        conic-gradient(from 20deg, #082554 0 12deg, transparent 12deg 22deg, #082554 22deg 34deg, transparent 34deg 44deg, #082554 44deg 56deg, transparent 56deg 360deg) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    font-size: 11px !important;
+    font-weight: 950 !important;
+}
+
+.platform-login-brand-text {
+    color: #082554 !important;
+    font-size: 38px !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+    letter-spacing: 0 !important;
+}
+
+.platform-login-brand-text::first-letter {
+    color: #082554 !important;
+}
+
+.platform-login-brand-text {
+    background: linear-gradient(90deg, #082554 0 27%, #126cff 27% 60%, #082554 60% 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+.platform-login-actions {
+    display: none !important;
+}
+
+.platform-login-hero {
+    min-height: 488px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.05fr) minmax(420px, 0.95fr) !important;
+    align-items: center !important;
+    gap: 48px !important;
+    margin: 0 !important;
+    padding: 66px 110px !important;
+    border-radius: 0 !important;
+    border: 0 !important;
+    background:
+        linear-gradient(105deg, rgba(5, 39, 89, 0.98) 0%, rgba(4, 31, 74, 0.98) 48%, rgba(78, 125, 190, 0.72) 48.2%, rgba(159, 190, 234, 0.76) 100%),
+        url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=80") center right / cover no-repeat !important;
+    box-shadow: none !important;
+}
+
+.platform-login-hero::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 45% !important;
+    display: block !important;
+    background:
+        radial-gradient(circle at 11% 38%, rgba(255,255,255,0.08), transparent 22%),
+        radial-gradient(circle at 9% 58%, rgba(255,255,255,0.06), transparent 18%) !important;
+    pointer-events: none !important;
+}
+
+.platform-login-copy {
+    position: relative !important;
+    z-index: 1 !important;
+    max-width: 660px !important;
+}
+
+.platform-login-copy h1 {
+    margin: 0 !important;
+    color: #ffffff !important;
+    font-size: clamp(46px, 5vw, 66px) !important;
+    line-height: 1.15 !important;
+    font-weight: 950 !important;
+    letter-spacing: 0 !important;
+}
+
+.platform-login-copy h1 span {
+    color: #1b73ff !important;
+}
+
+.platform-login-gold-line {
+    width: 82px !important;
+    height: 4px !important;
+    margin: 34px 0 24px !important;
+    border-radius: 99px !important;
+    background: #e7b34b !important;
+}
+
+.platform-login-copy p {
+    max-width: 560px !important;
+    margin: 0 !important;
+    color: rgba(255,255,255,0.95) !important;
+    font-size: 22px !important;
+    line-height: 1.55 !important;
+    font-weight: 650 !important;
+}
+
+.platform-login-card {
+    position: relative !important;
+    z-index: 1 !important;
+    min-height: 304px !important;
+    max-width: 540px !important;
+    width: 100% !important;
+    justify-self: center !important;
+    display: grid !important;
+    place-items: center !important;
+    align-content: center !important;
+    padding: 42px !important;
+    border-radius: 10px !important;
+    border: 1px solid #dce5f2 !important;
+    background: rgba(255,255,255,0.96) !important;
+    box-shadow: 0 28px 72px rgba(8,37,84,0.18) !important;
+}
+
+.platform-login-card-icon {
+    width: 54px !important;
+    height: 54px !important;
+    margin-bottom: 18px !important;
+    display: grid !important;
+    place-items: center !important;
+    color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    font-size: 0 !important;
+}
+
+.platform-login-card-icon::before {
+    content: "BTS" !important;
+    width: 54px !important;
+    height: 54px !important;
+    display: grid !important;
+    place-items: center !important;
+    color: #082554 !important;
+    font-size: 17px !important;
+    font-weight: 950 !important;
+}
+
+.platform-login-card-title {
+    margin: 0 !important;
+    color: #082554 !important;
+    font-size: 38px !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+}
+
+.platform-login-card-line {
+    width: 78px !important;
+    height: 3px !important;
+    margin: 26px 0 24px !important;
+    border-radius: 99px !important;
+    background: #e7b34b !important;
+}
+
+.platform-login-card-subtitle {
+    color: #586984 !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+}
+
+.platform-login-shell + div,
+.stTabs {
+    width: min(1400px, calc(100vw - 140px)) !important;
+    margin: 0 auto !important;
+}
+
+.stTabs [data-baseweb="tab-list"] {
+    gap: 36px !important;
+    padding: 28px 0 0 !important;
+    border-bottom: 1px solid #d7e1ee !important;
+}
+
+.stTabs [data-baseweb="tab"] {
+    min-width: 180px !important;
+    padding: 0 0 22px !important;
+    color: #6b7890 !important;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+}
+
+.stTabs [aria-selected="true"] {
+    color: #126cff !important;
+    border-bottom: 3px solid #126cff !important;
+}
+
+.stTabs div[data-testid="stForm"] {
+    margin-top: 26px !important;
+    padding: 28px 30px 26px !important;
+    border-radius: 8px !important;
+    border: 1px solid #d7e1ee !important;
+    background: #ffffff !important;
+    box-shadow: 0 18px 44px rgba(8,37,84,0.08) !important;
+}
+
+.stTabs div[data-testid="stTextInput"] label,
+.stTabs div[data-testid="stTextInput"] label p {
+    color: #111d34 !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+}
+
+.stTabs div[data-testid="stTextInput"] input {
+    min-height: 52px !important;
+    border-radius: 5px !important;
+    border: 1px solid #cfd9e8 !important;
+    background: #ffffff !important;
+    color: #082554 !important;
+    font-size: 16px !important;
+}
+
+.stTabs div[data-testid="stFormSubmitButton"] > button {
+    width: auto !important;
+    min-width: 300px !important;
+    min-height: 56px !important;
+    margin-top: 18px !important;
+    padding: 0 28px !important;
+    border-radius: 5px !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #082b63 0%, #041d45 100%) !important;
+    border: 0 !important;
+    box-shadow: 0 16px 34px rgba(8,43,99,0.26) !important;
+    font-size: 17px !important;
+    font-weight: 950 !important;
+}
+
+.platform-login-note {
+    width: min(1400px, calc(100vw - 140px)) !important;
+    margin: 28px auto 0 !important;
+    padding: 21px 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 18px !important;
+    border-radius: 7px !important;
+    border: 1px solid #9fc4ff !important;
+    color: #082554 !important;
+    background: #f1f7ff !important;
+    box-shadow: none !important;
+    font-weight: 850 !important;
+}
+
+.platform-login-note span:first-child {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    color: #126cff !important;
+    background: #ffffff !important;
+    border: 2px solid #126cff !important;
+    font-weight: 950 !important;
+}
+
+.platform-login-note + div,
+.creator-footer {
+    width: min(1400px, calc(100vw - 140px)) !important;
+    margin: 24px auto 0 !important;
+    padding: 20px 0 30px !important;
+    text-align: right !important;
+    color: #586984 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 1000px) {
+    .platform-login-top {
+        min-height: auto !important;
+        padding: 22px !important;
+    }
+
+    .platform-login-brand-text {
+        font-size: 28px !important;
+    }
+
+    .platform-login-hero {
+        grid-template-columns: 1fr !important;
+        padding: 50px 28px !important;
+    }
+
+    .platform-login-card {
+        max-width: none !important;
+    }
+
+    .platform-login-shell + div,
+    .stTabs,
+    .platform-login-note,
+    .platform-login-note + div,
+    .creator-footer {
+        width: min(100% - 34px, 900px) !important;
+    }
+}
+
+@media (max-width: 620px) {
+    .platform-login-brand {
+        gap: 12px !important;
+    }
+
+    .platform-login-crest {
+        width: 58px !important;
+        height: 58px !important;
+        min-width: 58px !important;
+    }
+
+    .platform-login-brand-text {
+        font-size: 22px !important;
+    }
+
+    .platform-login-copy h1 {
+        font-size: 36px !important;
+    }
+
+    .platform-login-copy p {
+        font-size: 17px !important;
+    }
+
+    .platform-login-card-title {
+        font-size: 31px !important;
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        min-width: auto !important;
+        font-size: 15px !important;
+    }
+
+    .stTabs div[data-testid="stFormSubmitButton"] > button {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+}
