@@ -5153,6 +5153,21 @@ def dashboard_section_title(icon, title):
     )
 
 
+def show_academic_page_header(title, subtitle, icon="SC"):
+    st.markdown(
+        f"""
+        <div class="synced-page-hero">
+            <div class="synced-page-icon">{icon}</div>
+            <div>
+                <h1>{title}</h1>
+                <p>{subtitle}</p>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_login_topbar(role_label):
     st.markdown(
         f"""
@@ -5897,7 +5912,11 @@ def show_courses(data):
 
 
 def show_search(data):
-    st.subheader("Recherche rapide")
+    show_academic_page_header(
+        "Recherche rapide",
+        "Retrouvez rapidement un cours, une fiche ou une ressource par mot-cle.",
+        "R",
+    )
     query = st.text_input(
         "Rechercher un cours",
         placeholder="Exemple: prix, inflation, GRH, anglais...",
@@ -6137,8 +6156,11 @@ def show_shared_files(data):
 
 
 def show_student_space(data):
-    st.subheader("Espace etudiant")
-    st.write("Acces rapide aux cours, fiches Drive, examens et annonces importantes.")
+    show_academic_page_header(
+        "Espace etudiant",
+        "Acces rapide aux cours, fiches Drive, examens et annonces importantes.",
+        "E",
+    )
 
     selected_subject = st.selectbox("Choisir une matiere", SUBJECTS)
     st.markdown(f"#### {selected_subject}")
@@ -6948,6 +6970,11 @@ def user_management_admin(data):
 
 
 def show_admin_space(data):
+    show_academic_page_header(
+        "Espace administration",
+        "Gestion complete des cours, examens, messages, fichiers et comptes de la plateforme.",
+        "A",
+    )
     st.success("Connecte: Administration BTS SMARTCAMPUS | Acces complet")
 
     section = st.radio(
@@ -7010,9 +7037,13 @@ def show_prof_space(data):
         st.error("Compte professeur introuvable.")
         return
 
-    st.subheader("Espace professeur")
     subject = account.get("subject", "General")
     prof_name = account.get("name", "Professeur")
+    show_academic_page_header(
+        "Espace professeur",
+        f"Publiez et gerez les contenus de la matiere {subject}.",
+        "P",
+    )
     st.success(f"Connecte: {prof_name} | Matiere: {subject}")
 
     section = st.radio(
@@ -7051,7 +7082,11 @@ def show_direction_space(data):
         st.error("Acces reserve a la direction.")
         return
 
-    st.subheader("Espace direction")
+    show_academic_page_header(
+        "Espace direction",
+        "Diffusez les annonces officielles, validez les comptes et partagez les documents importants.",
+        "D",
+    )
     st.success("Connecte: Direction BTS SMARTCAMPUS")
 
     section = st.radio(

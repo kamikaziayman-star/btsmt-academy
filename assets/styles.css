@@ -7935,3 +7935,386 @@ section[data-testid="stSidebar"] small {
         grid-template-columns: 1fr !important;
     }
 }
+
+/* Unified platform design system for every internal page. */
+.page-transition {
+    color: var(--dash-text);
+}
+
+.synced-page-hero,
+.courses-hero,
+.files-hero,
+.exam-hero,
+.planning-hero,
+.contact-hero {
+    position: relative !important;
+    min-height: 210px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 22px !important;
+    overflow: hidden !important;
+    margin: 0 0 28px !important;
+    padding: 36px 38px !important;
+    border-radius: 9px !important;
+    border: 1px solid rgba(255,255,255,0.10) !important;
+    color: #ffffff !important;
+    background:
+        radial-gradient(circle at 78% 34%, rgba(72, 137, 255, 0.20), transparent 34%),
+        linear-gradient(135deg, #071f4d 0%, #04163a 58%, #082a66 100%) !important;
+    box-shadow: var(--dash-shadow-strong) !important;
+}
+
+.synced-page-hero::before,
+.courses-hero::before,
+.files-hero::before,
+.exam-hero::before,
+.planning-hero::before,
+.contact-hero::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    background:
+        linear-gradient(90deg, rgba(255,255,255,0.06), transparent 38%),
+        radial-gradient(circle at 90% 80%, rgba(255,255,255,0.10), transparent 30%) !important;
+    pointer-events: none !important;
+}
+
+.synced-page-hero::after,
+.courses-hero::after,
+.files-hero::after,
+.exam-hero::after,
+.planning-hero::after,
+.contact-hero::after {
+    content: "" !important;
+    position: absolute !important;
+    right: 34px !important;
+    bottom: 24px !important;
+    width: 210px !important;
+    height: 140px !important;
+    border-radius: 28px !important;
+    display: block !important;
+    opacity: 0.40 !important;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.20) 0 22%, transparent 22% 34%, rgba(255,255,255,0.16) 34% 58%, transparent 58% 70%, rgba(255,255,255,0.12) 70% 100%),
+        radial-gradient(circle at 74% 18%, rgba(255,255,255,0.28), transparent 18%) !important;
+    transform: skewX(-8deg) !important;
+}
+
+.synced-page-icon,
+.exam-icon-main,
+.planning-icon-main,
+.files-icon,
+.contact-icon {
+    position: relative !important;
+    z-index: 1 !important;
+    width: 62px !important;
+    height: 62px !important;
+    min-width: 62px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 16px !important;
+    color: #ffffff !important;
+    font-size: 24px !important;
+    font-weight: 950 !important;
+    background: linear-gradient(145deg, #2f7dff, #145dea) !important;
+    box-shadow: 0 18px 38px rgba(20, 93, 234, 0.38) !important;
+}
+
+.synced-page-hero > div,
+.courses-hero > div,
+.files-title-wrap,
+.exam-hero > div,
+.planning-title-wrap,
+.contact-title-wrap {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.synced-page-hero h1,
+.courses-hero h1,
+.files-hero h1,
+.exam-hero h1,
+.planning-hero h1,
+.contact-hero h1 {
+    margin: 0 0 12px !important;
+    color: #ffffff !important;
+    font-size: 34px !important;
+    line-height: 1.14 !important;
+    font-weight: 950 !important;
+}
+
+.synced-page-hero p,
+.courses-hero p,
+.files-hero p,
+.exam-hero p,
+.planning-hero p,
+.planning-hero strong,
+.contact-hero p {
+    max-width: 720px !important;
+    margin: 0 !important;
+    color: rgba(255,255,255,0.86) !important;
+    font-size: 16px !important;
+    line-height: 1.75 !important;
+    font-weight: 650 !important;
+}
+
+.courses-hero-art,
+.files-art,
+.exam-hero-art,
+.planning-art,
+.contact-art {
+    display: none !important;
+}
+
+.section-title,
+.contact-form-title,
+.main h2,
+.main h3,
+.main h4,
+.main [data-testid="stMarkdownContainer"] h2,
+.main [data-testid="stMarkdownContainer"] h3,
+.main [data-testid="stMarkdownContainer"] h4 {
+    color: var(--dash-text) !important;
+    font-weight: 950 !important;
+    letter-spacing: 0 !important;
+}
+
+.section-title,
+.contact-form-title {
+    margin: 20px 0 14px !important;
+    font-size: 20px !important;
+}
+
+.subject-card,
+.course-row,
+.card,
+.exam-card,
+.planning-card,
+.planning-empty,
+.shared-file-card,
+.message,
+.homework-card,
+.user-card,
+.contact-help,
+.platform-login-note,
+div[data-testid="stForm"],
+div[data-testid="stExpander"],
+div[data-testid="stDataFrame"],
+div[data-testid="stAlert"] {
+    border-radius: 9px !important;
+    border: 1px solid var(--dash-border) !important;
+    background: rgba(255,255,255,0.98) !important;
+    box-shadow: var(--dash-shadow) !important;
+}
+
+.course-row,
+.card,
+.exam-card,
+.planning-card,
+.shared-file-card,
+.message,
+.homework-card {
+    padding: 22px 24px !important;
+    margin-bottom: 16px !important;
+}
+
+.subject-card,
+.user-card {
+    padding: 24px !important;
+}
+
+.subject-card:hover,
+.course-row:hover,
+.card:hover,
+.exam-card:hover,
+.planning-card:hover,
+.shared-file-card:hover,
+.message:hover,
+.homework-card:hover,
+.user-card:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 24px 58px rgba(7, 31, 74, 0.14) !important;
+}
+
+.subject-icon,
+.exam-card-icon,
+.planning-card-icon,
+.sidebar-live-head,
+.contact-help-icon {
+    border-radius: 12px !important;
+    color: #ffffff !important;
+    background: linear-gradient(145deg, #2f7dff, #145dea) !important;
+}
+
+.subject-card strong,
+.course-row h3,
+.card h3,
+.exam-card h3,
+.planning-card h3,
+.shared-file-card h3,
+.message-title,
+.homework-card h3 {
+    color: var(--dash-text) !important;
+    font-weight: 950 !important;
+}
+
+.subject-count,
+.subject-action,
+.subject-label,
+.muted,
+.exam-meta,
+.exam-description,
+.planning-date,
+.shared-file-meta,
+.shared-file-card p,
+.message-meta,
+.message-content,
+.homework-meta,
+.card p {
+    color: var(--dash-muted) !important;
+    line-height: 1.65 !important;
+}
+
+.badge,
+.badge-new,
+.badge-important {
+    border-radius: 999px !important;
+    padding: 6px 10px !important;
+    border: 1px solid #dbe7f6 !important;
+    background: #eef5ff !important;
+    color: #1559db !important;
+    font-weight: 900 !important;
+}
+
+.badge-new,
+.badge-important {
+    background: #fff2e5 !important;
+    border-color: #ffd9b8 !important;
+    color: #d65f00 !important;
+}
+
+div[data-testid="stForm"] {
+    padding: 24px !important;
+}
+
+label,
+div[data-testid="stWidgetLabel"] p {
+    color: var(--dash-text) !important;
+    font-weight: 850 !important;
+}
+
+input,
+textarea,
+select,
+div[data-baseweb="select"] > div,
+div[data-baseweb="input"] > div,
+div[data-baseweb="textarea"] > div {
+    border-radius: 8px !important;
+    border-color: #d8e3f1 !important;
+    background: #fbfdff !important;
+    color: var(--dash-text) !important;
+}
+
+input:focus,
+textarea:focus,
+div[data-baseweb="select"] > div:focus-within,
+div[data-baseweb="input"] > div:focus-within,
+div[data-baseweb="textarea"] > div:focus-within {
+    border-color: #2f7dff !important;
+    box-shadow: 0 0 0 3px rgba(47, 125, 255, 0.14) !important;
+}
+
+div[data-testid="stRadio"] {
+    padding: 10px 0 16px !important;
+}
+
+div[data-testid="stRadio"] label {
+    padding: 9px 14px !important;
+    border-radius: 999px !important;
+    border: 1px solid #dbe7f6 !important;
+    background: #ffffff !important;
+    box-shadow: 0 8px 20px rgba(7, 31, 74, 0.06) !important;
+}
+
+div[data-testid="stTabs"] button {
+    color: var(--dash-muted) !important;
+    font-weight: 900 !important;
+}
+
+div[data-testid="stTabs"] button[aria-selected="true"] {
+    color: #1559db !important;
+}
+
+div[data-testid="stButton"] > button,
+div[data-testid="stLinkButton"] > a,
+div[data-testid="stDownloadButton"] > button,
+div[data-testid="stFormSubmitButton"] > button {
+    min-height: 45px !important;
+    border-radius: 8px !important;
+    border: 1px solid #d8e3f1 !important;
+    background: #ffffff !important;
+    color: #1559db !important;
+    box-shadow: 0 10px 24px rgba(7, 31, 74, 0.08) !important;
+    font-weight: 950 !important;
+}
+
+div[data-testid="stButton"] > button *,
+div[data-testid="stLinkButton"] > a *,
+div[data-testid="stDownloadButton"] > button *,
+div[data-testid="stFormSubmitButton"] > button * {
+    color: inherit !important;
+}
+
+div[data-testid="stButton"] > button[kind="primary"],
+div[data-testid="stFormSubmitButton"] > button[kind="primary"] {
+    color: #ffffff !important;
+    border-color: transparent !important;
+    background: linear-gradient(135deg, #08275a 0%, #06183d 100%) !important;
+    box-shadow: 0 16px 34px rgba(7, 31, 74, 0.20) !important;
+}
+
+.stAlert {
+    border-radius: 9px !important;
+}
+
+.creator-footer {
+    border-top: 1px solid var(--dash-border) !important;
+    margin-top: 34px !important;
+}
+
+@media (max-width: 720px) {
+    .synced-page-hero,
+    .courses-hero,
+    .files-hero,
+    .exam-hero,
+    .planning-hero,
+    .contact-hero {
+        min-height: 190px !important;
+        align-items: flex-start !important;
+        flex-direction: column !important;
+        padding: 28px 22px !important;
+    }
+
+    .synced-page-hero::after,
+    .courses-hero::after,
+    .files-hero::after,
+    .exam-hero::after,
+    .planning-hero::after,
+    .contact-hero::after {
+        opacity: 0.18 !important;
+    }
+
+    .synced-page-hero h1,
+    .courses-hero h1,
+    .files-hero h1,
+    .exam-hero h1,
+    .planning-hero h1,
+    .contact-hero h1 {
+        font-size: 28px !important;
+    }
+
+    div[data-testid="stForm"] {
+        padding: 18px !important;
+    }
+}
