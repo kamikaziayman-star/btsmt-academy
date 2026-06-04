@@ -5656,14 +5656,14 @@ def show_home(data):
                 <div class="label">Matieres</div>
                 <div class="value">{len(SUBJECTS)}</div>
                 <div class="hint">Toutes les matieres</div>
-                <div class="stat-corner-icon">▱</div>
+                <div class="stat-corner-icon">B</div>
             </div>
             <div class="dashboard-stat stat-teal">
                 <div class="stat-icon">C</div>
                 <div class="label">Cours disponibles</div>
                 <div class="value">{total_courses}</div>
                 <div class="hint">Cours a votre disposition</div>
-                <div class="stat-corner-icon">□</div>
+                <div class="stat-corner-icon">C</div>
             </div>
             <div class="dashboard-stat stat-amber">
                 <div class="stat-icon">N</div>
@@ -5677,7 +5677,7 @@ def show_home(data):
                 <div class="label">Fichiers & examens</div>
                 <div class="value">{total_files + total_exams}</div>
                 <div class="hint">Fichiers disponibles</div>
-                <div class="stat-corner-icon">▭</div>
+                <div class="stat-corner-icon">F</div>
             </div>
         </div>
         """,
@@ -5744,10 +5744,9 @@ def show_home(data):
 
     dash_left, dash_right = st.columns(2)
     with dash_left:
-        st.markdown('<div class="academic-dashboard-panel">', unsafe_allow_html=True)
-        dashboard_section_title("▦", "Planification des examens")
+        dashboard_section_title("P", "Planification des examens")
         if not planned_exams:
-            dashboard_empty_card("▣", "Aucun nouvel examen planifie a afficher.")
+            dashboard_empty_card("P", "Aucun nouvel examen planifie a afficher.")
         else:
             for devoir in planned_exams:
                 exam_date = devoir.get("date_limite", "")
@@ -5762,24 +5761,20 @@ def show_home(data):
                     """,
                     unsafe_allow_html=True,
                 )
-        st.markdown("</div>", unsafe_allow_html=True)
 
     with dash_right:
-        st.markdown('<div class="academic-dashboard-panel">', unsafe_allow_html=True)
-        dashboard_section_title("□", "Fichiers partages recents")
+        dashboard_section_title("F", "Fichiers partages recents")
         if not recent_files:
-            dashboard_empty_card("▭", "Aucun nouveau fichier partage a afficher.")
+            dashboard_empty_card("F", "Aucun nouveau fichier partage a afficher.")
         else:
             for shared_file in recent_files:
                 render_shared_file(shared_file)
-        st.markdown("</div>", unsafe_allow_html=True)
 
     updates_left, messages_right = st.columns([1, 1])
     with updates_left:
-        st.markdown('<div class="academic-dashboard-panel">', unsafe_allow_html=True)
         dashboard_section_title("!", "Nouveautes non lues")
         if not dashboard_updates:
-            dashboard_empty_card("▤", "Aucune nouvelle nouveaute. Consultez l'historique pour revoir les anciennes publications.")
+            dashboard_empty_card("N", "Aucune nouvelle nouveaute. Consultez l'historique pour revoir les anciennes publications.")
         for item in dashboard_updates:
             extra = (
                 f"{item.get('_update_label', 'Nouveaute')} | "
@@ -5787,13 +5782,11 @@ def show_home(data):
                 f"{item.get('statut', '')} | {item_update_date(item)}"
             )
             show_resource_card(item, extra=extra)
-        st.markdown("</div>", unsafe_allow_html=True)
 
     with messages_right:
-        st.markdown('<div class="academic-dashboard-panel">', unsafe_allow_html=True)
-        dashboard_section_title("○", "Messages aux etudiants")
+        dashboard_section_title("M", "Messages aux etudiants")
         if not messages:
-            dashboard_empty_card("▱", "Aucun nouveau message a afficher.")
+            dashboard_empty_card("M", "Aucun nouveau message a afficher.")
 
         for message in messages:
             subject_label = message.get("matiere", "General")
@@ -5824,7 +5817,6 @@ def show_home(data):
                 """,
                 unsafe_allow_html=True,
             )
-        st.markdown("</div>", unsafe_allow_html=True)
 
 
 def show_courses(data):
@@ -7512,41 +7504,41 @@ def show_direct_messages(data):
 
 def sidebar_navigation():
     student_pages = [
-        ("Accueil", "⌂ Accueil"),
-        ("Cours", "▤ Cours"),
-        ("Fichiers partages", "□ Fichiers Drive"),
-        ("Examens nationaux", "▣ Examens"),
-        ("Planification des examens", "▦ Calendrier"),
-        ("Messages directs", "▱ Messages"),
-        ("Contact", "○ Contact"),
+        ("Accueil", "[H] Accueil"),
+        ("Cours", "[C] Cours"),
+        ("Fichiers partages", "[F] Fichiers Drive"),
+        ("Examens nationaux", "[E] Examens"),
+        ("Planification des examens", "[P] Calendrier"),
+        ("Messages directs", "[M] Messages"),
+        ("Contact", "[D] Contact"),
         ("Contact et support", "? Aide & Support"),
     ]
     user_role = st.session_state.get("platform_user_role", "student")
     if user_role == "prof":
         pages = [
-            ("Accueil", "⌂ Accueil"),
-            ("Espace professeur", "◉ Professeurs"),
-            ("Messages directs", "▱ Messages"),
+            ("Accueil", "[H] Accueil"),
+            ("Espace professeur", "[P] Professeurs"),
+            ("Messages directs", "[M] Messages"),
             ("Contact et support", "? Aide & Support"),
         ]
     elif user_role == "admin":
         pages = [
-            ("Accueil", "⌂ Accueil"),
-            ("Cours", "▤ Cours"),
-            ("Fichiers partages", "□ Fichiers Drive"),
-            ("Examens nationaux", "▣ Examens"),
-            ("Planification des examens", "▦ Calendrier"),
-            ("Espace professeur", "◉ Professeurs"),
-            ("Espace direction", "◇ Direction"),
-            ("Utilisateurs", "◎ Utilisateurs"),
-            ("Messages directs", "▱ Messages"),
+            ("Accueil", "[H] Accueil"),
+            ("Cours", "[C] Cours"),
+            ("Fichiers partages", "[F] Fichiers Drive"),
+            ("Examens nationaux", "[E] Examens"),
+            ("Planification des examens", "[P] Calendrier"),
+            ("Espace professeur", "[P] Professeurs"),
+            ("Espace direction", "[D] Direction"),
+            ("Utilisateurs", "[U] Utilisateurs"),
+            ("Messages directs", "[M] Messages"),
             ("Contact et support", "? Aide & Support"),
         ]
     elif user_role == "direction":
         pages = [
-            ("Accueil", "⌂ Accueil"),
-            ("Espace direction", "◇ Direction"),
-            ("Messages directs", "▱ Messages"),
+            ("Accueil", "[H] Accueil"),
+            ("Espace direction", "[D] Direction"),
+            ("Messages directs", "[M] Messages"),
             ("Contact et support", "? Aide & Support"),
         ]
     else:

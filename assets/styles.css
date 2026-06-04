@@ -8318,3 +8318,301 @@ div[data-testid="stFormSubmitButton"] > button[kind="primary"] {
         padding: 18px !important;
     }
 }
+
+/* Layout repair: stable readable dimensions on Streamlit Cloud and small screens. */
+#bts-sidebar-toggle,
+.bts-sidebar-toggle {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    left: auto !important;
+}
+
+html.bts-sidebar-collapsed section[data-testid="stSidebar"] {
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+section[data-testid="stSidebar"] {
+    width: 230px !important;
+    min-width: 230px !important;
+    max-width: 230px !important;
+    box-shadow: 10px 0 28px rgba(3, 20, 54, 0.14) !important;
+    border-right: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+section[data-testid="stSidebar"] > div {
+    padding: 28px 12px 18px !important;
+}
+
+.main .block-container {
+    width: 100% !important;
+    max-width: 1060px !important;
+    padding-top: 2rem !important;
+    padding-left: 1.6rem !important;
+    padding-right: 1.6rem !important;
+}
+
+.academic-sidebar-brand {
+    margin-bottom: 32px !important;
+}
+
+.academic-sidebar-crest {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 12px !important;
+}
+
+.academic-sidebar-brand h2 {
+    font-size: 15px !important;
+}
+
+.academic-sidebar-label {
+    margin: 0 10px 10px !important;
+    font-size: 10px !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button {
+    min-height: 46px !important;
+    padding: 0 13px !important;
+    margin: 4px 0 !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button *,
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button p,
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button span {
+    font-size: 13px !important;
+    white-space: nowrap !important;
+}
+
+.academic-dashboard-topbar {
+    min-height: 66px !important;
+    padding: 0 22px !important;
+    margin-bottom: 22px !important;
+}
+
+.academic-dashboard-brand {
+    font-size: clamp(16px, 2vw, 21px) !important;
+    white-space: nowrap !important;
+}
+
+.academic-dashboard-user {
+    min-width: 0 !important;
+    gap: 12px !important;
+    font-size: 13px !important;
+}
+
+.academic-dashboard-user span {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.academic-dashboard-user strong {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+}
+
+.academic-dashboard-hero {
+    min-height: 245px !important;
+    grid-template-columns: minmax(0, 1fr) 210px !important;
+    padding: 38px 32px !important;
+    margin-bottom: 26px !important;
+}
+
+.academic-dashboard-hero h1 {
+    font-size: clamp(28px, 4vw, 38px) !important;
+    word-break: normal !important;
+}
+
+.academic-dashboard-hero p {
+    max-width: 560px !important;
+    font-size: 15px !important;
+}
+
+.academic-dashboard-illustration {
+    min-height: 180px !important;
+    transform: scale(0.82) !important;
+    transform-origin: center right !important;
+}
+
+.dashboard-stat-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+}
+
+.dashboard-stat {
+    min-height: 150px !important;
+    padding: 18px 16px !important;
+}
+
+.dashboard-stat .stat-icon {
+    width: 42px !important;
+    height: 42px !important;
+    margin-bottom: 14px !important;
+}
+
+.dashboard-stat .label {
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+}
+
+.dashboard-stat .value {
+    margin: 12px 0 6px !important;
+    font-size: 31px !important;
+}
+
+.dashboard-stat .hint {
+    font-size: 12px !important;
+}
+
+.stat-corner-icon {
+    right: 12px !important;
+    bottom: 12px !important;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+}
+
+.academic-section-title {
+    align-items: center !important;
+    gap: 10px !important;
+    margin: 20px 0 12px !important;
+    min-width: 0 !important;
+}
+
+.academic-section-title span {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    border-radius: 8px !important;
+    color: #1559db !important;
+    background: #eef5ff !important;
+}
+
+.academic-section-title h3 {
+    min-width: 0 !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
+    font-size: clamp(16px, 2vw, 20px) !important;
+}
+
+.academic-empty-card,
+.homework-card,
+.shared-file-card,
+.message,
+.card,
+.course-row,
+.exam-card,
+.planning-card {
+    min-height: auto !important;
+    padding: 18px !important;
+    overflow-wrap: anywhere !important;
+}
+
+.academic-empty-card {
+    gap: 12px !important;
+}
+
+.academic-empty-card strong {
+    font-size: 13px !important;
+}
+
+.message-title,
+.shared-file-card h3,
+.homework-card h3,
+.card h3 {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+}
+
+.message-meta,
+.message-content,
+.shared-file-card p,
+.shared-file-meta,
+.homework-meta,
+.card p,
+.muted {
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+}
+
+.creator-footer {
+    width: 100% !important;
+    text-align: right !important;
+    overflow: hidden !important;
+    white-space: normal !important;
+}
+
+@media (max-width: 1180px) {
+    section[data-testid="stSidebar"] {
+        width: 180px !important;
+        min-width: 180px !important;
+        max-width: 180px !important;
+    }
+
+    .main .block-container {
+        max-width: calc(100vw - 210px) !important;
+        padding-left: 1.1rem !important;
+        padding-right: 1.1rem !important;
+    }
+
+    .academic-sidebar-brand h2 {
+        font-size: 13px !important;
+    }
+
+    section[data-testid="stSidebar"] div[data-testid="stButton"] > button,
+    section[data-testid="stSidebar"] div[data-testid="stButton"] > button *,
+    section[data-testid="stSidebar"] div[data-testid="stButton"] > button p,
+    section[data-testid="stSidebar"] div[data-testid="stButton"] > button span {
+        font-size: 11px !important;
+    }
+
+    .academic-dashboard-hero {
+        grid-template-columns: 1fr !important;
+    }
+
+    .academic-dashboard-illustration {
+        display: none !important;
+    }
+
+    .dashboard-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 760px) {
+    section[data-testid="stSidebar"] {
+        width: 78vw !important;
+        min-width: 220px !important;
+        max-width: 300px !important;
+    }
+
+    .main .block-container {
+        max-width: 100% !important;
+        padding-left: 0.9rem !important;
+        padding-right: 0.9rem !important;
+    }
+
+    .academic-dashboard-topbar {
+        gap: 12px !important;
+        padding: 16px !important;
+    }
+
+    .academic-dashboard-hero {
+        min-height: auto !important;
+        padding: 28px 22px !important;
+    }
+
+    .dashboard-stat-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
