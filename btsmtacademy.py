@@ -8,6 +8,7 @@ import os
 import secrets
 import shutil
 import sqlite3
+import textwrap
 import urllib.error
 import urllib.request
 from datetime import datetime, timedelta
@@ -5829,12 +5830,8 @@ def show_home(data):
         if "/" in deadline:
             day, month = deadline.split("/", 1)
         exam_rows.append(
-            f"""
-            <div class="dash-list-row dash-exam-row">
-                <div><strong>{title}</strong><small>{subject}</small></div>
-                <time><b>{day}</b><span>{month}</span></time>
-            </div>
-            """
+            f'<div class="dash-list-row dash-exam-row"><div><strong>{title}</strong>'
+            f'<small>{subject}</small></div><time><b>{day}</b><span>{month}</span></time></div>'
         )
     if not exam_rows:
         exam_rows.append('<div class="dash-empty-row">Aucun nouvel examen planifie a afficher.</div>')
@@ -5845,13 +5842,9 @@ def show_home(data):
         subject = clean(item.get("matiere") or item.get("subject"), "General")
         ext = clean((Path(str(item.get("file_name", item.get("titre", "PDF")))).suffix or ".pdf").replace(".", "").upper(), "PDF")
         file_rows.append(
-            f"""
-            <div class="dash-list-row dash-file-row">
-                <span class="dash-file-badge">{ext[:3]}</span>
-                <div><strong>{title}</strong><small>{subject}</small></div>
-                <em>{clean(item.get("taille") or item.get("size"), "")}</em>
-            </div>
-            """
+            f'<div class="dash-list-row dash-file-row"><span class="dash-file-badge">{ext[:3]}</span>'
+            f'<div><strong>{title}</strong><small>{subject}</small></div>'
+            f'<em>{clean(item.get("taille") or item.get("size"), "")}</em></div>'
         )
     if not file_rows:
         file_rows.append('<div class="dash-empty-row">Aucune nouvelle ressource partagee.</div>')
@@ -5863,12 +5856,8 @@ def show_home(data):
         text = clean(item.get("contenu") or item.get("message"), "")
         date = short_date(item.get("date"))
         announcement_rows.append(
-            f"""
-            <div class="dash-list-row dash-announcement-row">
-                <div><strong>{title}</strong><small>{text}</small></div>
-                <em>{date}</em>
-            </div>
-            """
+            f'<div class="dash-list-row dash-announcement-row"><div><strong>{title}</strong>'
+            f'<small>{text}</small></div><em>{date}</em></div>'
         )
     if not announcement_rows:
         announcement_rows.append('<div class="dash-empty-row">Aucune annonce recente a afficher.</div>')
@@ -5879,18 +5868,14 @@ def show_home(data):
         text = clean(item.get("contenu") or item.get("message") or item.get("titre"), "")
         initials = "".join(part[:1] for part in author.split()[:2]).upper()[:2] or "BT"
         message_rows.append(
-            f"""
-            <div class="dash-list-row dash-message-row">
-                <span>{clean(initials)}</span>
-                <div><strong>{author}</strong><small>{text}</small></div>
-                <em>{short_date(item.get("date"))}</em>
-            </div>
-            """
+            f'<div class="dash-list-row dash-message-row"><span>{clean(initials)}</span>'
+            f'<div><strong>{author}</strong><small>{text}</small></div>'
+            f'<em>{short_date(item.get("date"))}</em></div>'
         )
     if not message_rows:
         message_rows.append('<div class="dash-empty-row">Aucun nouveau message a afficher.</div>')
 
-    fixed_dashboard_html = f"""
+    fixed_dashboard_html = textwrap.dedent(f"""
     <div class="dashboard-stat-grid">
         <div class="dashboard-stat stat-blue">
             <div class="stat-icon">B</div>
@@ -5939,7 +5924,7 @@ def show_home(data):
             <a>Voir tous les messages -></a>
         </div>
     </div>
-    """
+    """).strip()
     st.markdown(fixed_dashboard_html, unsafe_allow_html=True)
 
     if unread_total or planned_exams or recent_files or messages:
@@ -5968,6 +5953,8 @@ def show_home(data):
             st.rerun()
 
     return
+
+
 def show_courses(data):
     if "selected_course_subject" not in st.session_state:
         st.session_state.selected_course_subject = None

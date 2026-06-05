@@ -12219,3 +12219,312 @@ div[data-testid="stTabs"] [aria-selected="true"] {
         padding: 18px !important;
     }
 }
+
+/* Academy Signature final theme: official, calm, readable, and coherent. */
+:root {
+    --academy-ink: #071f49;
+    --academy-navy: #06245a;
+    --academy-navy-2: #031538;
+    --academy-blue: #126cff;
+    --academy-blue-2: #2f86ff;
+    --academy-sky: #eef6ff;
+    --academy-line: #d6e4f6;
+    --academy-gold: #d8a72f;
+    --academy-teal: #0ea99b;
+    --academy-purple: #6d4be8;
+    --academy-rose: #d83b88;
+    --academy-shadow: 0 22px 48px rgba(7, 31, 73, 0.10);
+}
+
+html,
+body,
+[data-testid="stAppViewContainer"] {
+    color: var(--academy-ink) !important;
+    background:
+        linear-gradient(90deg, rgba(255,255,255,0.70) 0 14%, transparent 14%),
+        radial-gradient(circle at 78% 5%, rgba(18,108,255,0.11), transparent 26%),
+        linear-gradient(180deg, #f8fbff 0%, #edf4fc 100%) !important;
+}
+
+header[data-testid="stHeader"] {
+    background: rgba(248,251,255,0.72) !important;
+    backdrop-filter: blur(18px) !important;
+    border-bottom: 1px solid rgba(214,228,246,0.62) !important;
+}
+
+.main .block-container {
+    max-width: 1240px !important;
+    padding-top: 30px !important;
+    padding-bottom: 54px !important;
+}
+
+section[data-testid="stSidebar"] {
+    background:
+        radial-gradient(circle at 50% 0%, rgba(18,108,255,0.26), transparent 24%),
+        linear-gradient(180deg, var(--academy-navy) 0%, var(--academy-navy-2) 100%) !important;
+}
+
+.academic-sidebar-brand {
+    padding-top: 14px !important;
+}
+
+.academic-sidebar-crest {
+    width: 88px !important;
+    height: 98px !important;
+    border-radius: 22px 22px 30px 30px !important;
+    border: 2px solid rgba(255,255,255,0.88) !important;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)),
+        radial-gradient(circle at 50% 12%, rgba(18,108,255,0.26), transparent 38%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 20px 44px rgba(0,0,0,0.22) !important;
+}
+
+.academic-sidebar-crest::before,
+.academic-sidebar-crest::after {
+    content: "" !important;
+    position: absolute !important;
+}
+
+.academic-sidebar-brand h2 {
+    margin-top: 12px !important;
+    color: #ffffff !important;
+    font-size: 23px !important;
+    line-height: 1.08 !important;
+}
+
+.academic-sidebar-brand h2 span {
+    color: var(--academy-blue-2) !important;
+}
+
+.academic-sidebar-brand p {
+    margin-top: 8px !important;
+    color: rgba(255,255,255,0.76) !important;
+}
+
+.academic-sidebar-label {
+    margin: 18px 8px 10px !important;
+    color: rgba(255,255,255,0.46) !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button {
+    min-height: 56px !important;
+    margin: 5px 0 !important;
+    padding: 0 18px !important;
+    border-radius: 10px !important;
+    color: rgba(255,255,255,0.92) !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button[kind="primary"],
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button:hover {
+    background: linear-gradient(135deg, var(--academy-blue), #0758df) !important;
+    box-shadow: 0 16px 34px rgba(18,108,255,0.34) !important;
+}
+
+.sidebar-study-card {
+    border-radius: 18px !important;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.05)) !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10) !important;
+}
+
+.academic-dashboard-hero,
+.files-hero,
+.synced-page-hero,
+.exam-hero,
+.planning-hero,
+.contact-hero {
+    border-radius: 14px !important;
+    border: 1px solid rgba(255,255,255,0.24) !important;
+    background:
+        radial-gradient(circle at 84% 20%, rgba(47,134,255,0.42), transparent 28%),
+        radial-gradient(circle at 12% 100%, rgba(14,169,155,0.18), transparent 24%),
+        linear-gradient(135deg, #03183d 0%, #062a64 54%, #0b5ed7 100%) !important;
+    box-shadow: 0 28px 62px rgba(7,31,73,0.18) !important;
+}
+
+.academic-dashboard-hero::before,
+.files-hero::before,
+.synced-page-hero::before,
+.exam-hero::before,
+.planning-hero::before,
+.contact-hero::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background:
+        linear-gradient(120deg, rgba(255,255,255,0.10), transparent 34%),
+        repeating-radial-gradient(circle at 92% 24%, rgba(255,255,255,0.15) 0 2px, transparent 2px 22px) !important;
+    pointer-events: none !important;
+}
+
+.academic-dashboard-hero h1,
+.files-hero h1,
+.synced-page-hero h1,
+.exam-hero h1,
+.planning-hero h1,
+.contact-hero h1 {
+    color: #ffffff !important;
+    text-shadow: 0 12px 34px rgba(0,0,0,0.18) !important;
+}
+
+.academic-dashboard-hero h1 span {
+    color: #5fb6ff !important;
+}
+
+.dashboard-gold-line,
+.welcome-gold-line {
+    background: linear-gradient(90deg, var(--academy-gold), #f3c75e) !important;
+}
+
+.dashboard-stat,
+.drive-stat-card,
+.subject-card,
+.dash-panel,
+.card,
+.course-row,
+.message,
+.exam-card,
+.planning-card,
+.shared-file-card,
+.academic-empty-card,
+.support-ticket-card,
+div[data-testid="stForm"] {
+    border-color: var(--academy-line) !important;
+    border-radius: 14px !important;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.92)) !important;
+    box-shadow: var(--academy-shadow) !important;
+}
+
+.dashboard-stat:hover,
+.drive-stat-card:hover,
+.subject-card:hover,
+.dash-panel:hover,
+.card:hover,
+.course-row:hover,
+.message:hover,
+.exam-card:hover,
+.planning-card:hover,
+.shared-file-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 30px 64px rgba(7,31,73,0.14) !important;
+}
+
+.dashboard-stat .stat-icon,
+.drive-stat-card > span,
+.subject-icon,
+.exam-card-icon,
+.planning-card-icon,
+.shared-file-icon,
+.synced-page-icon,
+.exam-icon-main,
+.planning-icon-main,
+.contact-icon,
+.drive-folder-icon {
+    border-radius: 12px !important;
+    box-shadow: 0 16px 34px rgba(18,108,255,0.24) !important;
+}
+
+.dashboard-stat.stat-blue .stat-icon,
+.drive-stat-card.stat-blue > span,
+.subject-icon {
+    background: linear-gradient(135deg, var(--academy-blue), #0758df) !important;
+}
+
+.dashboard-stat.stat-teal .stat-icon,
+.drive-stat-card.stat-teal > span {
+    background: linear-gradient(135deg, var(--academy-purple), #4c2ebd) !important;
+}
+
+.dashboard-stat.stat-amber .stat-icon,
+.drive-stat-card.stat-amber > span {
+    background: linear-gradient(135deg, var(--academy-teal), #078f82) !important;
+}
+
+.dashboard-stat.stat-violet .stat-icon {
+    background: linear-gradient(135deg, #ff7b2e, #f05e12) !important;
+}
+
+.dash-panel h3,
+.card h3,
+.course-row h3,
+.message-title,
+.exam-card h3,
+.planning-card h3,
+.shared-file-card h3,
+.subject-card strong,
+.drive-file-info strong {
+    color: var(--academy-ink) !important;
+}
+
+.dash-list-row,
+.drive-file-row {
+    border-bottom-color: rgba(214,228,246,0.95) !important;
+}
+
+.dash-list-row:last-child,
+.drive-file-row:last-child {
+    border-bottom-color: transparent !important;
+}
+
+div[data-testid="stTextInput"] input,
+div[data-testid="stTextArea"] textarea,
+div[data-testid="stNumberInput"] input,
+div[data-testid="stDateInput"] input,
+div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+div[data-testid="stMultiSelect"] [data-baseweb="select"] > div {
+    border-radius: 10px !important;
+    background: #fbfdff !important;
+}
+
+div[data-testid="stButton"] > button,
+div[data-testid="stDownloadButton"] > button,
+a[data-testid="stLinkButton"],
+div[data-testid="stFormSubmitButton"] > button {
+    border-radius: 10px !important;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease !important;
+}
+
+div[data-testid="stButton"] > button:hover,
+div[data-testid="stDownloadButton"] > button:hover,
+a[data-testid="stLinkButton"]:hover,
+div[data-testid="stFormSubmitButton"] > button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 18px 36px rgba(18,108,255,0.22) !important;
+}
+
+.badge,
+.badge-new,
+.badge-important {
+    border-radius: 999px !important;
+    font-weight: 950 !important;
+}
+
+.stAlert {
+    border-radius: 14px !important;
+}
+
+.creator-footer {
+    margin-top: 34px !important;
+    padding-top: 22px !important;
+    border-top: 1px solid rgba(214,228,246,0.90) !important;
+}
+
+@media (max-width: 900px) {
+    .main .block-container {
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+    }
+
+    .academic-dashboard-hero,
+    .files-hero,
+    .synced-page-hero,
+    .exam-hero,
+    .planning-hero,
+    .contact-hero {
+        border-radius: 12px !important;
+    }
+}
