@@ -721,6 +721,80 @@ def render_shared_file(shared_file):
     )
 
 
+def shared_file_extension(shared_file):
+    file_name = str(shared_file.get("filename") or shared_file.get("titre") or "fichier.pdf")
+    suffix = Path(file_name).suffix.replace(".", "").upper()
+    if suffix:
+        return suffix[:4]
+    mime = str(shared_file.get("mime", "")).lower()
+    if "pdf" in mime:
+        return "PDF"
+    if "word" in mime or "document" in mime:
+        return "DOCX"
+    if "excel" in mime or "spreadsheet" in mime:
+        return "XLSX"
+    if "powerpoint" in mime or "presentation" in mime:
+        return "PPTX"
+    if "image" in mime:
+        return "IMG"
+    return "FILE"
+
+
+def shared_file_size(path):
+    try:
+        size = path.stat().st_size
+    except OSError:
+        return ""
+    units = ["o", "Ko", "Mo", "Go"]
+    value = float(size)
+    unit = units[0]
+    for unit in units:
+        if value < 1024 or unit == units[-1]:
+            break
+        value /= 1024
+    if unit == "o":
+        return f"{int(value)} {unit}"
+    return f"{value:.1f} {unit}"
+
+
+def render_shared_file_preview(shared_file, key):
+    path = Path(shared_file.get("path", ""))
+    if not path.exists() or not path.is_file():
+        st.warning("Le fichier n'existe plus dans le dossier local.")
+        return
+
+    mime = shared_file.get("mime", "application/octet-stream")
+    if mime.startswith("image/"):
+        st.image(str(path), width="stretch")
+        return
+
+    if mime == "application/pdf" or path.suffix.lower() == ".pdf":
+        encoded_pdf = base64.b64encode(path.read_bytes()).decode("ascii")
+        st.markdown(
+            f"""
+            <iframe class="shared-file-preview-frame"
+                src="data:application/pdf;base64,{encoded_pdf}">
+            </iframe>
+            """,
+            unsafe_allow_html=True,
+        )
+        return
+
+    if mime.startswith("text/") or path.suffix.lower() in {".txt", ".csv", ".md"}:
+        try:
+            st.text_area(
+                "Apercu du fichier",
+                path.read_text(encoding="utf-8", errors="replace")[:6000],
+                height=260,
+                key=f"preview_text_{key}",
+            )
+        except OSError:
+            st.warning("Impossible de lire ce fichier.")
+        return
+
+    st.info("Apercu non disponible pour ce type de fichier. Utilisez le bouton Telecharger.")
+
+
 def render_local_attachment(path_value, file_name="", mime="application/octet-stream", key_prefix="attachment"):
     raw_path = str(path_value or "").strip()
     if not raw_path or raw_path in {".", "./", "/", "\\"}:
@@ -5816,6 +5890,85 @@ def show_home(data):
     if not message_rows:
         message_rows.append('<div class="dash-empty-row">Aucun nouveau message a afficher.</div>')
 
+    fixed_dashboard_html = f"""
+    <div class="dashboard-stat-grid">
+        <div class="dashboard-stat stat-blue">
+            <div class="stat-icon">B</div>
+            <div class="label">Matieres</div>
+            <div class="value">{total_courses}</div>
+            <div class="hint">Cours disponibles</div>
+        </div>
+        <div class="dashboard-stat stat-teal">
+            <div class="stat-icon">E</div>
+            <div class="label">Examens</div>
+            <div class="value">{total_exams}</div>
+            <div class="hint">A venir</div>
+        </div>
+        <div class="dashboard-stat stat-amber">
+            <div class="stat-icon">R</div>
+            <div class="label">Ressources</div>
+            <div class="value">{total_files}</div>
+            <div class="hint">Fichiers disponibles</div>
+        </div>
+        <div class="dashboard-stat stat-violet">
+            <div class="stat-icon">N</div>
+            <div class="label">Evenements</div>
+            <div class="value">{unread_total}</div>
+            <div class="hint">Nouveautes</div>
+        </div>
+    </div>
+    <div class="dashboard-list-grid">
+        <div class="dash-panel">
+            <h3><span>E</span>Examens a venir</h3>
+            {''.join(exam_rows)}
+            <a>Voir tous les examens a venir -></a>
+        </div>
+        <div class="dash-panel">
+            <h3><span>R</span>Ressources recentes</h3>
+            {''.join(file_rows)}
+            <a>Voir toutes les ressources -></a>
+        </div>
+        <div class="dash-panel">
+            <h3><span>A</span>Annonces</h3>
+            {''.join(announcement_rows)}
+            <a>Voir toutes les annonces -></a>
+        </div>
+        <div class="dash-panel">
+            <h3><span>M</span>Messages etudiants</h3>
+            {''.join(message_rows)}
+            <a>Voir tous les messages -></a>
+        </div>
+    </div>
+    """
+    st.markdown(fixed_dashboard_html, unsafe_allow_html=True)
+
+    if unread_total or planned_exams or recent_files or messages:
+        if st.button("Marquer toutes les nouveautes comme vues", key="mark_all_dashboard_news_seen"):
+            mark_updates_seen(data, unread_updates(data, limit=100))
+            mark_many_dashboard_items_seen(
+                data,
+                {
+                    "planning": planned_exams,
+                    "files": recent_files,
+                    "messages": messages,
+                },
+            )
+            st.success("Toutes les nouveautes visibles sont marquees comme vues.")
+            st.rerun()
+
+    if st.session_state.get("platform_user_role") == "admin":
+        if st.button("Reinitialiser mes nouveautes vues", key="reset_seen_updates_admin"):
+            seen = data.setdefault("seen_updates", {})
+            seen.pop(current_user_key(), None)
+            data.setdefault("seen_dashboard", {}).pop(current_user_key(), None)
+            st.session_state.setdefault("seen_updates_session", {}).pop(current_user_key(), None)
+            st.session_state.setdefault("seen_dashboard_session", {}).pop(current_user_key(), None)
+            save_data(data)
+            st.success("Historique de lecture reinitialise pour votre compte.")
+            st.rerun()
+
+    return
+
     st.markdown(
         f"""
         <div class="dashboard-stat-grid">
@@ -6189,14 +6342,21 @@ def show_homework_plan(data):
 
 
 def show_shared_files(data):
+    files_all = data.get("shared_files", [])
+    professors = {
+        shared_file.get("auteur", "Professeur")
+        for shared_file in files_all
+        if shared_file.get("role") != "direction"
+    }
     st.markdown(
         """
         <div class="files-hero">
-            <div class="files-title-wrap">
-                <div class="files-icon">F</div>
+            <div class="files-title-wrap drive-title-wrap">
+                <div class="files-icon drive-folder-icon">▰</div>
                 <div>
                     <h1>Fichiers partages</h1>
-                    <p>Documents, images, PDF, Word, Excel et autres fichiers partages par la direction ou les professeurs.</p>
+                    <div class="dashboard-gold-line"></div>
+                    <p>Accedez aux documents, cours, PDF, Word, Excel et ressources partages par les enseignants.</p>
                 </div>
             </div>
             <div class="files-art"></div>
@@ -6205,36 +6365,133 @@ def show_shared_files(data):
         unsafe_allow_html=True,
     )
 
+    st.markdown(
+        f"""
+        <div class="drive-stat-grid">
+            <div class="drive-stat-card stat-blue">
+                <span>▤</span>
+                <div><strong>{len(files_all)}</strong><b>Documents</b><small>fichiers disponibles</small></div>
+            </div>
+            <div class="drive-stat-card stat-teal">
+                <span>▥</span>
+                <div><strong>{len(SUBJECTS)}</strong><b>Matieres</b><small>concernees</small></div>
+            </div>
+            <div class="drive-stat-card stat-amber">
+                <span>◉</span>
+                <div><strong>{max(len(professors), 1 if files_all else 0)}</strong><b>Professeurs</b><small>partageants</small></div>
+            </div>
+        </div>
+        <div class="drive-filter-shell">
+            <h3><span>≡</span>Filtres</h3>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     col1, col2 = st.columns(2)
     subject_filter = col1.selectbox(
         "Filtrer par matiere",
-        ["Tous les fichiers", "Toutes les matieres"] + SUBJECTS,
+        ["Toutes les matieres"] + SUBJECTS,
+        key="drive_subject_filter",
     )
     source_filter = col2.selectbox(
         "Publie par",
-        ["Tous", "Direction", "Professeur"],
+        ["Tous les professeurs", "Direction", "Professeur"],
+        key="drive_source_filter",
     )
 
-    files = data.get("shared_files", [])
-    if subject_filter != "Tous les fichiers":
+    sort_filter = st.selectbox(
+        "Trier par",
+        ["Plus recents", "Plus anciens", "Titre A-Z"],
+        key="drive_sort_filter",
+    )
+
+    files = list(files_all)
+    if subject_filter != "Toutes les matieres":
         files = [
             shared_file
             for shared_file in files
             if shared_file.get("matiere") in (subject_filter, "Toutes les matieres")
         ]
 
-    if source_filter != "Tous":
+    if source_filter != "Tous les professeurs":
         role = "direction" if source_filter == "Direction" else "prof"
         files = [shared_file for shared_file in files if shared_file.get("role") == role]
 
-    files = sorted(files, key=lambda shared_file: parse_date(shared_file.get("date")), reverse=True)
+    if sort_filter == "Plus anciens":
+        files = sorted(files, key=lambda shared_file: parse_date(shared_file.get("date")))
+    elif sort_filter == "Titre A-Z":
+        files = sorted(files, key=lambda shared_file: str(shared_file.get("titre", "")).lower())
+    else:
+        files = sorted(files, key=lambda shared_file: parse_date(shared_file.get("date")), reverse=True)
 
     if not files:
         st.info("Aucun fichier partage pour le moment.")
         return
 
-    for shared_file in files:
-        render_shared_file(shared_file)
+    st.markdown(
+        f"""
+        <div class="drive-list-shell">
+            <div class="drive-list-head">
+                <h3><span>▤</span>Liste des fichiers</h3>
+                <small>Affichage de {min(len(files), 1)} a {len(files)} sur {len(files_all)} fichiers</small>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    for index, shared_file in enumerate(files):
+        path = Path(shared_file.get("path", ""))
+        role_label = "Direction BTS SMARTCAMPUS" if shared_file.get("role") == "direction" else shared_file.get("auteur", "Professeur")
+        extension = shared_file_extension(shared_file)
+        title = html.escape(str(shared_file.get("titre", "Fichier partage")))
+        subject = html.escape(str(shared_file.get("matiere", "Toutes les matieres")))
+        description = html.escape(str(shared_file.get("description", "")))
+        date = html.escape(str(shared_file.get("date", "Date non indiquee")))
+        size = shared_file_size(path) if path.exists() else ""
+        item_key = f"{path.as_posix()}_{shared_file.get('date', '')}_{index}"
+
+        st.markdown(
+            f"""
+            <div class="drive-file-row">
+                <div class="drive-file-type drive-file-{extension.lower()}">{extension}</div>
+                <div class="drive-file-info">
+                    <strong>{title}</strong>
+                    <div class="drive-file-meta">
+                        <span>Matiere : {subject}</span>
+                        <span>Publie par : {html.escape(str(role_label))}</span>
+                        <span>Date : {date}</span>
+                    </div>
+                    <p>{description}</p>
+                </div>
+                <div class="drive-file-size">{html.escape(size)}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        action_cols = st.columns([6, 1.35, 1.15])
+        with action_cols[1]:
+            if path.exists() and path.is_file():
+                st.download_button(
+                    "Telecharger",
+                    data=path.read_bytes(),
+                    file_name=shared_file.get("filename") or path.name,
+                    mime=shared_file.get("mime", "application/octet-stream"),
+                    key=f"drive_download_{item_key}",
+                    width="stretch",
+                )
+            else:
+                st.button("Indisponible", key=f"drive_missing_{item_key}", disabled=True, width="stretch")
+        with action_cols[2]:
+            if st.button("Apercu", key=f"drive_preview_{item_key}", width="stretch"):
+                preview_key = st.session_state.get("drive_preview_key")
+                st.session_state.drive_preview_key = "" if preview_key == item_key else item_key
+                st.rerun()
+
+        if st.session_state.get("drive_preview_key") == item_key:
+            render_shared_file_preview(shared_file, item_key)
 
 
 def show_student_space(data):
@@ -7640,21 +7897,21 @@ def sidebar_navigation():
     )
 
     nav_icons = {
-        "Accueil": "⌂",
-        "Cours": "▤",
-        "Fichiers Drive": "□",
-        "Examens": "◇",
-        "Calendrier": "▦",
-        "Professeurs": "◉",
-        "Messages": "○",
+        "Accueil": "A",
+        "Cours": "C",
+        "Fichiers Drive": "F",
+        "Examens": "E",
+        "Calendrier": "P",
+        "Professeurs": "P",
+        "Messages": "M",
         "Annonces": "!",
-        "Profil": "◎",
+        "Profil": "U",
         "Parametres": "?",
     }
 
     for page_name, label in pages:
         is_active = st.session_state.current_page == page_name
-        button_label = f"{nav_icons.get(label, '•')}  {label}"
+        button_label = f"{nav_icons.get(label, '*')}  {label}"
         if st.sidebar.button(
             button_label,
             key=f"nav_{page_name}",
