@@ -1230,6 +1230,34 @@ body,
     max-width: 100% !important;
 }
 
+/* Presentation mode: hide Streamlit chrome that is not part of the platform. */
+#MainMenu,
+footer,
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"],
+[data-testid="stDeployButton"],
+.stDeployButton,
+header [data-testid="stToolbar"],
+header [data-testid="stActionButton"],
+header [data-testid="baseButton-headerNoPadding"],
+header [data-testid="baseButton-header"],
+button[title="View app source"],
+button[title="Edit"],
+button[title="Share"],
+button[title="Favorite"],
+a[href*="github.com/streamlit"],
+div[data-testid="viewerBadge_container"] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+header[data-testid="stHeader"] {
+    height: 0 !important;
+    min-height: 0 !important;
+}
+
 @media (max-width: 560px) {
     .dashboard-stat-grid {
         grid-template-columns: 1fr;

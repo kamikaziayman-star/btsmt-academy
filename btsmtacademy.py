@@ -5243,7 +5243,6 @@ def dashboard_announcement(data, admin_messages):
                 <strong>Annonces importantes</strong>
                 <p>{message_text}</p>
             </div>
-            <span>Voir toutes les annonces -></span>
         </div>
         """,
         unsafe_allow_html=True,
@@ -5648,10 +5647,6 @@ def show_welcome_academic():
                         <span class="welcome-brand-sub">PLATEFORME ACADEMIQUE</span>
                     </span>
                 </div>
-                <div class="welcome-header-actions">
-                    <span class="welcome-dashboard-pill">Tableau de bord</span>
-                    <span class="welcome-help-pill">Aide</span>
-                </div>
             </div>
             <div class="academic-welcome-panel">
                 <div class="welcome-copy academic-welcome-copy">
@@ -5906,22 +5901,18 @@ def show_home(data):
         <div class="dash-panel">
             <h3><span>E</span>Examens a venir</h3>
             {''.join(exam_rows)}
-            <a>Voir tous les examens a venir -></a>
         </div>
         <div class="dash-panel">
             <h3><span>R</span>Ressources recentes</h3>
             {''.join(file_rows)}
-            <a>Voir toutes les ressources -></a>
         </div>
         <div class="dash-panel">
             <h3><span>A</span>Annonces</h3>
             {''.join(announcement_rows)}
-            <a>Voir toutes les annonces -></a>
         </div>
         <div class="dash-panel">
             <h3><span>M</span>Messages etudiants</h3>
             {''.join(message_rows)}
-            <a>Voir tous les messages -></a>
         </div>
     </div>
     """).strip()
@@ -5949,7 +5940,7 @@ def show_home(data):
             st.session_state.setdefault("seen_updates_session", {}).pop(current_user_key(), None)
             st.session_state.setdefault("seen_dashboard_session", {}).pop(current_user_key(), None)
             save_data(data)
-            st.success("Historique de lecture reinitialise pour votre compte.")
+            st.success("Lectures reinitialisees pour votre compte.")
             st.rerun()
 
     return
@@ -6083,7 +6074,7 @@ def show_updates(data):
         """
         <div class="courses-hero">
             <div>
-                <h1>Historique des nouveautes</h1>
+                <h1>Dernieres nouveautes</h1>
                 <p>Toutes les publications deja affichees sur le dashboard restent disponibles ici.</p>
             </div>
             <div class="courses-hero-art"></div>
@@ -7791,7 +7782,7 @@ def sidebar_navigation():
 
     if "current_page" not in st.session_state:
         st.session_state.current_page = "Accueil"
-    allowed_pages = [page_name for page_name, _ in pages] + ["Historique des nouveautes"]
+    allowed_pages = [page_name for page_name, _ in pages]
     if st.session_state.current_page not in allowed_pages:
         st.session_state.current_page = "Accueil"
 
@@ -7905,7 +7896,7 @@ def main():
         show_home(data)
     elif page == "Recherche rapide":
         show_search(data)
-    elif page in ("Dernieres mises a jour", "Historique des nouveautes"):
+    elif page == "Dernieres mises a jour":
         show_updates(data)
     elif page == "Cours":
         show_courses(data)
