@@ -6358,27 +6358,29 @@ def show_shared_files(data):
         size = shared_file_size(path) if path.exists() else ""
         item_key = f"{path.as_posix()}_{shared_file.get('date', '')}_{index}"
 
-        st.markdown(
-            f"""
-            <div class="drive-file-row">
-                <div class="drive-file-type drive-file-{extension.lower()}">{extension}</div>
-                <div class="drive-file-info">
-                    <strong>{title}</strong>
-                    <div class="drive-file-meta">
-                        <span>Matiere : {subject}</span>
-                        <span>Publie par : {html.escape(str(role_label))}</span>
-                        <span>Date : {date}</span>
+        st.markdown('<div class="drive-file-card-shell">', unsafe_allow_html=True)
+        file_col, download_col, preview_col = st.columns([6.4, 1.45, 1.25], vertical_alignment="center")
+        with file_col:
+            st.markdown(
+                f"""
+                <div class="drive-file-row">
+                    <div class="drive-file-type drive-file-{extension.lower()}">{extension}</div>
+                    <div class="drive-file-info">
+                        <strong>{title}</strong>
+                        <div class="drive-file-meta">
+                            <span>Matiere : {subject}</span>
+                            <span>Publie par : {html.escape(str(role_label))}</span>
+                            <span>Date : {date}</span>
+                        </div>
+                        <p>{description}</p>
                     </div>
-                    <p>{description}</p>
+                    <div class="drive-file-size">{html.escape(size)}</div>
                 </div>
-                <div class="drive-file-size">{html.escape(size)}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+                """,
+                unsafe_allow_html=True,
+            )
 
-        action_cols = st.columns([6, 1.35, 1.15])
-        with action_cols[1]:
+        with download_col:
             if path.exists() and path.is_file():
                 st.download_button(
                     "Telecharger",
@@ -6390,11 +6392,14 @@ def show_shared_files(data):
                 )
             else:
                 st.button("Indisponible", key=f"drive_missing_{item_key}", disabled=True, width="stretch")
-        with action_cols[2]:
+
+        with preview_col:
             if st.button("Apercu", key=f"drive_preview_{item_key}", width="stretch"):
                 preview_key = st.session_state.get("drive_preview_key")
                 st.session_state.drive_preview_key = "" if preview_key == item_key else item_key
                 st.rerun()
+
+        st.markdown("</div>", unsafe_allow_html=True)
 
         if st.session_state.get("drive_preview_key") == item_key:
             render_shared_file_preview(shared_file, item_key)
