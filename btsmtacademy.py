@@ -5109,20 +5109,26 @@ def show_header(data=None):
     initial = (user_label.strip()[:1] or "A").upper()
     st.markdown(
         f"""
-        <div class="university-topbar">
-            <div class="university-menu-icon"><span></span><span></span><span></span></div>
-            <div class="university-user">
-                <span>Bonjour,<strong>{user_label}</strong></span>
-                <b>{initial}</b>
+        <div class="academic-dashboard-userbar">
+            <div></div>
+            <div class="academic-dashboard-user">
+                <span>Bonjour,<strong>{html.escape(user_label)}</strong></span>
+                <b>{html.escape(initial)}</b>
             </div>
         </div>
-        <div class="university-hero">
+        <div class="academic-dashboard-hero">
             <div>
-                <h1>Bienvenue sur<br><span>la plateforme academique</span></h1>
+                <h1>Bienvenue sur<br>BTS <span>SMARTCAMPUS</span></h1>
+                <div class="dashboard-gold-line"></div>
                 <p>
-                    Plateforme centralisee pour gerer vos cours, vos fichiers,
-                    vos examens et echanger avec la communaute universitaire.
+                    Plateforme academique moderne pour centraliser les cours,
+                    ressources, examens et communications.
                 </p>
+            </div>
+            <div class="academic-dashboard-illustration">
+                <div class="dash-cap"></div>
+                <div class="dash-books"></div>
+                <div class="dash-screen"></div>
             </div>
         </div>
         """,
@@ -5563,7 +5569,7 @@ def show_welcome_academic():
                 <div class="welcome-brand academic-welcome-brand">
                     <span class="welcome-brand-mark academic-welcome-crest">BTS</span>
                     <span class="welcome-brand-text">
-                        <span class="welcome-brand-main">BTS SMARTCAMPUS</span>
+                        <span class="welcome-brand-main">BTS <span class="brand-blue">SMART</span>CAMPUS</span>
                         <span class="welcome-brand-sub">PLATEFORME ACADEMIQUE</span>
                     </span>
                 </div>
@@ -5600,11 +5606,11 @@ def show_welcome_academic():
                     </div>
                     <div class="welcome-mini-card mini-drive">
                         <strong>Exam</strong>
-                        <span><b>Exam</b>Preparation nationale, sujets et annales corriges.</span>
+                        <span><b>Examens</b>Preparation nationale, sujets et annales corriges.</span>
                     </div>
                     <div class="welcome-mini-card mini-profs">
                         <strong>Prof</strong>
-                        <span><b>Prof</b>Messages et partage avec vos enseignants.</span>
+                        <span><b>Professeurs</b>Messages et partage avec vos enseignants.</span>
                     </div>
                     <div class="welcome-floating-badge">BTS</div>
                 </div>
@@ -5615,7 +5621,7 @@ def show_welcome_academic():
     )
 
     st.markdown('<div class="welcome-actions academic-welcome-actions">', unsafe_allow_html=True)
-    if st.button("Commencer maintenant", width="stretch"):
+    if st.button("Acceder a la plateforme ->", width="stretch"):
         st.session_state.platform_started = True
         st.session_state.entry_animation = True
         st.rerun()
@@ -5705,38 +5711,6 @@ def show_home(data):
     unread_total = len(unread_updates(data, limit=50))
     total_files = len(data.get("shared_files", []))
     total_exams = len(data.get("examens", []))
-    st.markdown(
-        f"""
-        <div class="dashboard-stat-grid">
-            <div class="dashboard-stat stat-blue">
-                <div class="stat-icon">B</div>
-                <div class="label">Matieres</div>
-                <div class="value">{len(SUBJECTS)}</div>
-                <div class="hint">Toutes les matieres</div>
-            </div>
-            <div class="dashboard-stat stat-teal">
-                <div class="stat-icon">C</div>
-                <div class="label">Cours disponibles</div>
-                <div class="value">{total_courses}</div>
-                <div class="hint">Cours a votre disposition</div>
-            </div>
-            <div class="dashboard-stat stat-amber">
-                <div class="stat-icon">N</div>
-                <div class="label">Nouveautes</div>
-                <div class="value">{unread_total}</div>
-                <div class="hint">Non lues</div>
-            </div>
-            <div class="dashboard-stat stat-violet">
-                <div class="stat-icon">F</div>
-                <div class="label">Fichiers & examens</div>
-                <div class="value">{total_files + total_exams}</div>
-                <div class="hint">Fichiers disponibles</div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    dashboard_announcement(data, admin_messages)
 
     planned_exams = [
         devoir
@@ -5763,29 +5737,138 @@ def show_home(data):
     )
     messages = unseen_dashboard_items(data, "messages", messages, limit=5)
 
-    action_left, action_right = st.columns(2)
-    with action_left:
-        dashboard_feature_card("P", "Planification des examens", "Consultez votre planning d'examens et restez informe des prochaines sessions.")
-        if st.button("Voir le planning ->", key="dashboard_open_planning"):
-            st.session_state.current_page = "Planification des examens"
-            st.rerun()
-    with action_right:
-        dashboard_feature_card("F", "Fichiers partages recents", "Accedez rapidement aux derniers fichiers partages par vos enseignants.")
-        if st.button("Voir les fichiers ->", key="dashboard_open_files"):
-            st.session_state.current_page = "Fichiers partages"
-            st.rerun()
+    def clean(value, fallback=""):
+        return html.escape(str(value or fallback))
 
-    action_left, action_right = st.columns(2)
-    with action_left:
-        dashboard_feature_card("N", "Nouveautes non lues", "Consultez les annonces et nouveautes publiees recemment.")
-        if st.button("Voir les nouveautes ->", key="open_updates_history_from_dashboard"):
-            st.session_state.current_page = "Historique des nouveautes"
-            st.rerun()
-    with action_right:
-        dashboard_feature_card("M", "Messages aux etudiants", "Envoyez et recevez des messages avec vos enseignants et camarades.")
-        if st.button("Voir les messages ->", key="dashboard_open_messages"):
-            st.session_state.current_page = "Messages directs"
-            st.rerun()
+    def short_date(value):
+        parsed = parse_date(value)
+        if parsed.year <= 1901:
+            return clean(value, "")
+        return parsed.strftime("%d/%m")
+
+    exam_rows = []
+    for devoir in planned_exams[:3]:
+        title = clean(devoir.get("titre") or devoir.get("matiere"), "Examen")
+        subject = clean(devoir.get("matiere"), "Session")
+        deadline = short_date(devoir.get("date_limite"))
+        day, month = ("--", "")
+        if "/" in deadline:
+            day, month = deadline.split("/", 1)
+        exam_rows.append(
+            f"""
+            <div class="dash-list-row dash-exam-row">
+                <div><strong>{title}</strong><small>{subject}</small></div>
+                <time><b>{day}</b><span>{month}</span></time>
+            </div>
+            """
+        )
+    if not exam_rows:
+        exam_rows.append('<div class="dash-empty-row">Aucun nouvel examen planifie a afficher.</div>')
+
+    file_rows = []
+    for item in recent_files[:3]:
+        title = clean(item.get("titre") or item.get("name"), "Ressource")
+        subject = clean(item.get("matiere") or item.get("subject"), "General")
+        ext = clean((Path(str(item.get("file_name", item.get("titre", "PDF")))).suffix or ".pdf").replace(".", "").upper(), "PDF")
+        file_rows.append(
+            f"""
+            <div class="dash-list-row dash-file-row">
+                <span class="dash-file-badge">{ext[:3]}</span>
+                <div><strong>{title}</strong><small>{subject}</small></div>
+                <em>{clean(item.get("taille") or item.get("size"), "")}</em>
+            </div>
+            """
+        )
+    if not file_rows:
+        file_rows.append('<div class="dash-empty-row">Aucune nouvelle ressource partagee.</div>')
+
+    announcement_rows = []
+    source_messages = admin_messages or data.get("messages", [])
+    for item in sorted(source_messages, key=lambda row: parse_date(row.get("date")), reverse=True)[:3]:
+        title = clean(item.get("titre"), "Annonce")
+        text = clean(item.get("contenu") or item.get("message"), "")
+        date = short_date(item.get("date"))
+        announcement_rows.append(
+            f"""
+            <div class="dash-list-row dash-announcement-row">
+                <div><strong>{title}</strong><small>{text}</small></div>
+                <em>{date}</em>
+            </div>
+            """
+        )
+    if not announcement_rows:
+        announcement_rows.append('<div class="dash-empty-row">Aucune annonce recente a afficher.</div>')
+
+    message_rows = []
+    for item in messages[:3]:
+        author = clean(item.get("prof") or item.get("auteur") or item.get("sender") or item.get("titre"), "Direction")
+        text = clean(item.get("contenu") or item.get("message") or item.get("titre"), "")
+        initials = "".join(part[:1] for part in author.split()[:2]).upper()[:2] or "BT"
+        message_rows.append(
+            f"""
+            <div class="dash-list-row dash-message-row">
+                <span>{clean(initials)}</span>
+                <div><strong>{author}</strong><small>{text}</small></div>
+                <em>{short_date(item.get("date"))}</em>
+            </div>
+            """
+        )
+    if not message_rows:
+        message_rows.append('<div class="dash-empty-row">Aucun nouveau message a afficher.</div>')
+
+    st.markdown(
+        f"""
+        <div class="dashboard-stat-grid">
+            <div class="dashboard-stat stat-blue">
+                <div class="stat-icon">📖</div>
+                <div class="label">Matieres</div>
+                <div class="value">{total_courses}</div>
+                <div class="hint">Cours disponibles</div>
+            </div>
+            <div class="dashboard-stat stat-teal">
+                <div class="stat-icon">🎓</div>
+                <div class="label">Examens</div>
+                <div class="value">{total_exams}</div>
+                <div class="hint">A venir</div>
+            </div>
+            <div class="dashboard-stat stat-amber">
+                <div class="stat-icon">📁</div>
+                <div class="label">Ressources</div>
+                <div class="value">{total_files}</div>
+                <div class="hint">Fichiers disponibles</div>
+            </div>
+            <div class="dashboard-stat stat-violet">
+                <div class="stat-icon">📅</div>
+                <div class="label">Evenements</div>
+                <div class="value">{unread_total}</div>
+                <div class="hint">Nouveautes</div>
+            </div>
+        </div>
+        <div class="dashboard-list-grid">
+            <section class="dash-panel">
+                <h3><span>📅</span>Examens a venir</h3>
+                {''.join(exam_rows)}
+                <a>Voir tous les examens a venir -></a>
+            </section>
+            <section class="dash-panel">
+                <h3><span>📁</span>Ressources recentes</h3>
+                {''.join(file_rows)}
+                <a>Voir toutes les ressources -></a>
+            </section>
+            <section class="dash-panel">
+                <h3><span>📣</span>Annonces</h3>
+                {''.join(announcement_rows)}
+                <a>Voir toutes les annonces -></a>
+            </section>
+            <section class="dash-panel">
+                <h3><span>💬</span>Messages etudiants</h3>
+                {''.join(message_rows)}
+                <a>Voir tous les messages -></a>
+            </section>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     if unread_total or planned_exams or recent_files or messages:
         if st.button("Marquer toutes les nouveautes comme vues", key="mark_all_dashboard_news_seen"):
@@ -7547,18 +7630,31 @@ def sidebar_navigation():
     st.sidebar.markdown(
         """
         <div class="academic-sidebar-brand">
-            <div class="academic-sidebar-crest">U</div>
-            <h2>UNIVERSITE</h2>
-            <p>EXCELLENCE & SAVOIR</p>
+            <div class="academic-sidebar-crest">BTS</div>
+            <h2>BTS <span>SMARTCAMPUS</span></h2>
+            <p>PLATEFORME ACADEMIQUE</p>
         </div>
         <div class="academic-sidebar-label">Navigation</div>
         """,
         unsafe_allow_html=True,
     )
 
+    nav_icons = {
+        "Accueil": "⌂",
+        "Cours": "▤",
+        "Fichiers Drive": "□",
+        "Examens": "◇",
+        "Calendrier": "▦",
+        "Professeurs": "◉",
+        "Messages": "○",
+        "Annonces": "!",
+        "Profil": "◎",
+        "Parametres": "?",
+    }
+
     for page_name, label in pages:
         is_active = st.session_state.current_page == page_name
-        button_label = f"  {label}" if is_active else f"  {label}"
+        button_label = f"{nav_icons.get(label, '•')}  {label}"
         if st.sidebar.button(
             button_label,
             key=f"nav_{page_name}",
