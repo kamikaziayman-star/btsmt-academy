@@ -1852,6 +1852,139 @@ div[data-baseweb="select"] > div {
     }
 }
 
+/* Final alignment fix: center content inside the real main area, not the full viewport. */
+.main .block-container,
+section.main .block-container,
+[data-testid="stMainBlockContainer"] {
+    width: min(1180px, calc(100% - 48px)) !important;
+    max-width: 1180px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+[data-testid="stAppViewContainer"] > .main {
+    display: block !important;
+}
+
+/* Final navigator button fix: unhide the real Streamlit sidebar control. */
+header[data-testid="stHeader"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    background: transparent !important;
+    pointer-events: none !important;
+    z-index: 999998 !important;
+}
+
+header[data-testid="stHeader"] button,
+header button[data-testid="baseButton-headerNoPadding"],
+header button[data-testid="baseButton-header"],
+header [data-testid="baseButton-headerNoPadding"],
+header [data-testid="baseButton-header"],
+button[data-testid="collapsedControl"],
+[data-testid="collapsedControl"],
+div[data-testid="stSidebarCollapsedControl"] button,
+button[title="Open sidebar"],
+button[title="Close sidebar"],
+button[aria-label="Open sidebar"],
+button[aria-label="Close sidebar"],
+button[aria-label*="sidebar" i],
+button[title*="sidebar" i],
+button[aria-label*="navigation" i],
+button[title*="navigation" i] {
+    display: inline-flex !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
+}
+
+header button[data-testid="baseButton-headerNoPadding"],
+header button[data-testid="baseButton-header"],
+header [data-testid="baseButton-headerNoPadding"],
+header [data-testid="baseButton-header"],
+button[data-testid="collapsedControl"],
+[data-testid="collapsedControl"],
+div[data-testid="stSidebarCollapsedControl"] button,
+button[title="Open sidebar"],
+button[title="Close sidebar"],
+button[aria-label="Open sidebar"],
+button[aria-label="Close sidebar"],
+button[aria-label*="sidebar" i],
+button[title*="sidebar" i],
+button[aria-label*="navigation" i],
+button[title*="navigation" i] {
+    position: fixed !important;
+    top: 18px !important;
+    left: 286px !important;
+    z-index: 999999 !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 14px !important;
+    border: 1px solid #d6e5f6 !important;
+    background: #ffffff !important;
+    color: #061f49 !important;
+    box-shadow: 0 16px 34px rgba(7,31,73,0.18) !important;
+}
+
+header [data-testid="stToolbar"],
+[data-testid="stToolbar"] {
+    display: none !important;
+}
+
+header button[data-testid="baseButton-headerNoPadding"]:hover,
+header button[data-testid="baseButton-header"]:hover,
+header [data-testid="baseButton-headerNoPadding"]:hover,
+header [data-testid="baseButton-header"]:hover,
+button[data-testid="collapsedControl"]:hover,
+[data-testid="collapsedControl"]:hover,
+div[data-testid="stSidebarCollapsedControl"] button:hover,
+button[title="Open sidebar"]:hover,
+button[title="Close sidebar"]:hover,
+button[aria-label="Open sidebar"]:hover,
+button[aria-label="Close sidebar"]:hover,
+button[aria-label*="sidebar" i]:hover,
+button[title*="sidebar" i]:hover,
+button[aria-label*="navigation" i]:hover,
+button[title*="navigation" i]:hover {
+    background: linear-gradient(135deg, #1769ff, #075be8) !important;
+    color: #ffffff !important;
+}
+
+@media (max-width: 760px) {
+    .main .block-container,
+    section.main .block-container,
+    [data-testid="stMainBlockContainer"] {
+        width: calc(100% - 24px) !important;
+    }
+
+    header button[data-testid="baseButton-headerNoPadding"],
+    header button[data-testid="baseButton-header"],
+    header [data-testid="baseButton-headerNoPadding"],
+    header [data-testid="baseButton-header"],
+    button[data-testid="collapsedControl"],
+    [data-testid="collapsedControl"],
+    div[data-testid="stSidebarCollapsedControl"] button,
+    button[title="Open sidebar"],
+    button[title="Close sidebar"],
+    button[aria-label="Open sidebar"],
+    button[aria-label="Close sidebar"],
+    button[aria-label*="sidebar" i],
+    button[title*="sidebar" i],
+    button[aria-label*="navigation" i],
+    button[title*="navigation" i] {
+        left: 16px !important;
+        top: 14px !important;
+    }
+}
+
 /* Dashboard premium style */
 .stApp {
     background: #f5f7ff;

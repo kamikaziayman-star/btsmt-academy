@@ -5918,30 +5918,38 @@ def show_home(data):
     """).strip()
     st.markdown(fixed_dashboard_html, unsafe_allow_html=True)
 
-    if unread_total or planned_exams or recent_files or messages:
-        if st.button("Marquer toutes les nouveautes comme vues", key="mark_all_dashboard_news_seen"):
-            mark_updates_seen(data, unread_updates(data, limit=100))
-            mark_many_dashboard_items_seen(
-                data,
-                {
-                    "planning": planned_exams,
-                    "files": recent_files,
-                    "messages": messages,
-                },
-            )
-            st.success("Toutes les nouveautes visibles sont marquees comme vues.")
+    dashboard_actions = st.columns([1, 1, 1], gap="medium")
+    with dashboard_actions[0]:
+        if st.button("Historique des nouveautes", key="open_dashboard_updates", width="stretch"):
+            st.session_state.current_page = "Dernieres mises a jour"
             st.rerun()
 
+    if unread_total or planned_exams or recent_files or messages:
+        with dashboard_actions[1]:
+            if st.button("Marquer les nouveautes comme vues", key="mark_all_dashboard_news_seen", width="stretch"):
+                mark_updates_seen(data, unread_updates(data, limit=100))
+                mark_many_dashboard_items_seen(
+                    data,
+                    {
+                        "planning": planned_exams,
+                        "files": recent_files,
+                        "messages": messages,
+                    },
+                )
+                st.success("Toutes les nouveautes visibles sont marquees comme vues.")
+                st.rerun()
+
     if st.session_state.get("platform_user_role") == "admin":
-        if st.button("Reinitialiser mes nouveautes vues", key="reset_seen_updates_admin"):
-            seen = data.setdefault("seen_updates", {})
-            seen.pop(current_user_key(), None)
-            data.setdefault("seen_dashboard", {}).pop(current_user_key(), None)
-            st.session_state.setdefault("seen_updates_session", {}).pop(current_user_key(), None)
-            st.session_state.setdefault("seen_dashboard_session", {}).pop(current_user_key(), None)
-            save_data(data)
-            st.success("Lectures reinitialisees pour votre compte.")
-            st.rerun()
+        with dashboard_actions[2]:
+            if st.button("Reinitialiser les lectures", key="reset_seen_updates_admin", width="stretch"):
+                seen = data.setdefault("seen_updates", {})
+                seen.pop(current_user_key(), None)
+                data.setdefault("seen_dashboard", {}).pop(current_user_key(), None)
+                st.session_state.setdefault("seen_updates_session", {}).pop(current_user_key(), None)
+                st.session_state.setdefault("seen_dashboard_session", {}).pop(current_user_key(), None)
+                save_data(data)
+                st.success("Lectures reinitialisees pour votre compte.")
+                st.rerun()
 
     return
 
@@ -7782,7 +7790,7 @@ def sidebar_navigation():
 
     if "current_page" not in st.session_state:
         st.session_state.current_page = "Accueil"
-    allowed_pages = [page_name for page_name, _ in pages]
+    allowed_pages = [page_name for page_name, _ in pages] + ["Dernieres mises a jour"]
     if st.session_state.current_page not in allowed_pages:
         st.session_state.current_page = "Accueil"
 
