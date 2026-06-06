@@ -51,6 +51,28 @@ create table if not exists app_state (
 );
 ```
 
+Pour une utilisation plus fiable avec plusieurs connexions en meme temps, executez aussi le fichier:
+
+```text
+supabase_multitable_schema.sql
+```
+
+Il cree les tables:
+
+```text
+student_accounts
+prof_accounts
+messages
+courses
+exams
+shared_files
+planning
+view_receipts
+support_tickets
+```
+
+Quand ces tables existent, l'application les utilise automatiquement. Sinon elle garde l'ancien stockage `app_state` comme fallback.
+
 Ajoutez ensuite ces secrets dans Streamlit Cloud:
 
 ```text

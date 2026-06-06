@@ -6,7 +6,8 @@
       "prof": "Prof Marketing touristique",
       "date": "21/05/2026 00:29",
       "important": false,
-      "contenu": "HY"
+      "contenu": "HY",
+      "_id": "57f5f7806f1410d5736fb8c3"
     },
     {
       "titre": "sdgfqsgqsq",
@@ -14,7 +15,8 @@
       "prof": "Direction BTS SMARTCAMPUS",
       "date": "20/05/2026 17:46",
       "important": true,
-      "contenu": "gqsdgqzer"
+      "contenu": "gqsdgqzer",
+      "_id": "cb4aa8a878655b5ce9f95a1f"
     },
     {
       "titre": "ana ayman mol had platforme",
@@ -22,7 +24,8 @@
       "prof": "Prof Marketing touristique",
       "date": "20/05/2026 16:45",
       "important": false,
-      "contenu": "hello word"
+      "contenu": "hello word",
+      "_id": "b426d82915dec97536738ea6"
     },
     {
       "titre": "Bienvenue sur BTS SMARTCAMPUS",
@@ -30,7 +33,8 @@
       "prof": "Administration",
       "date": "20/05/2026 12:00",
       "contenu": "Les professeurs peuvent publier ici les annonces, les nouveaux cours et les dates importantes.",
-      "important": false
+      "important": false,
+      "_id": "fed6e43d36d84dde81309e47"
     }
   ],
   "cours": {
@@ -42,7 +46,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Controle de gestion",
+        "_id": "0febd5e3d3af884e09278f0d"
       },
       {
         "titre": "Couts partiels",
@@ -51,7 +57,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Controle de gestion",
+        "_id": "ab423d06299bf22907c9553b"
       },
       {
         "titre": "Analyse financiere",
@@ -60,7 +68,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Controle de gestion",
+        "_id": "7eb4d0f46cd5aa45910e494f"
       },
       {
         "titre": "L'ajustement liniere",
@@ -69,7 +79,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Controle de gestion",
+        "_id": "bf2a1cf7decac21a8eba58a8"
       },
       {
         "titre": "Les ecart",
@@ -78,7 +90,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Controle de gestion",
+        "_id": "bd1d949f1d3022a2b89d1861"
       },
       {
         "titre": "Approvisionnements",
@@ -87,7 +101,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Controle de gestion",
+        "_id": "3ef1a3b20a0d540b9b73b046"
       }
     ],
     "Informatique de gestion": [
@@ -98,7 +114,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Informatique de gestion",
+        "_id": "b85c860727e43027704757e7"
       }
     ],
     "Marketing touristique": [
@@ -109,7 +127,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Marketing touristique",
+        "_id": "53b76bb464318f8144ce8fa5"
       },
       {
         "titre": "Politique produit",
@@ -118,7 +138,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Marketing touristique",
+        "_id": "030596d4eaa2a0a5b4d3d36f"
       },
       {
         "titre": "Produit marque",
@@ -127,7 +149,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Marketing touristique",
+        "_id": "5e272f4198a7880361d64983"
       },
       {
         "titre": "Produit gamme",
@@ -136,7 +160,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Marketing touristique",
+        "_id": "8398166cdb09b02a478f275b"
       },
       {
         "titre": "Politique prix",
@@ -145,7 +171,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Marketing touristique",
+        "_id": "8ad523110592a84266626afd"
       },
       {
         "titre": "Politique de distribution",
@@ -154,7 +182,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Marketing touristique",
+        "_id": "e0910ae28a5e3b7a646b60d4"
       }
     ],
     "Commercialisation des services touristiques": [
@@ -165,7 +195,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Commercialisation des services touristiques",
+        "_id": "0b9288f1370c9ff5dba5e9d5"
       }
     ],
     "Communication professionnelle": [
@@ -176,7 +208,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Communication professionnelle",
+        "_id": "b6ceeca18e5517935c8ce649"
       },
       {
         "titre": "Les reunions et application",
@@ -185,7 +219,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Communication professionnelle",
+        "_id": "5c14eb8d5fbd82508b544e94"
       },
       {
         "titre": "Les concepts de base de la communication",
@@ -194,7 +230,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Communication professionnelle",
+        "_id": "00fb6a632dea9956b5a6254a"
       },
       {
         "titre": "Le compte rendu et application",
@@ -203,7 +241,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Communication professionnelle",
+        "_id": "f2941481f4c76ab5c3398009"
       },
       {
         "titre": "L'entretien",
@@ -212,7 +252,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Communication professionnelle",
+        "_id": "0b851f5243e65625225bf00f"
       },
       {
         "titre": "L'entretien telephonique",
@@ -221,7 +263,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Communication professionnelle",
+        "_id": "5d9e7571ed3cbc94b0cc7b69"
       },
       {
         "titre": "Courrier electronique application",
@@ -230,7 +274,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Communication professionnelle",
+        "_id": "b49f907d94ac088ad3438d17"
       },
       {
         "titre": "Communication ecrite professionnelle et application",
@@ -239,7 +285,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Communication professionnelle",
+        "_id": "6bfc2ed2b95e3ea104e17a3e"
       },
       {
         "titre": "Accueil et application",
@@ -248,7 +296,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Communication professionnelle",
+        "_id": "6c32252c87fd1b1a36251878"
       }
     ],
     "Entrepreneuriat": [
@@ -259,7 +309,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Entrepreneuriat",
+        "_id": "229e17dc060f9c5206ae8350"
       }
     ],
     "Anglais": [
@@ -270,7 +322,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Anglais",
+        "_id": "ac8b89dc4ac88d443fbe8d69"
       },
       {
         "titre": "Unit II Rest.Serv.Management Student",
@@ -279,7 +333,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Anglais",
+        "_id": "ed3a1398d89030bafa7d3c5b"
       },
       {
         "titre": "Unit 3 - Catering Trends and Moroccan Gastronomy",
@@ -288,7 +344,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Anglais",
+        "_id": "5d3fbf0ce2d6fab6c11bce30"
       },
       {
         "titre": "UNIT 4 Event Management",
@@ -297,7 +355,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Anglais",
+        "_id": "a66d157ec21a61daa074c39f"
       },
       {
         "titre": "Unit 5. Handling Guest Complaint",
@@ -306,7 +366,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Anglais",
+        "_id": "f661b836fafa1c6ff0a58ff4"
       }
     ],
     "Arabe": [
@@ -317,7 +379,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Arabe",
+        "_id": "8680214bdad18d075968b6f0"
       }
     ],
     "Espagnol": [
@@ -328,7 +392,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Espagnol",
+        "_id": "6e549dc35c8db5f066891846"
       },
       {
         "titre": "Tecnico de respusta - linco",
@@ -337,7 +403,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Espagnol",
+        "_id": "dc39b19868a92f8aa3c6abb4"
       },
       {
         "titre": "Presentate basudocte sabio los siguientes datos (information)",
@@ -346,7 +414,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Espagnol",
+        "_id": "1873a621579fb65dbfbee644"
       },
       {
         "titre": "Presentate basudocte sabio los siguientes datos (information) SUITE",
@@ -355,7 +425,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Espagnol",
+        "_id": "2bdf6bf6da1aa915786fa88a"
       },
       {
         "titre": "Motivation (E mail)",
@@ -364,7 +436,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Espagnol",
+        "_id": "6b309bed8fb08964f0562eb5"
       },
       {
         "titre": "Imperativo infirmativo",
@@ -373,7 +447,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Espagnol",
+        "_id": "1bddfa6a132775e2e9229dfb"
       },
       {
         "titre": "Future",
@@ -382,7 +458,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Espagnol",
+        "_id": "247004519c70e5fe9c5fad89"
       },
       {
         "titre": "Applicacion 1",
@@ -391,7 +469,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Espagnol",
+        "_id": "4dcba603bf75e1d3a6d00a98"
       },
       {
         "titre": "Applicacion 2",
@@ -400,7 +480,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Espagnol",
+        "_id": "44e74af1170b44c68522c3c6"
       }
     ],
     "Francais": [
@@ -411,7 +493,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Francais",
+        "_id": "6a049bbc20cbb61ce159495e"
       },
       {
         "titre": "Les procedes de reprise",
@@ -420,7 +504,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Francais",
+        "_id": "9bd2f05a82507fec5feadb2b"
       },
       {
         "titre": "Expression de but",
@@ -429,7 +515,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Francais",
+        "_id": "55b7ff72fc55803a6569e790"
       },
       {
         "titre": "Exercice nominalisation",
@@ -438,7 +526,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Francais",
+        "_id": "6fce5c61628c88ddc1ea6300"
       },
       {
         "titre": "Concession (1)",
@@ -447,7 +537,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Francais",
+        "_id": "8c868df0fb92e4bb61a24383"
       },
       {
         "titre": "Activite de langue discours",
@@ -456,7 +548,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Francais",
+        "_id": "f7074489966a03d50c0545c4"
       },
       {
         "titre": "La voix passive",
@@ -465,7 +559,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Francais",
+        "_id": "644f0ee3d37c9083d2874c12"
       },
       {
         "titre": "La subordonnee circonstancielle de but",
@@ -474,7 +570,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Francais",
+        "_id": "5024c8ebf12310a2296f5330"
       }
     ],
     "Economie generale et touristique": [
@@ -485,7 +583,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Economie generale et touristique",
+        "_id": "003ae7c89035b226a10ee209"
       },
       {
         "titre": "Politique economique",
@@ -494,7 +594,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Economie generale et touristique",
+        "_id": "32576018f4e9fe6db77eb406"
       },
       {
         "titre": "Politique monetaire (1)",
@@ -503,7 +605,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Economie generale et touristique",
+        "_id": "afd62dc404a35677d4765e96"
       },
       {
         "titre": "La politique de change",
@@ -512,7 +616,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Economie generale et touristique",
+        "_id": "47796ad5b06ec723e52979f4"
       },
       {
         "titre": "La monnaie",
@@ -521,7 +627,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Economie generale et touristique",
+        "_id": "50d45171531cc336d767e112"
       },
       {
         "titre": "Croissance et developpement",
@@ -530,7 +638,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Economie generale et touristique",
+        "_id": "65a252dbb4b89f0cde727db7"
       },
       {
         "titre": "Commerce international",
@@ -539,7 +649,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Economie generale et touristique",
+        "_id": "415a90269f7d8eecbf907910"
       },
       {
         "titre": "Les echanges touristiques",
@@ -548,7 +660,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Economie generale et touristique",
+        "_id": "7d584573424497e2351ed776"
       },
       {
         "titre": "Le chomage",
@@ -557,7 +671,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Economie generale et touristique",
+        "_id": "cb516028a8aea761de24db74"
       },
       {
         "titre": "L'inflation",
@@ -566,7 +682,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Economie generale et touristique",
+        "_id": "abc5759dbd47a7af87582506"
       }
     ],
     "Management des organisations touristiques": [
@@ -577,7 +695,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Management des organisations touristiques",
+        "_id": "9f4530b0c0c0a7356e03e317"
       },
       {
         "titre": "L'analyse concurrentielle",
@@ -586,7 +706,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Management des organisations touristiques",
+        "_id": "0bcba26103e61dea7c2ea39d"
       },
       {
         "titre": "GRH",
@@ -595,7 +717,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Management des organisations touristiques",
+        "_id": "cad5339d0d79f5cd5019440b"
       }
     ],
     "Droit applique au tourisme": [
@@ -606,7 +730,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Droit applique au tourisme",
+        "_id": "8446d1049c2a41c6fb67d124"
       },
       {
         "titre": "DROIT TOURISME",
@@ -615,7 +741,9 @@
         "type": "Cours",
         "statut": "Disponible",
         "date": "Date non indiquee",
-        "prof": "Administration"
+        "prof": "Administration",
+        "matiere": "Droit applique au tourisme",
+        "_id": "89944b6187e6b6f4d95c857a"
       }
     ]
   },
@@ -628,7 +756,9 @@
       "url": "https://drive.google.com/drive/folders/1mMdAbpt37yYZm2Lluoc6oKy4t5_ubDy5?usp=drive_link",
       "session": "Archive",
       "corrige_url": "",
-      "date": "Date non indiquee"
+      "date": "Date non indiquee",
+      "prof": "Administration",
+      "_id": "c3d8c57026ff934d3be6bd44"
     }
   ],
   "prof_accounts": {
@@ -725,7 +855,8 @@
       "date_limite": "2026-11-17",
       "lien": "",
       "prof": "Prof Informatique de gestion",
-      "date_publication": "20/05/2026 17:35"
+      "date_publication": "20/05/2026 17:35",
+      "_id": "c89aa76eabe51acb873f85f2"
     }
   ],
   "shared_files": [
@@ -738,7 +869,8 @@
       "date": "20/05/2026 17:47",
       "filename": "Capture d’écran 2026-05-20 170649.jpg",
       "path": "btsmtacademy_uploads\\Toutes_les_matieres\\20260520_174741_Capture_d_écran_2026-05-20_170649.jpg",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "_id": "2ace41f51c491c67810b0598"
     },
     {
       "titre": "sdgfqsgqsq",
@@ -749,7 +881,8 @@
       "date": "20/05/2026 17:46",
       "filename": "Capture d’écran 2026-05-20 170649.jpg",
       "path": "btsmtacademy_uploads\\Toutes_les_matieres\\20260520_174627_Capture_d_écran_2026-05-20_170649.jpg",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "_id": "25e9b6f2e3ede6bd8685a999"
     }
   ],
   "student_contacts": [
@@ -760,7 +893,8 @@
       "message": "hi mr",
       "date": "20/05/2026 18:44",
       "reponse": "",
-      "date_reponse": ""
+      "date_reponse": "",
+      "_id": "5e18db2ac7c6b96102aec68d"
     }
   ],
   "student_accounts": {
@@ -778,5 +912,974 @@
   },
   "support_tickets": [],
   "direct_messages": [],
-  "seen_updates": {}
+  "seen_updates": {
+    "aymanmarzaguiprint@gmail.com": [],
+    "admin@btsmtacademy.com": []
+  },
+  "seen_dashboard": {
+    "aymanmarzaguiprint@gmail.com": {
+      "admin_messages": [],
+      "planning": [
+        "032175e72dd083fd498f5beaedd99f35e03282c5580bd1c7a83b3e6006cc995e"
+      ],
+      "files": [
+        "582aa0ad00ca7dbf981146266cddfdb4d49e7d2c1338d10ae56a1cbcfc9fa162",
+        "f94866e8f77ba923e7dc922a8dbb1378b393f95ce3c808aa37cd076cb3530088"
+      ],
+      "messages": [
+        "23896a0757f044a0dce4bf7c9f05ee2529998fd8229139afd248f626a058849c",
+        "678fb00afae709fb3e340bafa2df2765c59eb0ed8c80240d6650a2ca495c5316",
+        "92cd014cecf59c361e0bc4c31d1d52dfc53a35bf06613cdcf3c2510e3b9b83c4",
+        "f485c2fd5ba6e637da70ed9cf59cde5274b695b863ad3f0b145e4c0583b205ca"
+      ]
+    },
+    "admin@btsmtacademy.com": {
+      "planning": [
+        "032175e72dd083fd498f5beaedd99f35e03282c5580bd1c7a83b3e6006cc995e"
+      ],
+      "files": [
+        "582aa0ad00ca7dbf981146266cddfdb4d49e7d2c1338d10ae56a1cbcfc9fa162",
+        "f94866e8f77ba923e7dc922a8dbb1378b393f95ce3c808aa37cd076cb3530088"
+      ],
+      "messages": [
+        "23896a0757f044a0dce4bf7c9f05ee2529998fd8229139afd248f626a058849c",
+        "678fb00afae709fb3e340bafa2df2765c59eb0ed8c80240d6650a2ca495c5316",
+        "92cd014cecf59c361e0bc4c31d1d52dfc53a35bf06613cdcf3c2510e3b9b83c4",
+        "f485c2fd5ba6e637da70ed9cf59cde5274b695b863ad3f0b145e4c0583b205ca"
+      ]
+    }
+  },
+  "view_receipts": {
+    "032175e72dd083fd498f5beaedd99f35e03282c5580bd1c7a83b3e6006cc995e": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      },
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "7366c6ef77f122fbcd9e981f"
+      }
+    ],
+    "f94866e8f77ba923e7dc922a8dbb1378b393f95ce3c808aa37cd076cb3530088": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      },
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "7366c6ef77f122fbcd9e981f"
+      }
+    ],
+    "582aa0ad00ca7dbf981146266cddfdb4d49e7d2c1338d10ae56a1cbcfc9fa162": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      },
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "7366c6ef77f122fbcd9e981f"
+      }
+    ],
+    "678fb00afae709fb3e340bafa2df2765c59eb0ed8c80240d6650a2ca495c5316": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      },
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "7366c6ef77f122fbcd9e981f"
+      }
+    ],
+    "f485c2fd5ba6e637da70ed9cf59cde5274b695b863ad3f0b145e4c0583b205ca": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      },
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "7366c6ef77f122fbcd9e981f"
+      }
+    ],
+    "92cd014cecf59c361e0bc4c31d1d52dfc53a35bf06613cdcf3c2510e3b9b83c4": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      },
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "7366c6ef77f122fbcd9e981f"
+      }
+    ],
+    "23896a0757f044a0dce4bf7c9f05ee2529998fd8229139afd248f626a058849c": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      },
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "7366c6ef77f122fbcd9e981f"
+      }
+    ],
+    "6e39d554cd51c9796f6cb22f3a1ed8fbf6565495891cb9fdfb616d499b064cb6": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "26/05/2026 02:43",
+        "_id": "37c406301884b71c3d22f9b1"
+      }
+    ],
+    "86846c246332b28b4c7d663b2a7eee0744013824df9afcd68ed8135a029dd7a4": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "340fad82032e57a1dcd2958f2426cfa107f5199231f7e9615a76e847d45f6d53": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "c0d9f243ed15a907c74276abab89a215788fe8e721693eb240b6f4775bfd0e07": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      },
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "7366c6ef77f122fbcd9e981f"
+      }
+    ],
+    "445d4281e7fcb875201a6a9290714fb56b8bd01248f476b152ec19fa7ca6f578": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "4999d809a4ac2e607af92f002b8fc3de1af926fef8640b088a93a59de2f0acca": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "77741e56799c78e3208ed487e6c8707ef9c840026ec9b791ee99a434fb8e728f": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "b4ae612c704042b57bec285a4fbf8d467e695d227e77a5bd40baec4507466510": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "623a2258fec803027c36b1fa39d07a1706381db0f40792023be13e60a0292a88": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "1e11ddcb5dead5fae4e87772227889e0994de6a910506c2c1cdf1f98a9cce0e5": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "fd0bff4108a1881e5e23721627070f1e6b2e06a0b01213aa6eaedecccf0f0799": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "17d2aefda3d098f813770a7d102a190fabfe18ca27ac1a10a88536fcf74b63d2": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "7a33785f8c57f90c9e852ecb749133bbd026d927e17b01e1fd2d559292f8275f": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "0f51b2cd2b698a7e2564a054c8401ced10c03eb8e9fe32583c38d577fad3bb07": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "c5c9164aa0a3655a061420f41545fdeece86c89c3334ac43399984f89327518a": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "f2af0964642741d31c2fe4b3c6e7471bcf24424efaa10240a90bf93c0a1eac58": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "fb2e7538221027864e7da60ba29dd2a9b582b1cb96c28134d9a163d31f2de57a": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "c693b419395a9a16c9e5699115514361630a836f8af4ba1d11ae90d286432cf1": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "e2195acc78841174b8cc54f52cd1671d09901bf72c51152e82b1a790568009a3": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "ff6f630b17068f1100511a73e7bc5a299522d86d78f4e3d42df24467d73b4889": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "09d4e8c35d68dac31191220bb50cef1738ef764f6ddda99fd35e4e293385708f": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "d124ad46205661ad57312caaff0207d570029db3583e736bff7c0f7a8df72fc7": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "f2f4d30f515ce61967e8392c10d28e176e8bcbe62f28ed79cb8da245e52bd78a": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "52af79673dcc9a26e1e329cdb1890fee79bf1e5035f44b7ec9cdeb4347e15103": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "8a1d9146bc6b5314f78a5aa58afc0321c1cd75664114aa4518ca0108b51abb10": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "5b9683cc65657532342ba06e172312d7536aaee3637b2fc9f2ef0f4f74ccab85": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "fa8b3b259dbf495a74a43fa6fc4631d781ddf6ce2fc9484b623ccea3714ee5f8": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "6c3c5805b6121409a5bc020411994058667f12ffab191c9cae81d37a916f7763": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "a4a60695abbcfd38a602a93772211fb72c9383965ad878d972421db4472e1a0e": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "d2c00d45ff70ab335c5c9a844e5f9bfef52fe01926f28b4e35fed9ee70f68024": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "e4e5b47b1f3e6b390cbf8c7595bc8fdc86cd3e8ae14ee70384132cfc3e0d63c8": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "1f0c950c9f084311f3b5477234eb6070401a1144be8fe57b4f59836328359e91": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "63c4ad319ee3d44abbe0bdec3f8b4be58319e03942e51b16cd5c169683525a9e": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "d8465327c7ec96e6a0325020ea49df0fa03c3de258391e947ee8f686dd1ef45d": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "7318655c04873ce23bc0649e87e6cff7637981a38f11efcffb01679324741868": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "5565137aaad84e29ae71c3261d1ad6358e485783a202337b30d4a3cf859ed775": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "dd8d7a083a1eeab4760c9dc32ad3d34a99c78ab33878194ba676d211cf42970d": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "2941f43827c323449b7f2f28d150b0f43dad788d4515607b201a82fde1472033": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "7bef9fa5b47ddd28dd82b0f26876b1d404962e6d08a3103fea4bc786c71b9024": [
+      {
+        "email": "admin@btsmtacademy.com",
+        "name": "Administration BTS SMARTCAMPUS",
+        "role": "admin",
+        "date": "30/05/2026 15:47",
+        "_id": "d346cd704d85ea42d5d66295"
+      },
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "22ec2704c1ef7e79c9aa9b6a"
+      }
+    ],
+    "5d3a8d4aadf6a50c8caac4f84729dc28046620a5d05e7da303cac1d599923056": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "3a61e5190300d3d3d75b42be424ff0ac67564463732eb0af13c82e644e9c007e": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "832176a42bf0f600d8c9679479bc60c9d14fc364d6eab57474890e11cd9609cf": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "ea6a9243b5c8cdeb19738b1d9b434d2299f0b73f93dd07d3e5e33a4bc9c3dc8e": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "c9c99e55ad602e575f5dd3de2ecf1c787cb79301cfa7aeadd72583e6ee331aae": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "0add1425c535a7a684b1d9dd4d960660cf1db9d3adfcaed260c8bd9249def8c8": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "22fd694be513b673daf58551e578123d6f460020e9657a5bb380585150b1edf6": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "8a56085edca8153f2be993f1ef13b0d8661eadc10e9fb591f6557b30fed5ba26": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "9bbe378908a1ddae5903cba3ed32e0dd2bee4273101264f4279486dd3cda16dc": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "4768802967c11e8d44ce4ee54f4d128303b8210f5351f650511ee39b38f67b55": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "d0e7ef345fdf96b055b61564a034690325f01c7a25e9c801f313e6cbf3e2f1a9": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "16cddc1b6e3ef25a6f182ced36a46dfe9e10a61f58f0ccdeb4f8f9d2cc90f03d": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "dbfe76ddd59bc8d418ca952690241c61572c06c5cc2688f96dc6916c5b8a69b0": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "7e0c6b491eb434bd1449b23ce8875b9cb48660501364054030eb707e686bc009": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "d0fdaed1bd94767b5dbf49a7236ed97fdbdb3b53fb935c5a69dfe41560f2a1a5": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "c15a23aa9e59d623b49077d05cb12cffea32ebdfb66894d31e3bc8ac50059aae": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "8e3c3e119ceae1874ee7ac01216a6e63382d14baf3674849593e3c9f3ba67992": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "abc6c86d5fe1df3d46bfa67b32ef8771abcffc566254649823d1a7d7ee5eec98": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "a894519a6add3b4d21049712d0a6973e46901052999452502621e51e7bbe92dc": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "40c4f6a20328640f01d71ff22962258e28f0f4af4c02a805ae70db3dcb755571": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "3c8ec2f3dd7b2674c4652bcce8f0c0faf38d6ef69dca859b7eca6c5531c4de0d": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "6dd8bb6a54db9271799b3b32f3fedaad8e580dbaf35c6bfc9d43ca0d75053f50": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "72a79eb306318cf03011f028edd9782fd28c925b12926dab1176c7a098065c65": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ],
+    "c33d1ff8fb90506ec66bfd7aa7bf6dfc30e7aad1ffd48229563d9287f290a34c": [
+      {
+        "email": "aymanmarzaguiprint@gmail.com",
+        "name": "Ayman marzagui",
+        "role": "student",
+        "date": "01/06/2026 10:53",
+        "_id": "7a763b54002b151a2a86053d"
+      }
+    ]
+  }
 }
