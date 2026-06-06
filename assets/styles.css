@@ -1852,6 +1852,111 @@ div[data-baseweb="select"] > div {
     }
 }
 
+/* Real app-owned navigator button and centering state. */
+#bts-sidebar-toggle-button {
+    position: fixed !important;
+    top: 18px !important;
+    left: 18px !important;
+    z-index: 2147483647 !important;
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px !important;
+    min-height: 52px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    border: 1px solid #d8e6f6 !important;
+    border-radius: 15px !important;
+    background: #ffffff !important;
+    color: #061f49 !important;
+    box-shadow: 0 18px 38px rgba(7,31,73,0.22) !important;
+    cursor: pointer !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+#bts-sidebar-toggle-button span {
+    display: block !important;
+    width: 23px !important;
+    height: 3px !important;
+    border-radius: 999px !important;
+    background: currentColor !important;
+    transition: transform 180ms ease, opacity 180ms ease !important;
+}
+
+#bts-sidebar-toggle-button:hover {
+    background: linear-gradient(135deg, #1769ff, #075be8) !important;
+    color: #ffffff !important;
+}
+
+#bts-sidebar-toggle-button.is-open {
+    left: 286px !important;
+}
+
+#bts-sidebar-toggle-button.is-open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg) !important;
+}
+
+#bts-sidebar-toggle-button.is-open span:nth-child(2) {
+    opacity: 0 !important;
+}
+
+#bts-sidebar-toggle-button.is-open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg) !important;
+}
+
+html.bts-sidebar-collapsed section[data-testid="stSidebar"] {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    transform: translateX(-110%) !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+}
+
+html.bts-sidebar-collapsed .main .block-container,
+html.bts-sidebar-collapsed section.main .block-container,
+html.bts-sidebar-collapsed [data-testid="stMainBlockContainer"] {
+    width: min(1180px, calc(100vw - 96px)) !important;
+    max-width: 1180px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+html.bts-sidebar-open .main .block-container,
+html.bts-sidebar-open section.main .block-container,
+html.bts-sidebar-open [data-testid="stMainBlockContainer"] {
+    width: min(1120px, calc(100vw - 340px)) !important;
+    max-width: 1120px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+html.bts-sidebar-collapsed [data-testid="stAppViewContainer"] {
+    padding-left: 0 !important;
+}
+
+@media (max-width: 760px) {
+    #bts-sidebar-toggle-button,
+    #bts-sidebar-toggle-button.is-open {
+        left: 16px !important;
+        top: 14px !important;
+    }
+
+    html.bts-sidebar-collapsed .main .block-container,
+    html.bts-sidebar-open .main .block-container,
+    html.bts-sidebar-collapsed section.main .block-container,
+    html.bts-sidebar-open section.main .block-container,
+    html.bts-sidebar-collapsed [data-testid="stMainBlockContainer"],
+    html.bts-sidebar-open [data-testid="stMainBlockContainer"] {
+        width: calc(100vw - 28px) !important;
+        max-width: calc(100vw - 28px) !important;
+    }
+}
+
 /* Final alignment fix: center content inside the real main area, not the full viewport. */
 .main .block-container,
 section.main .block-container,

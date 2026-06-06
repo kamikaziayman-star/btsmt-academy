@@ -15,6 +15,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 
 APP_TITLE = "BTS SMARTCAMPUS"
@@ -5315,6 +5316,85 @@ def dashboard_section_title(icon, title):
     )
 
 
+def inject_sidebar_toggle_button():
+    components.html(
+        """
+        <script>
+        (function () {
+            const doc = window.parent.document;
+
+            function findSidebarToggle() {
+                const selectors = [
+                    'button[data-testid="collapsedControl"]',
+                    '[data-testid="collapsedControl"] button',
+                    'div[data-testid="stSidebarCollapsedControl"] button',
+                    'button[aria-label*="sidebar" i]',
+                    'button[title*="sidebar" i]',
+                    'button[aria-label*="navigation" i]',
+                    'button[title*="navigation" i]',
+                    'header button[data-testid="baseButton-headerNoPadding"]',
+                    'header button[data-testid="baseButton-header"]'
+                ];
+                for (const selector of selectors) {
+                    const candidates = Array.from(doc.querySelectorAll(selector));
+                    const button = candidates.find((item) => item.id !== 'bts-sidebar-toggle-button');
+                    if (button) return button;
+                }
+                return null;
+            }
+
+            function sidebarIsOpen() {
+                const sidebar = doc.querySelector('section[data-testid="stSidebar"]');
+                if (!sidebar) return false;
+                const rect = sidebar.getBoundingClientRect();
+                const style = window.parent.getComputedStyle(sidebar);
+                return rect.width > 80 && style.display !== 'none' && style.visibility !== 'hidden';
+            }
+
+            function syncState() {
+                const open = sidebarIsOpen();
+                doc.documentElement.classList.toggle('bts-sidebar-open', open);
+                doc.documentElement.classList.toggle('bts-sidebar-collapsed', !open);
+                const button = doc.getElementById('bts-sidebar-toggle-button');
+                if (button) {
+                    button.setAttribute('aria-label', open ? 'Fermer le navigateur' : 'Ouvrir le navigateur');
+                    button.title = open ? 'Fermer le navigateur' : 'Ouvrir le navigateur';
+                    button.classList.toggle('is-open', open);
+                }
+            }
+
+            function ensureButton() {
+                let button = doc.getElementById('bts-sidebar-toggle-button');
+                if (!button) {
+                    button = doc.createElement('button');
+                    button.id = 'bts-sidebar-toggle-button';
+                    button.type = 'button';
+                    button.innerHTML = '<span></span><span></span><span></span>';
+                    button.addEventListener('click', function () {
+                        const realToggle = findSidebarToggle();
+                        if (realToggle) realToggle.click();
+                        setTimeout(syncState, 80);
+                        setTimeout(syncState, 360);
+                    });
+                    doc.body.appendChild(button);
+                }
+                syncState();
+            }
+
+            ensureButton();
+            window.parent.setTimeout(ensureButton, 400);
+            window.parent.setTimeout(syncState, 900);
+            window.parent.addEventListener('resize', syncState);
+            const observer = new MutationObserver(syncState);
+            observer.observe(doc.body, { attributes: true, childList: true, subtree: true });
+        })();
+        </script>
+        """,
+        height=0,
+        width=0,
+    )
+
+
 def show_academic_page_header(title, subtitle, icon="SC"):
     st.markdown(
         f"""
@@ -7880,6 +7960,7 @@ def main():
     if st.session_state.entry_animation:
         show_entry_transition()
 
+    inject_sidebar_toggle_button()
     page = sidebar_navigation()
 
     st.sidebar.markdown("---")
