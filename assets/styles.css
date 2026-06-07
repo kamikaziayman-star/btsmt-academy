@@ -1852,6 +1852,15 @@ div[data-baseweb="select"] > div {
     }
 }
 
+/* Safety: old transition overlays must never block the production interface. */
+.entry-transition,
+.login-gateway-transition,
+.entry-transition-3d {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
 /* Real app-owned navigator button and centering state. */
 #bts-sidebar-toggle-button {
     position: fixed !important;
