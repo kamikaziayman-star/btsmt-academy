@@ -8,5 +8,6 @@ btsmtacademy_backups/
 btsmtacademy_uploads/
 btsmtacademy.db
 btsmtacademy.db-*
+btsmtacademy_data.json
 
 .streamlit/secrets.toml
