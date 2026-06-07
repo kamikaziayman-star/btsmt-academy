@@ -5633,7 +5633,7 @@ def show_platform_login(data):
             st.session_state.platform_user_label = auth.get("label", "Etudiant")
             st.session_state.platform_user_email = auth.get("email", "")
             st.session_state.platform_user_role = auth.get("role", "student")
-            st.session_state.login_transition = True
+            st.session_state.login_transition = False
             st.success("Connexion reussie.")
             st.rerun()
         else:
@@ -5698,7 +5698,7 @@ def show_welcome():
     st.markdown('<div class="welcome-actions">', unsafe_allow_html=True)
     if st.button("Commencer maintenant", width="stretch"):
         st.session_state.platform_started = True
-        st.session_state.entry_animation = True
+        st.session_state.entry_animation = False
         st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
     st.markdown(
@@ -5773,7 +5773,7 @@ def show_welcome_academic():
     st.markdown('<div class="welcome-actions academic-welcome-actions">', unsafe_allow_html=True)
     if st.button("Acceder a la plateforme ->", width="stretch"):
         st.session_state.platform_started = True
-        st.session_state.entry_animation = True
+        st.session_state.entry_animation = False
         st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
     st.markdown(
@@ -7947,18 +7947,18 @@ def main():
     if "entry_animation" not in st.session_state:
         st.session_state.entry_animation = False
 
+    # Keep the production flow reliable: old sessions can keep a transition flag
+    # active after a rerun, which hides the app behind a full-screen overlay.
+    st.session_state.login_transition = False
+    st.session_state.entry_animation = False
+
     if not st.session_state.platform_logged_in:
         show_platform_login(data)
         return
 
     if not st.session_state.platform_started:
-        if st.session_state.login_transition:
-            show_login_to_welcome_transition()
         show_welcome_academic()
         return
-
-    if st.session_state.entry_animation:
-        show_entry_transition()
 
     inject_sidebar_toggle_button()
     page = sidebar_navigation()
