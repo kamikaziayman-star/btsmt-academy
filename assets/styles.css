@@ -14984,3 +14984,86 @@ button, input, textarea, select, option,
         font-size: 22px !important;
     }
 }
+
+/* ==========================================================================
+   SIDEBAR RESPONSIVE LAYOUT FIX
+   The main area must resize when Streamlit opens/closes the sidebar.
+   ========================================================================== */
+
+.main .block-container,
+section.main .block-container,
+div[data-testid="stMainBlockContainer"] {
+    width: min(1180px, calc(100% - 32px)) !important;
+    max-width: 1180px !important;
+    min-width: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
+    transition: width 180ms ease, max-width 180ms ease, margin 180ms ease !important;
+}
+
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+.main,
+section.main {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+}
+
+.academic-dashboard-userbar,
+.academic-dashboard-hero,
+.dashboard-stat-grid,
+.dashboard-list-grid,
+.courses-hero,
+.files-hero,
+.exam-hero,
+.planning-hero,
+.contact-hero,
+.synced-page-hero,
+.drive-filter-shell,
+.drive-list-shell,
+.welcome-start-panel,
+.creator-footer {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+}
+
+button[data-testid="collapsedControl"],
+[data-testid="collapsedControl"],
+div[data-testid="stSidebarCollapsedControl"] button,
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stSidebarCollapseButton"] button,
+button[title="Open sidebar"],
+button[title="Close sidebar"],
+button[aria-label="Open sidebar"],
+button[aria-label="Close sidebar"],
+button[title="Ouvrir la barre latérale"],
+button[title="Fermer la barre latérale"],
+button[aria-label="Ouvrir la barre latérale"],
+button[aria-label="Fermer la barre latérale"] {
+    left: 18px !important;
+    top: 18px !important;
+}
+
+@media (min-width: 1500px) {
+    .main .block-container,
+    section.main .block-container,
+    div[data-testid="stMainBlockContainer"] {
+        max-width: 1240px !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .main .block-container,
+    section.main .block-container,
+    div[data-testid="stMainBlockContainer"] {
+        width: calc(100% - 18px) !important;
+        padding-left: 9px !important;
+        padding-right: 9px !important;
+    }
+}
