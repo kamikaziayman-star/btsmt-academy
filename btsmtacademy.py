@@ -5875,25 +5875,25 @@ def show_home(data):
     fixed_dashboard_html = textwrap.dedent(f"""
     <div class="dashboard-stat-grid">
         <div class="dashboard-stat stat-blue">
-            <div class="stat-icon">B</div>
+            <div class="stat-icon">▤</div>
             <div class="label">Matieres</div>
             <div class="value">{total_courses}</div>
             <div class="hint">Cours disponibles</div>
         </div>
         <div class="dashboard-stat stat-teal">
-            <div class="stat-icon">E</div>
+            <div class="stat-icon">◇</div>
             <div class="label">Examens</div>
             <div class="value">{total_exams}</div>
             <div class="hint">A venir</div>
         </div>
         <div class="dashboard-stat stat-amber">
-            <div class="stat-icon">R</div>
+            <div class="stat-icon">▣</div>
             <div class="label">Ressources</div>
             <div class="value">{total_files}</div>
             <div class="hint">Fichiers disponibles</div>
         </div>
         <div class="dashboard-stat stat-violet">
-            <div class="stat-icon">N</div>
+            <div class="stat-icon">!</div>
             <div class="label">Evenements</div>
             <div class="value">{unread_total}</div>
             <div class="hint">Nouveautes</div>
@@ -5901,19 +5901,19 @@ def show_home(data):
     </div>
     <div class="dashboard-list-grid">
         <div class="dash-panel">
-            <h3><span>E</span>Examens a venir</h3>
+            <h3><span>◇</span>Examens a venir</h3>
             {''.join(exam_rows)}
         </div>
         <div class="dash-panel">
-            <h3><span>R</span>Ressources recentes</h3>
+            <h3><span>▣</span>Ressources recentes</h3>
             {''.join(file_rows)}
         </div>
         <div class="dash-panel">
-            <h3><span>A</span>Annonces</h3>
+            <h3><span>!</span>Annonces</h3>
             {''.join(announcement_rows)}
         </div>
         <div class="dash-panel">
-            <h3><span>M</span>Messages etudiants</h3>
+            <h3><span>✉</span>Messages etudiants</h3>
             {''.join(message_rows)}
         </div>
     </div>
@@ -7809,16 +7809,16 @@ def sidebar_navigation():
     )
 
     nav_icons = {
-        "Accueil": "A",
-        "Cours": "C",
-        "Fichiers Drive": "F",
-        "Examens": "E",
-        "Calendrier": "P",
-        "Professeurs": "P",
-        "Messages": "M",
+        "Accueil": "⌂",
+        "Cours": "▤",
+        "Fichiers Drive": "▣",
+        "Examens": "◇",
+        "Calendrier": "□",
+        "Professeurs": "◉",
+        "Messages": "✉",
         "Annonces": "!",
-        "Profil": "U",
-        "Parametres": "?",
+        "Profil": "○",
+        "Parametres": "⚙",
     }
 
     for page_name, label in pages:
