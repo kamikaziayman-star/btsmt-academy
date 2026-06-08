@@ -593,7 +593,7 @@ def load_data():
 
     data.setdefault("support_tickets", [])
     for ticket in data["support_tickets"]:
-        ticket.setdefault("type", "Reclamation")
+        ticket.setdefault("type", "Réclamation")
         ticket.setdefault("nom", "")
         ticket.setdefault("email", "")
         ticket.setdefault("role", "Utilisateur")
@@ -606,6 +606,8 @@ def load_data():
         ticket.setdefault("screenshot_path", "")
         ticket.setdefault("screenshot_name", "")
         ticket.setdefault("screenshot_mime", "")
+        if ticket.get("statut") == "Traite":
+            ticket["statut"] = "Traité"
         for field in ("sujet", "message", "reponse"):
             ticket[field] = normalize_brand_text(ticket.get(field, ""))
 
@@ -6851,7 +6853,7 @@ def student_contact_inbox(data, subject):
                     contact["reponse"] = response.strip()
                     contact["date_reponse"] = datetime.now().strftime("%d/%m/%Y %H:%M")
                     save_data(data)
-                    st.success("Reponse enregistree.")
+                    st.success("Réponse enregistrée.")
                     st.rerun()
 
 
@@ -6898,7 +6900,7 @@ def student_accounts_admin(data):
                 <h3>{account.get('prenom', '')} {account.get('nom', '')}</h3>
                 <p>
                     Email: <strong>{email}</strong><br>
-                    Groupe: <strong>{account.get('groupe', 'Non indique')}</strong><br>
+                    Groupe: <strong>{account.get('groupe', 'Non indiqué')}</strong><br>
                     Statut: <strong>{status_label}</strong><br>
                     Demande envoyée: {account.get('created_at', 'Date non indiquée')}
                 </p>
@@ -6948,7 +6950,7 @@ def support_tickets_admin(data):
 
     status_filter = st.selectbox(
         "Filtrer par statut",
-        ["Tous", "Nouveau", "En cours", "Traite"],
+        ["Tous", "Nouveau", "En cours", "Traité"],
         key="support_status_filter",
     )
     filtered_tickets = tickets
@@ -6966,13 +6968,13 @@ def support_tickets_admin(data):
         st.markdown(
             f"""
             <div class="message">
-                <div class="message-title">{ticket.get('sujet', 'Reclamation')}</div>
+                <div class="message-title">{ticket.get('sujet', 'Réclamation')}</div>
                 <div class="message-meta">
-                    Type: {ticket.get('type', 'Reclamation')} | Statut: {ticket.get('statut', 'Nouveau')} | Date: {ticket.get('date', 'Date non indiquée')}
+                    Type: {ticket.get('type', 'Réclamation')} | Statut: {ticket.get('statut', 'Nouveau')} | Date: {ticket.get('date', 'Date non indiquée')}
                 </div>
                 <div class="message-content">
                     Utilisateur: <strong>{ticket.get('nom', 'Utilisateur')}</strong><br>
-                    Email: <strong>{ticket.get('email', 'Non indique')}</strong><br><br>
+                    Email: <strong>{ticket.get('email', 'Non indiqué')}</strong><br><br>
                     {ticket.get('message', '')}
                 </div>
             </div>
@@ -6988,7 +6990,7 @@ def support_tickets_admin(data):
 
         if ticket.get("reponse"):
             st.success(
-                f"Reponse admin ({ticket.get('date_reponse', 'Date non indiquée')}): {ticket.get('reponse')}"
+                f"Réponse admin ({ticket.get('date_reponse', 'Date non indiquée')}): {ticket.get('reponse')}"
             )
 
         response = st.text_area(
@@ -6997,22 +6999,22 @@ def support_tickets_admin(data):
             key=f"support_response_{original_index}_{ticket.get('date', '')}",
         )
         col1, col2, col3, col4 = st.columns(4)
-        if col1.button("Enregistrer la reponse", key=f"support_reply_{original_index}_{ticket.get('date')}"):
+        if col1.button("Enregistrer la réponse", key=f"support_reply_{original_index}_{ticket.get('date')}"):
             if not response.strip():
-                st.error("La reponse ne peut pas etre vide.")
+                st.error("La réponse ne peut pas être vide.")
             else:
                 tickets[original_index]["reponse"] = response.strip()
                 tickets[original_index]["date_reponse"] = datetime.now().strftime("%d/%m/%Y %H:%M")
-                tickets[original_index]["statut"] = "Traite"
+                tickets[original_index]["statut"] = "Traité"
                 save_data(data)
-                st.success("Réponse envoyée et reclamation marquee comme traitee.")
+                st.success("Réponse envoyée et réclamation marquée comme traitée.")
                 st.rerun()
         if col2.button("En cours", key=f"support_progress_{original_index}_{ticket.get('date')}"):
             tickets[original_index]["statut"] = "En cours"
             save_data(data)
             st.rerun()
-        if col3.button("Traite", key=f"support_done_{original_index}_{ticket.get('date')}"):
-            tickets[original_index]["statut"] = "Traite"
+        if col3.button("Traité", key=f"support_done_{original_index}_{ticket.get('date')}"):
+            tickets[original_index]["statut"] = "Traité"
             tickets[original_index]["date_reponse"] = datetime.now().strftime("%d/%m/%Y %H:%M")
             save_data(data)
             st.rerun()
@@ -7600,17 +7602,17 @@ def show_support(data):
             if ticket.get("reponse"):
                 response_html = f"""
                     <div class="message-content">
-                        <strong>Reponse support:</strong><br>
+                        <strong>Réponse support:</strong><br>
                         {ticket.get('reponse', '')}<br>
-                        <span class="message-meta">Date de reponse: {ticket.get('date_reponse', 'Date non indiquée')}</span>
+                        <span class="message-meta">Date de réponse : {ticket.get('date_reponse', 'Date non indiquée')}</span>
                     </div>
                 """
             st.markdown(
                 f"""
                 <div class="message">
-                    <div class="message-title">{ticket.get('sujet', 'Reclamation')}</div>
+                    <div class="message-title">{ticket.get('sujet', 'Réclamation')}</div>
                     <div class="message-meta">
-                        Type: {ticket.get('type', 'Reclamation')} | Statut: {ticket.get('statut', 'Nouveau')} | Date: {ticket.get('date', 'Date non indiquée')}
+                        Type: {ticket.get('type', 'Réclamation')} | Statut: {ticket.get('statut', 'Nouveau')} | Date: {ticket.get('date', 'Date non indiquée')}
                     </div>
                     <div class="message-content">{ticket.get('message', '')}</div>
                     {response_html}
@@ -7636,7 +7638,7 @@ def show_direct_messages(data):
         <div class="contact-topbar">
             <div class="contact-brand">BTS <span>SMART</span>CAMPUS</div>
             <div class="contact-user">
-                <span>Boite<br><strong>Messages</strong></span>
+                <span>Boîte<br><strong>Messages</strong></span>
                 <span class="contact-avatar"></span>
             </div>
         </div>
@@ -7711,7 +7713,7 @@ def show_direct_messages(data):
                 st.success("Message envoye.")
                 st.rerun()
 
-    st.markdown("#### Boite de reception")
+    st.markdown("#### Boîte de réception")
     messages = [
         message
         for message in data.get("direct_messages", [])

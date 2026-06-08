@@ -11146,7 +11146,7 @@ div[data-testid="stAlert"] {
 }
 
 .academic-welcome-actions::before {
-    content: "Commencer maintenant\\A Accedez a tous vos cours, ressources et outils en un clic." !important;
+    content: "Commencer maintenant\\A Accédez à tous vos cours, ressources et outils en un clic." !important;
     white-space: pre-line !important;
     margin-right: auto !important;
     color: #082554 !important;

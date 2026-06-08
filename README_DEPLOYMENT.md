@@ -1,4 +1,4 @@
-# BTS SMARTCAMPUS - Deploiement
+# BTS SMARTCAMPUS - D?ploiement
 
 Ce projet est une plateforme Streamlit pour un centre de formation BTS Management Touristique.
 
@@ -17,31 +17,31 @@ http://localhost:8501
 
 ## Comptes importants
 
-Les mots de passe peuvent etre configures avec des variables d'environnement.
+Les mots de passe peuvent ?tre configur?s avec des variables d'environnement.
 Voir `.env.example`.
 
-Comptes par defaut en developpement:
+Comptes par d?faut en d?veloppement:
 
 ```text
-Etudiant: btsmteljadidaacademy@.com / btsmt123
+?tudiant: btsmteljadidaacademy@.com / btsmt123
 Invite test: invite@btsmtacademy.com / invite123
 Admin: admin@btsmtacademy.com / admin123
 Direction: direction@btsmtacademy.com / direction123
 ```
 
-Les etudiants peuvent aussi creer leur propre compte depuis la page de connexion.
-Le compte reste en attente jusqu'a validation dans:
+Les ?tudiants peuvent aussi cr?er leur propre compte depuis la page de connexion.
+Le compte reste en attente jusqu'? validation dans:
 
 ```text
-Espace direction > Comptes etudiants
+Espace direction > Comptes ?tudiants
 ```
 
-Les mots de passe des comptes crees dans l'application sont stockes avec un hash PBKDF2.
-L'interface admin n'affiche plus les mots de passe reels.
+Les mots de passe des comptes cr??s dans l'application sont stockes avec un hash PBKDF2.
+L'interface admin n'affiche plus les mots de passe r?els.
 
 ## Supabase
 
-Pour garder les donnees en ligne sur Streamlit Cloud, creez un projet Supabase puis executez ce SQL dans Supabase SQL Editor:
+Pour garder les donn?es en ligne sur Streamlit Cloud, cr?ez un projet Supabase puis ex?cutez ce SQL dans Supabase SQL Editor:
 
 ```sql
 create table if not exists app_state (
@@ -51,13 +51,13 @@ create table if not exists app_state (
 );
 ```
 
-Pour une utilisation plus fiable avec plusieurs connexions en meme temps, executez aussi le fichier:
+Pour une utilisation plus fiable avec plusieurs connexions en m?me temps, ex?cutez aussi le fichier:
 
 ```text
 supabase_multitable_schema.sql
 ```
 
-Il cree les tables:
+Il cr?e les tables:
 
 ```text
 student_accounts
@@ -82,12 +82,12 @@ SUPABASE_SERVICE_ROLE_KEY
 
 L'application utilisera Supabase automatiquement si ces variables existent. Sinon elle garde SQLite en local.
 
-## Deployer sur Render
+## D?ployer sur Render
 
-1. Creer un compte sur Render.
-2. Creer un nouveau Web Service.
+1. Cr?er un compte sur Render.
+2. Cr?er un nouveau Web Service.
 3. Connecter le repository GitHub du projet.
-4. Render detectera `render.yaml`.
+4. Render d?tectera `render.yaml`.
 5. Ajouter les variables d'environnement:
 
 ```text
@@ -103,25 +103,25 @@ SUPABASE_SERVICE_ROLE_KEY
 
 Optionnellement, ajouter les variables professeurs depuis `.env.example`.
 
-## Donnees
+## Donn?es
 
-Si Supabase est configure, les donnees sont sauvegardees dans Supabase.
+Si Supabase est configur?, les donn?es sont sauvegard?es dans Supabase.
 
-Sinon, les donnees sont sauvegardees dans une base SQLite locale:
+Sinon, les donn?es sont sauvegard?es dans une base SQLite locale:
 
 ```text
 btsmtacademy.db
 ```
 
-Une copie lisible est aussi gardee dans:
+Une copie lisible est aussi gard?e dans:
 
 ```text
 btsmtacademy_data.json
 ```
 
-Important: sur Streamlit Community Cloud, les fichiers locaux peuvent etre recrees lors d'un redemarrage. Pour une plateforme publique durable, il faudra connecter Supabase ou une autre base externe.
+Important: sur Streamlit Community Cloud, les fichiers locaux peuvent ?tre recr??s lors d'un red?marrage. Pour une plateforme publique durable, il faudra connecter Supabase ou une autre base externe.
 
-Les fichiers envoyes sont dans:
+Les fichiers envoy?s sont dans:
 
 ```text
 btsmtacademy_uploads/
@@ -133,11 +133,11 @@ Les sauvegardes automatiques sont dans:
 btsmtacademy_backups/
 ```
 
-## Important pour usage reel
+## Important pour usage r?el
 
-Pour un vrai usage public avec beaucoup d'utilisateurs, la prochaine evolution conseillee est:
+Pour un vrai usage public avec beaucoup d'utilisateurs, la prochaine ?volution conseill?e est:
 
 - connecter Supabase ou PostgreSQL externe
 - stocker les fichiers dans Google Drive, Supabase Storage ou S3
 - hasher les mots de passe
-- ajouter sauvegarde externe automatique
+- ajouter une sauvegarde externe automatique
