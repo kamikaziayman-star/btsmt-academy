@@ -1852,6 +1852,404 @@ div[data-baseweb="select"] > div {
     }
 }
 
+/* Final presentation safety: no stuck page veil, no faded page, no blocked clicks. */
+.entry-transition,
+.login-gateway-transition,
+.entry-transition-3d {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
+.page-transition,
+.page-transition *,
+.page-transition > div,
+.page-transition .stMarkdown,
+.page-transition div[data-testid="stForm"],
+.page-transition div[data-testid="stExpander"],
+.page-transition div[data-testid="stAlert"],
+.page-transition div[data-testid="stVerticalBlock"] > div {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    pointer-events: auto !important;
+}
+
+.page-transition::before,
+.page-transition::after {
+    content: none !important;
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Remove the old JavaScript-created navigator button if it remains in cache. */
+#bts-sidebar-toggle-button {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* ==========================================================================
+   FINAL PRESENTATION POLISH - keep the platform usable for demo
+   ========================================================================== */
+:root {
+    --final-navy: #061f49;
+    --final-blue: #126cff;
+    --final-sky: #eaf4ff;
+    --final-border: #d7e4f4;
+    --final-text: #082554;
+    --final-muted: #526783;
+    --final-shadow: 0 18px 45px rgba(8, 37, 84, 0.10);
+}
+
+.stApp,
+[data-testid="stAppViewContainer"] {
+    background: linear-gradient(180deg, #f6f9ff 0%, #eef5ff 100%) !important;
+}
+
+.main .block-container,
+section.main .block-container,
+[data-testid="stMainBlockContainer"] {
+    width: min(1220px, calc(100vw - 72px)) !important;
+    max-width: 1220px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 34px 0 58px !important;
+}
+
+.main .block-container *,
+section[data-testid="stSidebar"] *,
+button *,
+[data-testid="stButton"] *,
+[data-testid="stMarkdownContainer"] * {
+    letter-spacing: 0 !important;
+    word-break: normal !important;
+    overflow-wrap: anywhere !important;
+    text-transform: none !important;
+}
+
+h1, h2, h3, h4,
+.academic-dashboard-hero h1,
+.courses-hero h1,
+.files-hero h1,
+.exam-hero h1,
+.planning-hero h1,
+.contact-hero h1,
+.synced-page-hero h1 {
+    color: var(--final-text) !important;
+    line-height: 1.12 !important;
+}
+
+p, label, small,
+.dashboard-stat .hint,
+.drive-stat-card small,
+.academic-dashboard-hero p,
+.courses-hero p,
+.files-hero p,
+.exam-hero p,
+.planning-hero p,
+.contact-hero p {
+    color: var(--final-muted) !important;
+    line-height: 1.55 !important;
+}
+
+div[data-testid="stButton"] > button,
+button[kind="primary"],
+button[kind="secondary"],
+button[data-testid="baseButton-secondary"],
+button[data-testid="baseButton-primary"] {
+    min-height: 44px !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--final-border) !important;
+    background: #ffffff !important;
+    color: var(--final-blue) !important;
+    font-weight: 900 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    box-shadow: 0 10px 25px rgba(8, 37, 84, 0.08) !important;
+}
+
+div[data-testid="stButton"] > button:hover,
+button[kind="primary"]:hover,
+button[kind="secondary"]:hover,
+button[data-testid="baseButton-secondary"]:hover,
+button[data-testid="baseButton-primary"]:hover {
+    transform: translateY(-1px) !important;
+    border-color: #9fc6ff !important;
+    box-shadow: 0 14px 30px rgba(18, 108, 255, 0.16) !important;
+}
+
+div[data-testid="stButton"] > button[kind="primary"],
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button[kind="primary"] {
+    background: linear-gradient(135deg, var(--final-blue), #075be8) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+}
+
+.academic-dashboard-userbar,
+.academic-dashboard-hero,
+.dashboard-stat,
+.dash-panel,
+.drive-filter-shell,
+.drive-list-shell,
+.subject-card,
+.card,
+.exam-card,
+.planning-card,
+.message,
+.support-card,
+.contact-card {
+    border-radius: 12px !important;
+    border: 1px solid var(--final-border) !important;
+    box-shadow: var(--final-shadow) !important;
+    overflow: hidden !important;
+}
+
+.dashboard-stat-grid,
+.drive-stat-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+}
+
+.dashboard-list-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+}
+
+section[data-testid="stSidebar"] {
+    width: 270px !important;
+    min-width: 270px !important;
+    background: linear-gradient(180deg, #061f49 0%, #021638 100%) !important;
+    border-right: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+section[data-testid="stSidebar"] > div {
+    padding: 28px 18px !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    min-height: 48px !important;
+    margin: 4px 0 !important;
+    padding: 0 16px !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    color: #eaf4ff !important;
+    box-shadow: none !important;
+    font-size: 15px !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button *,
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button p,
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button span {
+    color: inherit !important;
+    font-weight: 850 !important;
+    white-space: normal !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button[kind="primary"],
+section[data-testid="stSidebar"] div[data-testid="stButton"] > button:hover {
+    background: linear-gradient(135deg, var(--final-blue), #075be8) !important;
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,0.12) !important;
+}
+
+/* Real Streamlit navigator open/close button. Covers English/French labels. */
+button[data-testid="collapsedControl"],
+[data-testid="collapsedControl"],
+div[data-testid="stSidebarCollapsedControl"] button,
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stSidebarCollapseButton"] button,
+button[title="Open sidebar"],
+button[title="Close sidebar"],
+button[aria-label="Open sidebar"],
+button[aria-label="Close sidebar"],
+button[title*="sidebar" i],
+button[aria-label*="sidebar" i],
+button[title*="barre" i],
+button[aria-label*="barre" i],
+button[title*="latérale" i],
+button[aria-label*="latérale" i],
+button[title*="navigation" i],
+button[aria-label*="navigation" i] {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    position: fixed !important;
+    top: 18px !important;
+    left: 286px !important;
+    z-index: 2147483000 !important;
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 15px !important;
+    border: 1px solid #d7e4f4 !important;
+    background: #ffffff !important;
+    color: var(--final-navy) !important;
+    box-shadow: 0 18px 38px rgba(8, 37, 84, 0.18) !important;
+}
+
+button[data-testid="collapsedControl"] svg,
+[data-testid="collapsedControl"] svg,
+div[data-testid="stSidebarCollapsedControl"] button svg,
+[data-testid="stSidebarCollapseButton"] svg,
+[data-testid="stSidebarCollapseButton"] button svg,
+button[title*="sidebar" i] svg,
+button[aria-label*="sidebar" i] svg,
+button[title*="barre" i] svg,
+button[aria-label*="barre" i] svg,
+button[title*="navigation" i] svg,
+button[aria-label*="navigation" i] svg {
+    display: block !important;
+    width: 24px !important;
+    height: 24px !important;
+    color: currentColor !important;
+    stroke: currentColor !important;
+}
+
+#bts-sidebar-toggle-button,
+.bts-sidebar-toggle,
+#bts-sidebar-toggle {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+@media (max-width: 1100px) {
+    .main .block-container,
+    section.main .block-container,
+    [data-testid="stMainBlockContainer"] {
+        width: min(100%, calc(100vw - 34px)) !important;
+        padding-top: 82px !important;
+    }
+
+    .dashboard-stat-grid,
+    .drive-stat-grid,
+    .dashboard-list-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 720px) {
+    .main .block-container,
+    section.main .block-container,
+    [data-testid="stMainBlockContainer"] {
+        width: calc(100vw - 22px) !important;
+    }
+
+    .dashboard-stat-grid,
+    .drive-stat-grid,
+    .dashboard-list-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    button[data-testid="collapsedControl"],
+    [data-testid="collapsedControl"],
+    div[data-testid="stSidebarCollapsedControl"] button,
+    [data-testid="stSidebarCollapseButton"],
+    [data-testid="stSidebarCollapseButton"] button,
+    button[title*="sidebar" i],
+    button[aria-label*="sidebar" i],
+    button[title*="barre" i],
+    button[aria-label*="barre" i],
+    button[title*="navigation" i],
+    button[aria-label*="navigation" i] {
+        left: 16px !important;
+        top: 14px !important;
+    }
+}
+
+/* Remove the old JavaScript-created navigator button if it remains in cache. */
+#bts-sidebar-toggle-button {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+#bts-sidebar-toggle-button {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+#bts-sidebar-toggle-button {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Reliable welcome CTA: Streamlit button stays outside custom HTML wrappers. */
+.welcome-start-panel {
+    width: min(1500px, calc(100vw - 42px)) !important;
+    min-height: 108px !important;
+    margin: 36px auto 14px !important;
+    padding: 24px 34px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 12px !important;
+    border: 1px solid #b8d2f4 !important;
+    background:
+        radial-gradient(circle at 8% 50%, rgba(43,131,255,0.16), transparent 13%),
+        linear-gradient(90deg, #f4f9ff, #ffffff) !important;
+    box-shadow: 0 16px 38px rgba(8,37,84,0.08) !important;
+}
+
+.welcome-start-panel strong,
+.welcome-start-panel span {
+    display: block !important;
+    color: #082554 !important;
+    letter-spacing: 0 !important;
+}
+
+.welcome-start-panel strong {
+    font-size: 24px !important;
+    font-weight: 950 !important;
+    margin-bottom: 8px !important;
+}
+
+.welcome-start-panel span {
+    font-size: 17px !important;
+    font-weight: 750 !important;
+    color: #475d80 !important;
+}
+
+div[data-testid="stVerticalBlock"] > div:has(.welcome-start-panel) + div[data-testid="stButton"] {
+    width: min(1500px, calc(100vw - 42px)) !important;
+    margin: 0 auto 0 !important;
+}
+
+div[data-testid="stVerticalBlock"] > div:has(.welcome-start-panel) + div[data-testid="stButton"] > button {
+    min-height: 58px !important;
+    border-radius: 10px !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #082b63, #041d45) !important;
+    border: 0 !important;
+    box-shadow: 0 16px 34px rgba(8,43,99,0.24) !important;
+    font-size: 18px !important;
+    font-weight: 950 !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+.main .block-container,
+section.main .block-container,
+[data-testid="stMainBlockContainer"] {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
 /* Safety: old transition overlays must never block the production interface. */
 .entry-transition,
 .login-gateway-transition,
@@ -13978,4 +14376,43 @@ header button[title*="navigation" i] svg {
         left: 18px !important;
         top: 14px !important;
     }
+}
+
+/* Absolute final override: keep the interface visible and clickable. */
+.entry-transition,
+.login-gateway-transition,
+.entry-transition-3d {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.page-transition,
+.page-transition *,
+.page-transition > div,
+.page-transition .stMarkdown,
+.page-transition div[data-testid="stForm"],
+.page-transition div[data-testid="stExpander"],
+.page-transition div[data-testid="stAlert"],
+.page-transition div[data-testid="stVerticalBlock"] > div {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    pointer-events: auto !important;
+}
+
+.page-transition::before,
+.page-transition::after {
+    content: none !important;
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+/* Remove the old JavaScript-created navigator button if it remains in cache. */
+#bts-sidebar-toggle-button {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
