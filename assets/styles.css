@@ -15067,3 +15067,253 @@ button[aria-label="Fermer la barre latérale"] {
         padding-right: 9px !important;
     }
 }
+
+/* ==========================================================================
+   NAVIGATOR BUTTON RECOVERY
+   Keep Streamlit's real sidebar control visible and readable at all times.
+   ========================================================================== */
+
+button[data-testid="collapsedControl"],
+[data-testid="collapsedControl"],
+div[data-testid="stSidebarCollapsedControl"],
+div[data-testid="stSidebarCollapsedControl"] button,
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stSidebarCollapseButton"] button,
+button[title="Open sidebar"],
+button[title="Close sidebar"],
+button[aria-label="Open sidebar"],
+button[aria-label="Close sidebar"],
+button[title="Ouvrir la barre latérale"],
+button[title="Fermer la barre latérale"],
+button[aria-label="Ouvrir la barre latérale"],
+button[aria-label="Fermer la barre latérale"] {
+    display: inline-flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    position: fixed !important;
+    z-index: 2147483647 !important;
+    top: 18px !important;
+    left: 18px !important;
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px !important;
+    min-height: 52px !important;
+    max-width: 52px !important;
+    max-height: 52px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    border-radius: 15px !important;
+    border: 1px solid rgba(255,255,255,0.45) !important;
+    background: linear-gradient(135deg, #075be8, #1572ff) !important;
+    color: #ffffff !important;
+    box-shadow: 0 18px 38px rgba(7, 31, 73, 0.28) !important;
+}
+
+button[data-testid="collapsedControl"] svg,
+[data-testid="collapsedControl"] svg,
+div[data-testid="stSidebarCollapsedControl"] svg,
+div[data-testid="stSidebarCollapsedControl"] button svg,
+[data-testid="stSidebarCollapseButton"] svg,
+[data-testid="stSidebarCollapseButton"] button svg,
+button[title="Open sidebar"] svg,
+button[title="Close sidebar"] svg,
+button[aria-label="Open sidebar"] svg,
+button[aria-label="Close sidebar"] svg,
+button[title="Ouvrir la barre latérale"] svg,
+button[title="Fermer la barre latérale"] svg,
+button[aria-label="Ouvrir la barre latérale"] svg,
+button[aria-label="Fermer la barre latérale"] svg {
+    display: none !important;
+}
+
+button[data-testid="collapsedControl"]::before,
+[data-testid="collapsedControl"]::before,
+div[data-testid="stSidebarCollapsedControl"]::before,
+div[data-testid="stSidebarCollapsedControl"] button::before,
+[data-testid="stSidebarCollapseButton"]::before,
+[data-testid="stSidebarCollapseButton"] button::before,
+button[title="Open sidebar"]::before,
+button[title="Close sidebar"]::before,
+button[aria-label="Open sidebar"]::before,
+button[aria-label="Close sidebar"]::before,
+button[title="Ouvrir la barre latérale"]::before,
+button[title="Fermer la barre latérale"]::before,
+button[aria-label="Ouvrir la barre latérale"]::before,
+button[aria-label="Fermer la barre latérale"]::before {
+    content: "☰" !important;
+    display: block !important;
+    color: #ffffff !important;
+    font-size: 28px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+}
+
+button[data-testid="collapsedControl"]:hover,
+[data-testid="collapsedControl"]:hover,
+div[data-testid="stSidebarCollapsedControl"]:hover,
+div[data-testid="stSidebarCollapsedControl"] button:hover,
+[data-testid="stSidebarCollapseButton"]:hover,
+[data-testid="stSidebarCollapseButton"] button:hover {
+    transform: translateY(-1px) !important;
+    background: linear-gradient(135deg, #061f49, #075be8) !important;
+    box-shadow: 0 22px 44px rgba(7, 31, 73, 0.34) !important;
+}
+
+section[data-testid="stSidebar"] {
+    display: block !important;
+}
+
+.academic-dashboard-userbar {
+    margin-top: 14px !important;
+}
+
+.academic-dashboard-hero {
+    margin-top: 22px !important;
+}
+
+/* ==========================================================================
+   HEADER NAVIGATOR FINAL OVERRIDE
+   Streamlit changes this button between versions. This final rule catches the
+   real header control, keeps one visible navigator button, and removes the
+   useless header toolbar from the presentation view.
+   ========================================================================== */
+
+header[data-testid="stHeader"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    background: transparent !important;
+    pointer-events: none !important;
+    z-index: 2147483646 !important;
+}
+
+header [data-testid="stToolbar"],
+header [data-testid="stDecoration"],
+header [data-testid="stStatusWidget"],
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+header button[kind="header"],
+header button[data-testid="baseButton-headerNoPadding"],
+header button[data-testid="baseButton-header"],
+header [data-testid="baseButton-headerNoPadding"],
+header [data-testid="baseButton-header"],
+button[data-testid="collapsedControl"],
+[data-testid="collapsedControl"],
+div[data-testid="stSidebarCollapsedControl"],
+div[data-testid="stSidebarCollapsedControl"] button,
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stSidebarCollapseButton"] button,
+button[title="Open sidebar"],
+button[title="Close sidebar"],
+button[aria-label="Open sidebar"],
+button[aria-label="Close sidebar"],
+button[aria-label*="sidebar" i],
+button[title*="sidebar" i],
+button[aria-label*="barre" i],
+button[title*="barre" i],
+button[aria-label*="navigation" i],
+button[title*="navigation" i] {
+    display: inline-flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    position: fixed !important;
+    z-index: 2147483647 !important;
+    top: 18px !important;
+    left: 18px !important;
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px !important;
+    min-height: 52px !important;
+    max-width: 52px !important;
+    max-height: 52px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    border-radius: 15px !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    background: linear-gradient(135deg, #062a63, #1168f3) !important;
+    color: #ffffff !important;
+    box-shadow: 0 18px 38px rgba(7, 31, 73, 0.3) !important;
+}
+
+header button[kind="header"] svg,
+header button[data-testid="baseButton-headerNoPadding"] svg,
+header button[data-testid="baseButton-header"] svg,
+header [data-testid="baseButton-headerNoPadding"] svg,
+header [data-testid="baseButton-header"] svg,
+button[data-testid="collapsedControl"] svg,
+[data-testid="collapsedControl"] svg,
+div[data-testid="stSidebarCollapsedControl"] svg,
+div[data-testid="stSidebarCollapsedControl"] button svg,
+[data-testid="stSidebarCollapseButton"] svg,
+[data-testid="stSidebarCollapseButton"] button svg,
+button[title="Open sidebar"] svg,
+button[title="Close sidebar"] svg,
+button[aria-label="Open sidebar"] svg,
+button[aria-label="Close sidebar"] svg,
+button[aria-label*="sidebar" i] svg,
+button[title*="sidebar" i] svg,
+button[aria-label*="barre" i] svg,
+button[title*="barre" i] svg,
+button[aria-label*="navigation" i] svg,
+button[title*="navigation" i] svg {
+    display: none !important;
+}
+
+header button[kind="header"]::before,
+header button[data-testid="baseButton-headerNoPadding"]::before,
+header button[data-testid="baseButton-header"]::before,
+header [data-testid="baseButton-headerNoPadding"]::before,
+header [data-testid="baseButton-header"]::before,
+button[data-testid="collapsedControl"]::before,
+[data-testid="collapsedControl"]::before,
+div[data-testid="stSidebarCollapsedControl"]::before,
+div[data-testid="stSidebarCollapsedControl"] button::before,
+[data-testid="stSidebarCollapseButton"]::before,
+[data-testid="stSidebarCollapseButton"] button::before,
+button[title="Open sidebar"]::before,
+button[title="Close sidebar"]::before,
+button[aria-label="Open sidebar"]::before,
+button[aria-label="Close sidebar"]::before,
+button[aria-label*="sidebar" i]::before,
+button[title*="sidebar" i]::before,
+button[aria-label*="barre" i]::before,
+button[title*="barre" i]::before,
+button[aria-label*="navigation" i]::before,
+button[title*="navigation" i]::before {
+    content: "\2630" !important;
+    display: block !important;
+    color: #ffffff !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 28px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+}
+
+header button[kind="header"]:hover,
+header button[data-testid="baseButton-headerNoPadding"]:hover,
+header button[data-testid="baseButton-header"]:hover,
+button[data-testid="collapsedControl"]:hover,
+[data-testid="collapsedControl"]:hover,
+div[data-testid="stSidebarCollapsedControl"]:hover,
+div[data-testid="stSidebarCollapsedControl"] button:hover,
+[data-testid="stSidebarCollapseButton"]:hover,
+[data-testid="stSidebarCollapseButton"] button:hover {
+    transform: translateY(-1px) !important;
+    background: linear-gradient(135deg, #041b3f, #075be8) !important;
+    box-shadow: 0 22px 44px rgba(7, 31, 73, 0.36) !important;
+}

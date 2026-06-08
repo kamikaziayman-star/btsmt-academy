@@ -7860,7 +7860,12 @@ def sidebar_navigation():
 
 
 def main():
-    st.set_page_config(page_title=APP_TITLE, page_icon="SC", layout="wide")
+    st.set_page_config(
+        page_title=APP_TITLE,
+        page_icon="SC",
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
     inject_style()
     data = load_data()
 
