@@ -24,7 +24,7 @@ BACKUP_DIR = Path("btsmtacademy_backups")
 UPLOAD_DIR = Path("btsmtacademy_uploads")
 LOGO_PATH = Path(r"c:\Users\pc\Downloads\plf logo.png")
 RESOURCE_TYPES = ["Cours", "Exercice", "Correction", "Examen", "Fiche resume"]
-COURSE_STATUS = ["Disponible", "A reviser", "Corrige ajoute", "Mis a jour"]
+COURSE_STATUS = ["Disponible", "À réviser", "Corrigé ajouté", "Mis à jour"]
 ADMIN_EMAIL = "admin@btsmtacademy.com"
 ADMIN_PASSWORD = os.getenv("BTSMT_ADMIN_PASSWORD", "admin123")
 DIRECTION_EMAIL = "direction@btsmtacademy.com"
@@ -192,7 +192,7 @@ def subject_theme(subject):
 PROF_ACCOUNTS = {
     ADMIN_EMAIL: {
         "name": "Administration BTS SMARTCAMPUS",
-        "subject": "Toutes les matieres",
+        "subject": "Toutes les matières",
         "password": ADMIN_PASSWORD,
         "role": "admin",
     },
@@ -333,8 +333,8 @@ def default_data():
         },
         "examens": [
             {
-                "titre": "Examens nationaux precedents",
-                "matiere": "Toutes les matieres",
+                "titre": "Examens nationaux précédents",
+                "matiere": "Toutes les matières",
                 "annee": "Archive",
                 "description": "Ajoutez ici le lien Drive des examens nationaux.",
                 "url": "https://drive.google.com/",
@@ -505,7 +505,7 @@ def load_data():
     for message in data.get("messages", []):
         message.setdefault("matiere", "General")
         message.setdefault("prof", "Administration")
-        message.setdefault("date", "Date non indiquee")
+        message.setdefault("date", "Date non indiquée")
         message.setdefault("important", False)
         for field in ("titre", "prof", "contenu"):
             message[field] = normalize_brand_text(message.get(field, ""))
@@ -515,7 +515,7 @@ def load_data():
         for resource in data["cours"][subject]:
             resource.setdefault("type", "Cours")
             resource.setdefault("statut", "Disponible")
-            resource.setdefault("date", "Date non indiquee")
+            resource.setdefault("date", "Date non indiquée")
             resource.setdefault("prof", "Administration")
             for field in ("titre", "description", "prof"):
                 resource[field] = normalize_brand_text(resource.get(field, ""))
@@ -523,7 +523,7 @@ def load_data():
     for exam in data.get("examens", []):
         exam.setdefault("session", "Archive")
         exam.setdefault("corrige_url", "")
-        exam.setdefault("date", "Date non indiquee")
+        exam.setdefault("date", "Date non indiquée")
 
     data.setdefault("prof_accounts", PROF_ACCOUNTS)
     for email, account in PROF_ACCOUNTS.items():
@@ -546,7 +546,7 @@ def load_data():
         account.setdefault("groupe", "")
         account.setdefault("password", "")
         account.setdefault("status", "pending")
-        account.setdefault("created_at", "Date non indiquee")
+        account.setdefault("created_at", "Date non indiquée")
         account.setdefault("validated_at", "")
         account.setdefault("banned", False)
         account.setdefault("admin_messages", [])
@@ -563,7 +563,7 @@ def load_data():
         devoir.setdefault("date_limite", "")
         devoir.setdefault("lien", "")
         devoir.setdefault("prof", "Administration")
-        devoir.setdefault("date_publication", "Date non indiquee")
+        devoir.setdefault("date_publication", "Date non indiquée")
         for field in ("titre", "description", "prof"):
             devoir[field] = normalize_brand_text(devoir.get(field, ""))
 
@@ -571,10 +571,10 @@ def load_data():
     for shared_file in data["shared_files"]:
         shared_file.setdefault("titre", "Fichier partage")
         shared_file.setdefault("description", "")
-        shared_file.setdefault("matiere", "Toutes les matieres")
+        shared_file.setdefault("matiere", "Toutes les matières")
         shared_file.setdefault("auteur", "Administration")
         shared_file.setdefault("role", "direction")
-        shared_file.setdefault("date", "Date non indiquee")
+        shared_file.setdefault("date", "Date non indiquée")
         shared_file.setdefault("filename", "")
         shared_file.setdefault("path", "")
         shared_file.setdefault("mime", "application/octet-stream")
@@ -587,7 +587,7 @@ def load_data():
         contact.setdefault("nom", "")
         contact.setdefault("prenom", "")
         contact.setdefault("message", "")
-        contact.setdefault("date", "Date non indiquee")
+        contact.setdefault("date", "Date non indiquée")
         contact.setdefault("reponse", "")
         contact.setdefault("date_reponse", "")
 
@@ -599,7 +599,7 @@ def load_data():
         ticket.setdefault("role", "Utilisateur")
         ticket.setdefault("sujet", "")
         ticket.setdefault("message", "")
-        ticket.setdefault("date", "Date non indiquee")
+        ticket.setdefault("date", "Date non indiquée")
         ticket.setdefault("statut", "Nouveau")
         ticket.setdefault("reponse", "")
         ticket.setdefault("date_reponse", "")
@@ -620,7 +620,7 @@ def load_data():
         message.setdefault("to_name", "")
         message.setdefault("titre", "Message")
         message.setdefault("contenu", "")
-        message.setdefault("date", "Date non indiquee")
+        message.setdefault("date", "Date non indiquée")
         message.setdefault("attachment_path", "")
         message.setdefault("attachment_name", "")
         message.setdefault("attachment_mime", "application/octet-stream")
@@ -648,10 +648,18 @@ def backup_data_file():
 
 def save_data(data, create_backup=True):
     if create_backup:
-        backup_data_file()
+        try:
+            backup_data_file()
+        except OSError:
+            pass
     save_data_to_database(data)
-    with DATA_FILE.open("w", encoding="utf-8") as file:
-        json.dump(data, file, ensure_ascii=False, indent=2)
+    try:
+        with DATA_FILE.open("w", encoding="utf-8") as file:
+            json.dump(data, file, ensure_ascii=False, indent=2)
+    except OSError:
+        # The JSON file can be locked by the host or by another local process.
+        # The database/Supabase write above is durable, so keep the app running.
+        return
 
 
 def logo_data_uri():
@@ -692,9 +700,9 @@ def render_shared_file(shared_file):
                 <div>
                     <h3>{shared_file.get("titre", "Fichier partage")}</h3>
                     <div class="shared-file-meta">
-                        <span>Matiere: {shared_file.get("matiere", "Toutes les matieres")}</span>
-                        <span>Publie par: {role_label}</span>
-                        <span>Date: {shared_file.get("date", "Date non indiquee")}</span>
+                        <span>Matière : {shared_file.get("matiere", "Toutes les matières")}</span>
+                        <span>Publié par: {role_label}</span>
+                        <span>Date: {shared_file.get("date", "Date non indiquée")}</span>
                     </div>
                 </div>
             </div>
@@ -784,7 +792,7 @@ def render_shared_file_preview(shared_file, key):
     if mime.startswith("text/") or path.suffix.lower() in {".txt", ".csv", ".md"}:
         try:
             st.text_area(
-                "Apercu du fichier",
+                "Aperçu du fichier",
                 path.read_text(encoding="utf-8", errors="replace")[:6000],
                 height=260,
                 key=f"preview_text_{key}",
@@ -793,7 +801,7 @@ def render_shared_file_preview(shared_file, key):
             st.warning("Impossible de lire ce fichier.")
         return
 
-    st.info("Apercu non disponible pour ce type de fichier. Utilisez le bouton Telecharger.")
+    st.info("Aperçu non disponible pour ce type de fichier. Utilisez le bouton Télécharger.")
 
 
 def render_local_attachment(path_value, file_name="", mime="application/octet-stream", key_prefix="attachment"):
@@ -803,13 +811,13 @@ def render_local_attachment(path_value, file_name="", mime="application/octet-st
 
     path = Path(raw_path)
     if not path.exists() or not path.is_file():
-        st.info("Piece jointe indisponible sur ce serveur.")
+        st.info("Pièce jointe indisponible sur ce serveur.")
         return
 
     try:
         attachment_bytes = path.read_bytes()
     except (OSError, IsADirectoryError, PermissionError):
-        st.info("Piece jointe indisponible sur ce serveur.")
+        st.info("Pièce jointe indisponible sur ce serveur.")
         return
 
     if (mime or "").startswith("image/"):
@@ -838,22 +846,22 @@ def support_bot_answer(user_message):
     if any(word in text for word in password_words):
         return (
             "Je comprends. Pour un probleme de connexion ou mot de passe, verifiez d'abord que l'email est ecrit sans espace. "
-            "Si le probleme continue, envoyez cette conversation a l'admin: il pourra verifier votre compte ou changer le mot de passe."
+            "Si le problème continue, envoyez cette conversation à l'admin : il pourra vérifier votre compte ou changer le mot de passe."
         )
     if any(word in text for word in course_words):
         return (
             "Pour un cours ou un lien Drive, indiquez la matiere et le nom du cours. "
-            "Si le lien ne s'ouvre pas, l'admin/professeur pourra le corriger apres reception de votre reclamation."
+            "Si le lien ne s'ouvre pas, l'admin/professeur pourra le corriger après réception de votre réclamation."
         )
     if any(word in text for word in account_words):
         return (
             "Pour un compte ou une validation, votre demande doit etre traitee par l'administration. "
-            "Envoyez cette conversation a l'admin avec votre nom, email et groupe."
+            "Envoyez cette conversation à l'admin avec votre nom, votre email et votre groupe."
         )
     if any(word in text for word in exam_words):
         return (
             "Pour les examens ou la planification, verifiez d'abord l'onglet Calendrier et Examens. "
-            "Si une date ou un fichier manque, envoyez la conversation a l'admin."
+            "Si une date ou un fichier manque, envoyez la conversation à l'admin."
         )
     if any(word in text for word in bug_words):
         return (
@@ -862,7 +870,7 @@ def support_bot_answer(user_message):
         )
     return (
         "Merci pour votre message. Je peux vous aider en darija, francais ou anglais. "
-        "Expliquez le probleme avec plus de details, puis envoyez la conversation a l'admin si vous voulez une intervention."
+        "Expliquez le problème avec plus de détails, puis envoyez la conversation à l'admin si vous voulez une intervention."
     )
 
 
@@ -909,10 +917,10 @@ def show_support_assistant(data, user_label, user_email, user_role):
     with st.form("support_bot_form", clear_on_submit=True):
         user_message = st.text_area(
             "Votre message",
-            placeholder="Exemple: ma kaykhdemch lien dyal cours marketing / je n'arrive pas a ouvrir le PDF...",
+            placeholder="Exemple: ma kaykhdemch lien dyal cours marketing / je n'arrive pas à ouvrir le PDF...",
             key="support_bot_input",
         )
-        send_bot_message = st.form_submit_button("Envoyer a l'assistant")
+        send_bot_message = st.form_submit_button("Envoyer à l'assistant")
 
     if send_bot_message:
         if not user_message.strip():
@@ -925,10 +933,10 @@ def show_support_assistant(data, user_label, user_email, user_role):
             st.rerun()
 
     col_send, col_reset = st.columns(2)
-    if col_send.button("Envoyer cette conversation a l'admin", key="send_support_bot_to_admin"):
+    if col_send.button("Envoyer cette conversation à l'admin", key="send_support_bot_to_admin"):
         transcript = support_bot_transcript(st.session_state.support_bot_messages)
         if not any(message.get("role") == "user" for message in st.session_state.support_bot_messages):
-            st.error("Discutez d'abord avec l'assistant avant d'envoyer a l'admin.")
+            st.error("Discutez d'abord avec l'assistant avant d'envoyer à l'admin.")
         else:
             data.setdefault("support_tickets", []).insert(
                 0,
@@ -937,7 +945,7 @@ def show_support_assistant(data, user_label, user_email, user_role):
                     "nom": user_label or "Utilisateur",
                     "email": user_email,
                     "role": user_role,
-                    "sujet": "Conversation envoyee depuis l'assistant support",
+                    "sujet": "Conversation envoyée depuis l'assistant support",
                     "message": transcript,
                     "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
                     "statut": "Nouveau",
@@ -949,11 +957,11 @@ def show_support_assistant(data, user_label, user_email, user_role):
                 },
             )
             save_data(data)
-            st.success("Conversation envoyee a l'admin.")
+            st.success("Conversation envoyée à l'admin.")
             st.session_state.support_bot_messages = [
                 {
                     "role": "assistant",
-                    "content": "Votre conversation a ete envoyee. Vous pouvez commencer une nouvelle demande si besoin.",
+                    "content": "Votre conversation a été envoyée. Vous pouvez commencer une nouvelle demande si besoin.",
                 }
             ]
             st.rerun()
@@ -972,7 +980,7 @@ def platform_users_directory(data):
     users = [
         {
             "email": STUDENT_EMAIL,
-            "name": "Compte etudiant general",
+            "name": "Compte étudiant général",
             "role": "Etudiant general",
         },
         {
@@ -1068,7 +1076,7 @@ def item_update_date(item):
         item.get("date")
         or item.get("date_publication")
         or item.get("date_limite")
-        or "Date non indiquee"
+        or "Date non indiquée"
     )
 
 
@@ -1277,7 +1285,7 @@ def is_weekend_date(value):
 def deadline_label(value):
     deadline = parse_deadline(value)
     if deadline == datetime.max:
-        return "Date non indiquee"
+        return "Date non indiquée"
 
     today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
     days_left = (deadline - today).days
@@ -5196,8 +5204,8 @@ def show_header(data=None):
                 <h1>Bienvenue sur<br>BTS <span>SMARTCAMPUS</span></h1>
                 <div class="dashboard-gold-line"></div>
                 <p>
-                    Plateforme academique moderne pour centraliser les cours,
-                    ressources, examens et communications.
+                    Plateforme académique moderne pour centraliser les cours,
+                    les ressources, les examens et les communications.
                 </p>
             </div>
             <div class="academic-dashboard-illustration">
@@ -5227,7 +5235,7 @@ def dashboard_feature_card(icon, title, text):
 
 
 def dashboard_announcement(data, admin_messages):
-    message_text = "Reunion pedagogique le 15 mai a 10h en salle 204."
+    message_text = "Réunion pédagogique le 15 mai a 10h en salle 204."
     if admin_messages:
         latest_message = sorted(admin_messages, key=lambda item: parse_date(item.get("date")), reverse=True)[0]
         message_text = latest_message.get("contenu") or latest_message.get("titre", message_text)
@@ -5266,7 +5274,7 @@ def show_legacy_header(data=None):
                 <h1>Bienvenue sur<br><span>BTS SMARTCAMPUS</span></h1>
                 <p>
                     Plateforme pour centraliser les cours, les fiches Drive, les examens
-                    nationaux precedents et les messages destines aux etudiants.
+                    nationaux précédents et les messages destinés aux étudiants.
                 </p>
             </div>
             <div class="academic-dashboard-illustration">
@@ -5284,7 +5292,7 @@ def show_creator_footer():
     st.markdown(
         """
         <div class="creator-footer">
-            Plateforme creee par <strong>Ayman Marzagui</strong>
+            Plateforme créée par <strong>Ayman Marzagui</strong>
         </div>
         """,
         unsafe_allow_html=True,
@@ -5442,9 +5450,9 @@ def register_student_account(data, first_name, last_name, email, group, password
     if clean_password != clean_confirm:
         return False, "Les deux mots de passe ne sont pas identiques."
     if clean_email in data.get("student_accounts", {}):
-        return False, "Un compte etudiant existe deja avec cet email."
+        return False, "Un compte étudiant existe déjà avec cet email."
     if clean_email in data.get("prof_accounts", {}) or clean_email in (DIRECTION_EMAIL.lower(), ADMIN_EMAIL.lower()):
-        return False, "Cet email est reserve a l'administration."
+        return False, "Cet email est réservé à l'administration."
 
     data.setdefault("student_accounts", {})[clean_email] = {
         "prenom": clean_first_name,
@@ -5456,7 +5464,7 @@ def register_student_account(data, first_name, last_name, email, group, password
         "validated_at": "",
     }
     save_data(data)
-    return True, "Votre demande est envoyee. La direction doit valider votre compte."
+    return True, "Votre demande a été envoyée. La direction doit valider votre compte."
 
 
 def show_platform_login(data):
@@ -5469,17 +5477,17 @@ def show_platform_login(data):
                     <span class="platform-login-brand-text">BTS SMARTCAMPUS</span>
                 </div>
                 <div class="platform-login-actions">
-                    <div class="platform-login-pill">Acces securise a la plateforme</div>
+                    <div class="platform-login-pill">Accès sécurisé à la plateforme</div>
                     <div class="platform-login-help">?</div>
                 </div>
             </div>
             <div class="platform-login-hero">
                 <div class="platform-login-copy">
-                    <h1>Connectez-vous a<br><span>BTS SMARTCAMPUS</span></h1>
+                    <h1>Connectez-vous à<br><span>BTS SMARTCAMPUS</span></h1>
                     <div class="platform-login-gold-line"></div>
                     <p>
-                        Accedez a vos cours, examens, fichiers partages, messages et planning
-                        depuis un espace moderne pense pour accompagner votre reussite.
+                        Accédez à vos cours, examens, fichiers partagés, messages et planning
+                        depuis un espace moderne pensé pour accompagner votre réussite.
                     </p>
                 </div>
                 <div class="platform-login-card">
@@ -5493,13 +5501,13 @@ def show_platform_login(data):
 
     submitted = False
     signup_submitted = False
-    login_tab, signup_tab = st.tabs(["Connexion", "Inscription etudiant"])
+    login_tab, signup_tab = st.tabs(["Connexion", "Inscription étudiant"])
 
     with login_tab:
         with st.form("platform_login_form"):
             email = st.text_input("Email", placeholder="Entrez votre adresse email")
             password = st.text_input("Mot de passe", type="password", placeholder="Entrez votre mot de passe")
-            submitted = st.form_submit_button("Acceder a la plateforme")
+            submitted = st.form_submit_button("Accéder à la plateforme")
 
     with signup_tab:
         with st.form("student_signup_form", clear_on_submit=True):
@@ -5516,7 +5524,7 @@ def show_platform_login(data):
         """
                     <div class="platform-login-note">
                         <span>i</span>
-                        <span>Les nouveaux comptes etudiants doivent etre valides par la direction.</span>
+                        <span>Les nouveaux comptes étudiants doivent être validés par la direction.</span>
                     </div>
                 </div>
             </div>
@@ -5554,7 +5562,7 @@ def show_platform_login(data):
             st.session_state.platform_user_email = auth.get("email", "")
             st.session_state.platform_user_role = auth.get("role", "student")
             st.session_state.login_transition = False
-            st.success("Connexion reussie.")
+            st.success("Connexion réussie.")
             st.rerun()
         else:
             st.error("Email ou mot de passe incorrect.")
@@ -5580,21 +5588,21 @@ def show_welcome():
                 <div class="welcome-copy">
                     <h1>Bienvenue sur<br>BTS <span>SMARTCAMPUS</span></h1>
                     <p>
-                        Est une plateforme dediee aux etudiants souhaitant reviser efficacement.
-                        Vous y trouverez tous les cours, exercices corriges et examens des annees
-                        precedentes, organises et accessibles en un seul endroit. Un espace simple,
-                        moderne et complet pour accompagner votre reussite tout au long de l'annee.
+                        BTS SMARTCAMPUS est une plateforme dédiée aux étudiants qui souhaitent réviser efficacement.
+                        Vous y trouverez tous les cours, exercices corrigés et examens des années
+                        précédentes, organisés et accessibles en un seul endroit. Un espace simple,
+                        moderne et complet pour accompagner votre réussite tout au long de l'année.
                     </p>
                     <div class="welcome-feature-row">
-                        <span class="welcome-feature"><b>▣</b>Cours de qualite</span>
+                        <span class="welcome-feature"><b>▣</b>Cours de qualité</span>
                         <span class="welcome-feature"><b>◌</b>Ressources Drive</span>
-                        <span class="welcome-feature"><b>☆</b>Examens precedents</span>
+                        <span class="welcome-feature"><b>☆</b>Examens précédents</span>
                     </div>
                 </div>
                 <div class="welcome-visual">
                     <div class="welcome-mini-card mini-cours">
                         <strong>12+</strong>
-                        <span>Matieres organisees</span>
+                        <span>Matières organisées</span>
                     </div>
                     <div class="welcome-mini-card mini-examens">
                         <strong>PDF</strong>
@@ -5615,7 +5623,7 @@ def show_welcome():
         unsafe_allow_html=True,
     )
 
-    st.markdown('<div class="welcome-start-panel"><div><strong>Commencer maintenant</strong><span>Accedez a tous vos cours, ressources et outils en un clic.</span></div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="welcome-start-panel"><div><strong>Commencer maintenant</strong><span>Accédez à tous vos cours, ressources et outils en un clic.</span></div></div>', unsafe_allow_html=True)
     if st.button("Commencer maintenant", width="stretch"):
         st.session_state.platform_started = True
         st.session_state.entry_animation = False
@@ -5655,33 +5663,33 @@ def show_welcome_academic():
                     <h1>Bienvenue sur<br>BTS <span>SMARTCAMPUS</span></h1>
                     <div class="welcome-gold-line"></div>
                     <p>
-                        Est une plateforme dediee aux etudiants souhaitant reviser efficacement.
-                        Vous y trouverez tous les cours, exercices corriges et examens des annees
-                        precedentes, organises et accessibles en un seul endroit. Un espace simple,
-                        moderne et complet pour accompagner votre reussite tout au long de l'annee.
+                        BTS SMARTCAMPUS est une plateforme dédiée aux étudiants qui souhaitent réviser efficacement.
+                        Vous y trouverez tous les cours, exercices corrigés et examens des années
+                        précédentes, organisés et accessibles en un seul endroit. Un espace simple,
+                        moderne et complet pour accompagner votre réussite tout au long de l'année.
                     </p>
                     <div class="welcome-feature-row">
-                        <span class="welcome-feature"><b>II</b>Cours de qualite</span>
+                        <span class="welcome-feature"><b>II</b>Cours de qualité</span>
                         <span class="welcome-feature"><b>[]</b>Ressources Drive</span>
-                        <span class="welcome-feature"><b>*</b>Examens precedents</span>
+                        <span class="welcome-feature"><b>*</b>Examens précédents</span>
                     </div>
                 </div>
                 <div class="welcome-visual academic-welcome-grid">
                     <div class="welcome-mini-card mini-cours">
                         <strong>PDF</strong>
-                        <span><b>Matieres organisees</b>Tous vos cours classes par matiere.</span>
+                        <span><b>Matières organisées</b>Tous vos cours classés par matière.</span>
                     </div>
                     <div class="welcome-mini-card mini-examens">
                         <strong>PDF</strong>
-                        <span><b>Cours et fiches Drive</b>Accedez aux cours et fiches partages.</span>
+                        <span><b>Cours et fiches Drive</b>Accédez aux cours et aux fiches partagées.</span>
                     </div>
                     <div class="welcome-mini-card mini-drive">
                         <strong>Exam</strong>
-                        <span><b>Examens</b>Preparation nationale, sujets et annales corriges.</span>
+                        <span><b>Examens</b>Préparation nationale, sujets et annales corrigés.</span>
                     </div>
                     <div class="welcome-mini-card mini-profs">
                         <strong>Prof</strong>
-                        <span><b>Professeurs</b>Messages et partage avec vos enseignants.</span>
+                        <span><b>Professeurs</b>Messages et échanges avec vos enseignants.</span>
                     </div>
                     <div class="welcome-floating-badge">BTS</div>
                 </div>
@@ -5691,8 +5699,8 @@ def show_welcome_academic():
         unsafe_allow_html=True,
     )
 
-    st.markdown('<div class="welcome-start-panel academic-welcome-start-panel"><div><strong>Commencer maintenant</strong><span>Accedez a tous vos cours, ressources et outils en un clic.</span></div></div>', unsafe_allow_html=True)
-    if st.button("Acceder a la plateforme ->", width="stretch"):
+    st.markdown('<div class="welcome-start-panel academic-welcome-start-panel"><div><strong>Commencer maintenant</strong><span>Accédez à tous vos cours, ressources et outils en un clic.</span></div></div>', unsafe_allow_html=True)
+    if st.button("Accéder à la plateforme ->", width="stretch"):
         st.session_state.platform_started = True
         st.session_state.entry_animation = False
         st.session_state.login_transition = False
@@ -5701,7 +5709,7 @@ def show_welcome_academic():
     st.markdown(
         """
         <div class="welcome-tags-outside academic-welcome-links">
-            <span class="welcome-tag tag-academy"><b>SMART CAMPUS</b><small>Accueil et actualites</small></span>
+            <span class="welcome-tag tag-academy"><b>SMART CAMPUS</b><small>Accueil et actualités</small></span>
             <span class="welcome-tag tag-ressources"><b>RESSOURCES</b><small>Cours et documents</small></span>
             <span class="welcome-tag tag-examens"><b>EXAMENS</b><small>Annales et corriges</small></span>
             <span class="welcome-tag tag-direction"><b>DIRECTION</b><small>Informations et annonces</small></span>
@@ -5734,7 +5742,7 @@ def show_login_to_welcome_transition():
             <div class="login-gateway-card">
                 <div class="login-gateway-mark">SC</div>
                 <h2>BTS <span>SMART</span>CAMPUS</h2>
-                <p>Connexion reussie. Preparation de votre espace...</p>
+                <p>Connexion réussie. Preparation de votre espace...</p>
                 <div class="login-gateway-dots">
                     <span></span>
                     <span></span>
@@ -5831,7 +5839,7 @@ def show_home(data):
             f'<small>{subject}</small></div><time><b>{day}</b><span>{month}</span></time></div>'
         )
     if not exam_rows:
-        exam_rows.append('<div class="dash-empty-row">Aucun nouvel examen planifie a afficher.</div>')
+        exam_rows.append('<div class="dash-empty-row">Aucun nouvel examen planifié à afficher.</div>')
 
     file_rows = []
     for item in recent_files[:3]:
@@ -5844,7 +5852,7 @@ def show_home(data):
             f'<em>{clean(item.get("taille") or item.get("size"), "")}</em></div>'
         )
     if not file_rows:
-        file_rows.append('<div class="dash-empty-row">Aucune nouvelle ressource partagee.</div>')
+        file_rows.append('<div class="dash-empty-row">Aucune nouvelle ressource partagée.</div>')
 
     announcement_rows = []
     source_messages = admin_messages or data.get("messages", [])
@@ -5857,7 +5865,7 @@ def show_home(data):
             f'<small>{text}</small></div><em>{date}</em></div>'
         )
     if not announcement_rows:
-        announcement_rows.append('<div class="dash-empty-row">Aucune annonce recente a afficher.</div>')
+        announcement_rows.append('<div class="dash-empty-row">Aucune annonce récente à afficher.</div>')
 
     message_rows = []
     for item in messages[:3]:
@@ -5870,13 +5878,13 @@ def show_home(data):
             f'<em>{short_date(item.get("date"))}</em></div>'
         )
     if not message_rows:
-        message_rows.append('<div class="dash-empty-row">Aucun nouveau message a afficher.</div>')
+        message_rows.append('<div class="dash-empty-row">Aucun nouveau message à afficher.</div>')
 
     fixed_dashboard_html = textwrap.dedent(f"""
     <div class="dashboard-stat-grid">
         <div class="dashboard-stat stat-blue">
             <div class="stat-icon">▤</div>
-            <div class="label">Matieres</div>
+            <div class="label">Matières</div>
             <div class="value">{total_courses}</div>
             <div class="hint">Cours disponibles</div>
         </div>
@@ -5884,7 +5892,7 @@ def show_home(data):
             <div class="stat-icon">◇</div>
             <div class="label">Examens</div>
             <div class="value">{total_exams}</div>
-            <div class="hint">A venir</div>
+            <div class="hint">À venir</div>
         </div>
         <div class="dashboard-stat stat-amber">
             <div class="stat-icon">▣</div>
@@ -5896,16 +5904,16 @@ def show_home(data):
             <div class="stat-icon">!</div>
             <div class="label">Evenements</div>
             <div class="value">{unread_total}</div>
-            <div class="hint">Nouveautes</div>
+            <div class="hint">Nouveautés</div>
         </div>
     </div>
     <div class="dashboard-list-grid">
         <div class="dash-panel">
-            <h3><span>◇</span>Examens a venir</h3>
+            <h3><span>◇</span>Examens à venir</h3>
             {''.join(exam_rows)}
         </div>
         <div class="dash-panel">
-            <h3><span>▣</span>Ressources recentes</h3>
+            <h3><span>▣</span>Ressources récentes</h3>
             {''.join(file_rows)}
         </div>
         <div class="dash-panel">
@@ -5913,7 +5921,7 @@ def show_home(data):
             {''.join(announcement_rows)}
         </div>
         <div class="dash-panel">
-            <h3><span>✉</span>Messages etudiants</h3>
+            <h3><span>✉</span>Messages étudiants</h3>
             {''.join(message_rows)}
         </div>
     </div>
@@ -5922,13 +5930,13 @@ def show_home(data):
 
     dashboard_actions = st.columns([1, 1, 1], gap="medium")
     with dashboard_actions[0]:
-        if st.button("Historique des nouveautes", key="open_dashboard_updates", width="stretch"):
-            st.session_state.current_page = "Dernieres mises a jour"
+        if st.button("Historique des nouveautés", key="open_dashboard_updates", width="stretch"):
+            st.session_state.current_page = "Dernières mises à jour"
             st.rerun()
 
     if unread_total or planned_exams or recent_files or messages:
         with dashboard_actions[1]:
-            if st.button("Marquer les nouveautes comme vues", key="mark_all_dashboard_news_seen", width="stretch"):
+            if st.button("Marquer les nouveautés comme vues", key="mark_all_dashboard_news_seen", width="stretch"):
                 mark_updates_seen(data, unread_updates(data, limit=100))
                 mark_many_dashboard_items_seen(
                     data,
@@ -5938,19 +5946,19 @@ def show_home(data):
                         "messages": messages,
                     },
                 )
-                st.success("Toutes les nouveautes visibles sont marquees comme vues.")
+                st.success("Toutes les nouveautés visibles sont marquées comme vues.")
                 st.rerun()
 
     if st.session_state.get("platform_user_role") == "admin":
         with dashboard_actions[2]:
-            if st.button("Reinitialiser les lectures", key="reset_seen_updates_admin", width="stretch"):
+            if st.button("Réinitialiser les lectures", key="reset_seen_updates_admin", width="stretch"):
                 seen = data.setdefault("seen_updates", {})
                 seen.pop(current_user_key(), None)
                 data.setdefault("seen_dashboard", {}).pop(current_user_key(), None)
                 st.session_state.setdefault("seen_updates_session", {}).pop(current_user_key(), None)
                 st.session_state.setdefault("seen_dashboard_session", {}).pop(current_user_key(), None)
                 save_data(data)
-                st.success("Lectures reinitialisees pour votre compte.")
+                st.success("Lectures réinitialisées pour votre compte.")
                 st.rerun()
 
     return
@@ -5966,7 +5974,7 @@ def show_courses(data):
             <div class="courses-hero">
                 <div>
                     <h1>Cours</h1>
-                    <p>Choisissez une matiere pour afficher la liste des cours disponibles.</p>
+                    <p>Choisissez une matière pour afficher la liste des cours disponibles.</p>
                 </div>
                 <div class="courses-hero-art"></div>
             </div>
@@ -5986,7 +5994,7 @@ def show_courses(data):
                         <div>
                             <strong>{subject}</strong>
                             <div class="subject-count">{resources_count} cours disponible(s)</div>
-                            <div class="subject-action">Acceder aux ressources</div>
+                            <div class="subject-action">Accéder aux ressources</div>
                             <div class="subject-label">{theme['label']}</div>
                         </div>
                         <div class="subject-card-button-space"></div>
@@ -5994,13 +6002,13 @@ def show_courses(data):
                     """,
                     unsafe_allow_html=True,
                 )
-                if st.button("Ouvrir cette matiere ->", key=f"open_subject_{subject}", width="stretch"):
+                if st.button("Ouvrir cette matière →", key=f"open_subject_{subject}", width="stretch"):
                     st.session_state.selected_course_subject = subject
                     st.rerun()
         return
 
     subject = st.session_state.selected_course_subject
-    if st.button("Retour aux matieres"):
+    if st.button("Retour aux matières"):
         st.session_state.selected_course_subject = None
         st.rerun()
 
@@ -6025,7 +6033,7 @@ def show_courses(data):
         and (status == "Tous" or resource.get("statut") == status)
     ]
     if not resources:
-        st.info("Aucun cours publie pour cette matiere.")
+        st.info("Aucun cours publié pour cette matière.")
         return
 
     for resource in resources:
@@ -6040,7 +6048,7 @@ def show_courses(data):
             <div class="course-row">
                 <h3>{resource.get("titre", "Cours")}</h3>
                 <div>{''.join(badges)}</div>
-                <div class="muted">Ajoute par {resource.get("prof", "Administration")} | {resource.get("date", "Date non indiquee")}</div>
+                <div class="muted">Ajouté par {resource.get("prof", "Administration")} | {resource.get("date", "Date non indiquée")}</div>
                 <p>{resource.get("description", "")}</p>
             </div>
             """,
@@ -6056,7 +6064,7 @@ def show_courses(data):
 def show_search(data):
     show_academic_page_header(
         "Recherche rapide",
-        "Retrouvez rapidement un cours, une fiche ou une ressource par mot-cle.",
+        "Retrouvez rapidement un cours, une fiche ou une ressource par mot-clé.",
         "R",
     )
     query = st.text_input(
@@ -6071,11 +6079,11 @@ def show_search(data):
     st.caption(f"{len(results)} resultat(s)")
 
     if not results:
-        st.info("Aucun resultat trouve.")
+        st.info("Aucun résultat trouvé.")
         return
 
     for item in results:
-        extra = f"{item.get('matiere')} | {item.get('date', 'Date non indiquee')}"
+        extra = f"{item.get('matiere')} | {item.get('date', 'Date non indiquée')}"
         show_resource_card(item, extra=extra)
 
 
@@ -6084,8 +6092,8 @@ def show_updates(data):
         """
         <div class="courses-hero">
             <div>
-                <h1>Dernieres nouveautes</h1>
-                <p>Toutes les publications deja affichees sur le dashboard restent disponibles ici.</p>
+                <h1>Dernières nouveautés</h1>
+                <p>Toutes les publications déjà affichées sur le dashboard restent disponibles ici.</p>
             </div>
             <div class="courses-hero-art"></div>
         </div>
@@ -6095,7 +6103,7 @@ def show_updates(data):
 
     items = latest_updates(data, limit=30)
     if not items:
-        st.info("Aucune nouveaute pour le moment.")
+        st.info("Aucune nouveauté pour le moment.")
         return
 
     for item in items:
@@ -6114,7 +6122,7 @@ def show_exams(data):
             <div class="exam-hero">
                 <div class="exam-icon-main">E</div>
                 <div>
-                    <h1>Examens nationaux precedents</h1>
+                    <h1>Examens nationaux précédents</h1>
                     <p>Consultez les anciens examens nationaux par matiere, annee et session.</p>
                 </div>
             </div>
@@ -6124,18 +6132,18 @@ def show_exams(data):
     )
 
     col1, col2, col3 = st.columns(3)
-    subject_filter = col1.selectbox("Filtrer par matiere", ["Toutes les matieres"] + SUBJECTS)
+    subject_filter = col1.selectbox("Filtrer par matière", ["Toutes les matières"] + SUBJECTS)
     years = sorted({exam.get("annee", "Archive") for exam in data["examens"]})
-    year_filter = col2.selectbox("Annee", ["Toutes"] + years)
+    year_filter = col2.selectbox("Année", ["Toutes"] + years)
     sessions = sorted({exam.get("session", "Archive") for exam in data["examens"]})
     session_filter = col3.selectbox("Session", ["Toutes"] + sessions)
 
     exams = data["examens"]
-    if subject_filter != "Toutes les matieres":
+    if subject_filter != "Toutes les matières":
         exams = [
             exam
             for exam in exams
-            if exam["matiere"] in (subject_filter, "Toutes les matieres")
+            if exam["matiere"] in (subject_filter, "Toutes les matières")
         ]
     if year_filter != "Toutes":
         exams = [exam for exam in exams if exam.get("annee") == year_filter]
@@ -6143,7 +6151,7 @@ def show_exams(data):
         exams = [exam for exam in exams if exam.get("session") == session_filter]
 
     if not exams:
-        st.info("Aucun examen trouve pour cette matiere.")
+        st.info("Aucun examen trouvé pour cette matière.")
 
     grouped_years = sorted(
         {exam.get("annee", "Archive") for exam in exams},
@@ -6164,10 +6172,10 @@ def show_exams(data):
                                 <span class="badge badge-new">Disponible</span>
                             </div>
                             <div class="exam-meta">
-                                <span>{exam.get("matiere", "Toutes les matieres")}</span>
+                                <span>{exam.get("matiere", "Toutes les matières")}</span>
                                 <span>{exam.get("annee", "Archive")}</span>
                                 <span>{exam.get("session", "Archive")}</span>
-                                <span>{exam.get("date", "Date non indiquee")}</span>
+                                <span>{exam.get("date", "Date non indiquée")}</span>
                             </div>
                             <div class="exam-description">{exam.get("description", "")}</div>
                         </div>
@@ -6181,7 +6189,7 @@ def show_exams(data):
             st.markdown("</div>", unsafe_allow_html=True)
             corrige_url = exam.get("corrige_url", "")
             if corrige_url:
-                st.link_button("Ouvrir le corrige", corrige_url)
+                st.link_button("Ouvrir le corrigé", corrige_url)
 
 
 def show_homework_plan(data):
@@ -6205,12 +6213,12 @@ def show_homework_plan(data):
     )
 
     subject_filter = st.selectbox(
-        "Filtrer par matiere",
-        ["Toutes les matieres"] + SUBJECTS,
+        "Filtrer par matière",
+        ["Toutes les matières"] + SUBJECTS,
     )
 
     devoirs = data.get("devoirs", [])
-    if subject_filter != "Toutes les matieres":
+    if subject_filter != "Toutes les matières":
         devoirs = [devoir for devoir in devoirs if devoir.get("matiere") == subject_filter]
 
     devoirs = [
@@ -6223,7 +6231,7 @@ def show_homework_plan(data):
         st.markdown(
             """
             <div class="planning-empty">
-                Aucun examen planifie pour le moment.
+                Aucun examen planifié pour le moment.
             </div>
             """,
             unsafe_allow_html=True,
@@ -6239,7 +6247,7 @@ def show_homework_plan(data):
                 <div>
                     <h3>{devoir.get("matiere", "General")}</h3>
                     <div class="planning-date">
-                        Date d'examen: <strong>{exam_date or "Non indiquee"}</strong>
+                        Date d'examen: <strong>{exam_date or "Non indiquée"}</strong>
                     </div>
                 </div>
             </div>
@@ -6261,9 +6269,9 @@ def show_shared_files(data):
             <div class="files-title-wrap drive-title-wrap">
                 <div class="files-icon drive-folder-icon">▰</div>
                 <div>
-                    <h1>Fichiers partages</h1>
+                    <h1>Fichiers partagés</h1>
                     <div class="dashboard-gold-line"></div>
-                    <p>Accedez aux documents, cours, PDF, Word, Excel et ressources partages par les enseignants.</p>
+                    <p>Accédez aux documents, cours, PDF, Word, Excel et ressources partagés par les enseignants.</p>
                 </div>
             </div>
             <div class="files-art"></div>
@@ -6281,7 +6289,7 @@ def show_shared_files(data):
             </div>
             <div class="drive-stat-card stat-teal">
                 <span>▥</span>
-                <div><strong>{len(SUBJECTS)}</strong><b>Matieres</b><small>concernees</small></div>
+                <div><strong>{len(SUBJECTS)}</strong><b>Matières</b><small>concernées</small></div>
             </div>
             <div class="drive-stat-card stat-amber">
                 <span>◉</span>
@@ -6297,12 +6305,12 @@ def show_shared_files(data):
 
     col1, col2 = st.columns(2)
     subject_filter = col1.selectbox(
-        "Filtrer par matiere",
-        ["Toutes les matieres"] + SUBJECTS,
+        "Filtrer par matière",
+        ["Toutes les matières"] + SUBJECTS,
         key="drive_subject_filter",
     )
     source_filter = col2.selectbox(
-        "Publie par",
+        "Publié par",
         ["Tous les professeurs", "Direction", "Professeur"],
         key="drive_source_filter",
     )
@@ -6314,11 +6322,11 @@ def show_shared_files(data):
     )
 
     files = list(files_all)
-    if subject_filter != "Toutes les matieres":
+    if subject_filter != "Toutes les matières":
         files = [
             shared_file
             for shared_file in files
-            if shared_file.get("matiere") in (subject_filter, "Toutes les matieres")
+            if shared_file.get("matiere") in (subject_filter, "Toutes les matières")
         ]
 
     if source_filter != "Tous les professeurs":
@@ -6333,7 +6341,7 @@ def show_shared_files(data):
         files = sorted(files, key=lambda shared_file: parse_date(shared_file.get("date")), reverse=True)
 
     if not files:
-        st.info("Aucun fichier partage pour le moment.")
+        st.info("Aucun fichier partagé pour le moment.")
         return
 
     st.markdown(
@@ -6341,7 +6349,7 @@ def show_shared_files(data):
         <div class="drive-list-shell">
             <div class="drive-list-head">
                 <h3><span>▤</span>Liste des fichiers</h3>
-                <small>Affichage de {min(len(files), 1)} a {len(files)} sur {len(files_all)} fichiers</small>
+                <small>Affichage de {min(len(files), 1)} à {len(files)} sur {len(files_all)} fichiers</small>
             </div>
         </div>
         """,
@@ -6353,9 +6361,9 @@ def show_shared_files(data):
         role_label = "Direction BTS SMARTCAMPUS" if shared_file.get("role") == "direction" else shared_file.get("auteur", "Professeur")
         extension = shared_file_extension(shared_file)
         title = html.escape(str(shared_file.get("titre", "Fichier partage")))
-        subject = html.escape(str(shared_file.get("matiere", "Toutes les matieres")))
+        subject = html.escape(str(shared_file.get("matiere", "Toutes les matières")))
         description = html.escape(str(shared_file.get("description", "")))
-        date = html.escape(str(shared_file.get("date", "Date non indiquee")))
+        date = html.escape(str(shared_file.get("date", "Date non indiquée")))
         size = shared_file_size(path) if path.exists() else ""
         item_key = f"{path.as_posix()}_{shared_file.get('date', '')}_{index}"
 
@@ -6369,8 +6377,8 @@ def show_shared_files(data):
                     <div class="drive-file-info">
                         <strong>{title}</strong>
                         <div class="drive-file-meta">
-                            <span>Matiere : {subject}</span>
-                            <span>Publie par : {html.escape(str(role_label))}</span>
+                            <span>Matière : {subject}</span>
+                            <span>Publié par : {html.escape(str(role_label))}</span>
                             <span>Date : {date}</span>
                         </div>
                         <p>{description}</p>
@@ -6408,7 +6416,7 @@ def show_shared_files(data):
 
 def show_student_space(data):
     show_academic_page_header(
-        "Espace etudiant",
+        "Espace étudiant",
         "Acces rapide aux cours, fiches Drive, examens et annonces importantes.",
         "E",
     )
@@ -6423,7 +6431,7 @@ def show_student_space(data):
     related_exams = [
         exam
         for exam in data["examens"]
-        if exam["matiere"] in (selected_subject, "Toutes les matieres")
+        if exam["matiere"] in (selected_subject, "Toutes les matières")
     ]
     for exam in related_exams:
         show_resource_card(exam, extra=exam.get("annee", ""))
@@ -6439,7 +6447,7 @@ def add_course_form(data, subject, prof_name="Administration"):
         title = st.text_input(
             "Nom du cours",
             placeholder="Exemple: Politique de prix",
-            help="Ecrivez le titre qui sera visible par les etudiants.",
+            help="Écrivez le titre qui sera visible par les étudiants.",
         )
         description = st.text_area(
             "Description du cours",
@@ -6489,16 +6497,16 @@ def delete_course_form(data, subject):
     st.caption(
         f"Vous pouvez supprimer uniquement les cours de {subject}."
     )
-    st.text_input("Matiere du cours a supprimer", value=subject, disabled=True)
+    st.text_input("Matière du cours à supprimer", value=subject, disabled=True)
     resources = data["cours"].get(subject, [])
 
     if not resources:
-        st.info("Aucun cours a supprimer pour cette matiere.")
+        st.info("Aucun cours à supprimer pour cette matière.")
         return
 
     labels = [f"{index + 1}. {resource['titre']}" for index, resource in enumerate(resources)]
     selected = st.selectbox(
-        "Cours a supprimer",
+        "Cours à supprimer",
         labels,
         help="Selectionnez le cours exact avant de cliquer sur supprimer.",
     )
@@ -6517,7 +6525,7 @@ def add_exam_form(data, subject):
     with st.form("add_exam_form", clear_on_submit=True):
         st.text_input("Matiere de l'examen", value=subject, disabled=True)
         year = st.text_input(
-            "Annee de l'examen",
+            "Année de l'examen",
             placeholder="Exemple: 2024",
             help="Indiquez l'annee de l'examen. Si vous laissez vide, Archive sera utilise.",
         )
@@ -6529,7 +6537,7 @@ def add_exam_form(data, subject):
         title = st.text_input(
             "Nom de l'examen",
             placeholder="Exemple: Examen national 2024 - session normale",
-            help="Ecrivez le titre visible par les etudiants.",
+            help="Écrivez le titre visible par les étudiants.",
         )
         description = st.text_area(
             "Description de l'examen",
@@ -6578,7 +6586,7 @@ def delete_exam_form(data, subject):
     ]
 
     if not subject_exams:
-        st.info("Aucun examen a supprimer.")
+        st.info("Aucun examen à supprimer.")
         return
 
     labels = [
@@ -6586,7 +6594,7 @@ def delete_exam_form(data, subject):
         for index, exam in enumerate(subject_exams)
     ]
     selected = st.selectbox(
-        "Examen a supprimer",
+        "Examen à supprimer",
         labels,
         help="Selectionnez l'examen exact avant de cliquer sur supprimer.",
     )
@@ -6601,19 +6609,19 @@ def delete_exam_form(data, subject):
 
 
 def message_admin(data, subject, prof_name):
-    st.markdown("#### Messages aux etudiants")
+    st.markdown("#### Messages aux étudiants")
     st.caption(f"Publiez une annonce visible pour la matiere {subject}.")
     with st.form("add_message_form", clear_on_submit=True):
         st.text_input("Matiere du message", value=subject, disabled=True)
         title = st.text_input(
             "Titre du message",
             placeholder="Exemple: Controle le lundi 27 mai",
-            help="Titre court de l'annonce visible par les etudiants.",
+            help="Titre court de l'annonce visible par les étudiants.",
         )
         content = st.text_area(
             "Contenu du message",
-            placeholder="Exemple: Merci de reviser les chapitres 1 et 2 avant le controle.",
-            help="Ecrivez le message complet a afficher aux etudiants.",
+            placeholder="Exemple: Merci de réviser les chapitres 1 et 2 avant le controle.",
+            help="Écrivez le message complet à afficher aux étudiants.",
         )
         important = st.checkbox(
             "Message important",
@@ -6638,7 +6646,7 @@ def message_admin(data, subject, prof_name):
             },
         )
         save_data(data)
-        st.success("Message publie.")
+        st.success("Message publié.")
         st.rerun()
 
     subject_messages = [
@@ -6651,9 +6659,9 @@ def message_admin(data, subject, prof_name):
             for index, message in enumerate(subject_messages)
         ]
         selected = st.selectbox(
-            "Message a supprimer",
+            "Message à supprimer",
             labels,
-            help="Selectionnez l'annonce a retirer de la page d'accueil.",
+            help="Sélectionnez l'annonce à retirer de la page d'accueil.",
         )
 
         if st.button("Supprimer ce message", type="secondary"):
@@ -6664,7 +6672,7 @@ def message_admin(data, subject, prof_name):
             st.success("Message supprime.")
             st.rerun()
     else:
-        st.info("Aucun message publie pour votre matiere.")
+        st.info("Aucun message publié pour votre matière.")
 
 
 def homework_admin(data, subject, prof_name):
@@ -6692,7 +6700,7 @@ def homework_admin(data, subject, prof_name):
             }
         )
         save_data(data)
-        st.success("Date d'examen publiee.")
+        st.success("Date d'examen publiée.")
         st.rerun()
 
     st.divider()
@@ -6702,14 +6710,14 @@ def homework_admin(data, subject, prof_name):
     ]
 
     if not subject_homework:
-        st.info("Aucune date d'examen a supprimer pour cette matiere.")
+        st.info("Aucune date d'examen à supprimer pour cette matière.")
         return
 
     labels = [
         f"{index + 1}. {devoir.get('matiere', subject)} - {devoir.get('date_limite', '')}"
         for index, devoir in enumerate(subject_homework)
     ]
-    selected = st.selectbox("Date d'examen a supprimer", labels)
+    selected = st.selectbox("Date d'examen à supprimer", labels)
 
     if st.button("Supprimer cette date", type="secondary"):
         selected_index = labels.index(selected)
@@ -6727,8 +6735,8 @@ def shared_file_admin(data, subject, author, role):
         if role == "direction":
             target_subject = st.selectbox(
                 "Destination",
-                ["Toutes les matieres"] + SUBJECTS,
-                help="Choisissez Toutes les matieres pour publier a tous les etudiants.",
+                ["Toutes les matières"] + SUBJECTS,
+                help="Choisissez Toutes les matières pour publier à tous les étudiants.",
             )
         else:
             target_subject = subject
@@ -6785,14 +6793,14 @@ def shared_file_admin(data, subject, author, role):
         ]
 
     if not manageable_files:
-        st.info("Aucun fichier a supprimer.")
+        st.info("Aucun fichier à supprimer.")
         return
 
     labels = [
         f"{index + 1}. {shared_file.get('titre')} - {shared_file.get('matiere')}"
         for index, shared_file in enumerate(manageable_files)
     ]
-    selected = st.selectbox("Fichier a supprimer", labels)
+    selected = st.selectbox("Fichier à supprimer", labels)
     if st.button("Supprimer ce fichier", type="secondary"):
         selected_index = labels.index(selected)
         file_to_delete = manageable_files[selected_index]
@@ -6803,7 +6811,7 @@ def shared_file_admin(data, subject, author, role):
 
 
 def student_contact_inbox(data, subject):
-    st.markdown("#### Messages des etudiants")
+    st.markdown("#### Messages des étudiants")
     messages = [
         contact
         for contact in data.get("student_contacts", [])
@@ -6812,7 +6820,7 @@ def student_contact_inbox(data, subject):
     messages = sorted(messages, key=lambda contact: parse_date(contact.get("date")), reverse=True)
 
     if not messages:
-        st.info("Aucun message d'etudiant pour votre matiere.")
+        st.info("Aucun message d'étudiant pour votre matière.")
         return
 
     for index, contact in enumerate(messages):
@@ -6821,7 +6829,7 @@ def student_contact_inbox(data, subject):
             <div class="message">
                 <div class="message-title">{contact.get("prenom", "")} {contact.get("nom", "")}</div>
                 <div class="message-meta">
-                    Matiere: {contact.get("matiere", "")} | Date: {contact.get("date", "Date non indiquee")}
+                    Matière : {contact.get("matiere", "")} | Date: {contact.get("date", "Date non indiquée")}
                 </div>
                 <div class="message-content">{contact.get("message", "")}</div>
             </div>
@@ -6830,10 +6838,10 @@ def student_contact_inbox(data, subject):
         )
 
         if contact.get("reponse"):
-            st.success(f"Reponse envoyee: {contact.get('reponse')}")
+            st.success(f"Réponse envoyée: {contact.get('reponse')}")
         else:
             response = st.text_area(
-                "Repondre a cet etudiant",
+                "Répondre à cet étudiant",
                 key=f"response_{subject}_{index}_{contact.get('date')}",
             )
             if st.button("Envoyer la reponse", key=f"send_response_{subject}_{index}_{contact.get('date')}"):
@@ -6848,7 +6856,7 @@ def student_contact_inbox(data, subject):
 
 
 def student_accounts_admin(data):
-    st.markdown("#### Validation des comptes etudiants")
+    st.markdown("#### Validation des comptes étudiants")
     accounts = data.setdefault("student_accounts", {})
 
     if not accounts:
@@ -6892,7 +6900,7 @@ def student_accounts_admin(data):
                     Email: <strong>{email}</strong><br>
                     Groupe: <strong>{account.get('groupe', 'Non indique')}</strong><br>
                     Statut: <strong>{status_label}</strong><br>
-                    Demande envoyee: {account.get('created_at', 'Date non indiquee')}
+                    Demande envoyée: {account.get('created_at', 'Date non indiquée')}
                 </p>
             </div>
             """,
@@ -6903,17 +6911,17 @@ def student_accounts_admin(data):
             accounts[email]["status"] = "approved"
             accounts[email]["validated_at"] = datetime.now().strftime("%d/%m/%Y %H:%M")
             save_data(data)
-            st.success("Compte etudiant valide.")
+            st.success("Compte étudiant validé.")
             st.rerun()
         if col2.button("Refuser", key=f"reject_student_{email}", disabled=status == "rejected"):
             accounts[email]["status"] = "rejected"
             save_data(data)
-            st.warning("Compte etudiant refuse.")
+            st.warning("Compte étudiant refusé.")
             st.rerun()
         if col3.button("Supprimer", key=f"delete_student_{email}"):
             del accounts[email]
             save_data(data)
-            st.success("Compte etudiant supprime.")
+            st.success("Compte étudiant supprimé.")
             st.rerun()
 
 
@@ -6925,7 +6933,7 @@ def support_tickets_admin(data):
                 <div class="contact-icon">S</div>
                 <div>
                     <h1>Support admin</h1>
-                    <p>Consultez les reclamations envoyees par les utilisateurs et repondez directement depuis cette page.</p>
+                    <p>Consultez les réclamations envoyées par les utilisateurs et repondez directement depuis cette page.</p>
                 </div>
             </div>
             <div class="contact-art"></div>
@@ -6935,7 +6943,7 @@ def support_tickets_admin(data):
     )
     tickets = data.get("support_tickets", [])
     if not tickets:
-        st.info("Aucune reclamation pour le moment.")
+        st.info("Aucune réclamation pour le moment.")
         return
 
     status_filter = st.selectbox(
@@ -6950,7 +6958,7 @@ def support_tickets_admin(data):
         ]
 
     if not filtered_tickets:
-        st.info("Aucune reclamation dans ce filtre.")
+        st.info("Aucune réclamation dans ce filtre.")
         return
 
     for index, ticket in enumerate(filtered_tickets):
@@ -6960,7 +6968,7 @@ def support_tickets_admin(data):
             <div class="message">
                 <div class="message-title">{ticket.get('sujet', 'Reclamation')}</div>
                 <div class="message-meta">
-                    Type: {ticket.get('type', 'Reclamation')} | Statut: {ticket.get('statut', 'Nouveau')} | Date: {ticket.get('date', 'Date non indiquee')}
+                    Type: {ticket.get('type', 'Reclamation')} | Statut: {ticket.get('statut', 'Nouveau')} | Date: {ticket.get('date', 'Date non indiquée')}
                 </div>
                 <div class="message-content">
                     Utilisateur: <strong>{ticket.get('nom', 'Utilisateur')}</strong><br>
@@ -6980,11 +6988,11 @@ def support_tickets_admin(data):
 
         if ticket.get("reponse"):
             st.success(
-                f"Reponse admin ({ticket.get('date_reponse', 'Date non indiquee')}): {ticket.get('reponse')}"
+                f"Reponse admin ({ticket.get('date_reponse', 'Date non indiquée')}): {ticket.get('reponse')}"
             )
 
         response = st.text_area(
-            "Reponse a envoyer a l'utilisateur",
+            "Réponse à envoyer à l'utilisateur",
             value=ticket.get("reponse", ""),
             key=f"support_response_{original_index}_{ticket.get('date', '')}",
         )
@@ -6997,7 +7005,7 @@ def support_tickets_admin(data):
                 tickets[original_index]["date_reponse"] = datetime.now().strftime("%d/%m/%Y %H:%M")
                 tickets[original_index]["statut"] = "Traite"
                 save_data(data)
-                st.success("Reponse envoyee et reclamation marquee comme traitee.")
+                st.success("Réponse envoyée et reclamation marquee comme traitee.")
                 st.rerun()
         if col2.button("En cours", key=f"support_progress_{original_index}_{ticket.get('date')}"):
             tickets[original_index]["statut"] = "En cours"
@@ -7021,7 +7029,7 @@ def user_management_admin(data):
     users = []
     users.append({
         "email": STUDENT_EMAIL,
-        "name": "Compte etudiant general",
+        "name": "Compte étudiant général",
         "role": "Etudiant general",
         "password": "Protege par configuration",
         "status": "Actif",
@@ -7079,14 +7087,14 @@ def user_management_admin(data):
         ]
 
     if not users:
-        st.info("Aucun utilisateur trouve.")
+        st.info("Aucun utilisateur trouvé.")
         return
 
     actionable_users = [user for user in users if user["kind"] != "system"]
     if actionable_users:
         st.markdown("#### Panneau d'action rapide")
         selected_email = st.selectbox(
-            "Choisir un utilisateur a gerer",
+            "Choisir un utilisateur à gérer",
             [user["email"] for user in actionable_users],
             format_func=lambda email: next(
                 f"{user['name']} | {user['email']} | {user['role']} | {user['status']}"
@@ -7120,7 +7128,7 @@ def user_management_admin(data):
             key=f"quick_message_title_{selected_user['kind']}_{selected_user['email']}",
         )
         msg_content = st.text_area(
-            "Message a envoyer",
+            "Message à envoyer",
             key=f"quick_message_content_{selected_user['kind']}_{selected_user['email']}",
         )
         col1, col2, col3, col4 = st.columns(4)
@@ -7136,7 +7144,7 @@ def user_management_admin(data):
             else:
                 data["student_accounts"][selected_user["email"]]["password"] = hash_password(new_password.strip())
                 save_data(data)
-                st.success("Mot de passe etudiant modifie.")
+                st.success("Mot de passe étudiant modifié.")
                 st.rerun()
 
         is_banned = selected_user["status"] == "Banni"
@@ -7163,7 +7171,7 @@ def user_management_admin(data):
                     },
                 )
                 save_data(data)
-                st.success("Message envoye a l'etudiant.")
+                st.success("Message envoyé à l'étudiant.")
                 st.rerun()
             else:
                 data.setdefault("messages", []).insert(
@@ -7174,7 +7182,7 @@ def user_management_admin(data):
                         "prof": "Administration BTS SMARTCAMPUS",
                         "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
                         "important": True,
-                        "contenu": f"Message destine a {selected_user['name']}: {msg_content.strip()}",
+                        "contenu": f"Message destiné à {selected_user['name']}: {msg_content.strip()}",
                     },
                 )
                 save_data(data)
@@ -7193,7 +7201,7 @@ def user_management_admin(data):
             else:
                 del data["student_accounts"][selected_user["email"]]
                 save_data(data)
-                st.success("Compte etudiant supprime.")
+                st.success("Compte étudiant supprimé.")
                 st.rerun()
 
     st.markdown("#### Liste des identifiants")
@@ -7223,20 +7231,20 @@ def user_management_admin(data):
 def show_admin_space(data):
     show_academic_page_header(
         "Espace administration",
-        "Gestion complete des cours, examens, messages, fichiers et comptes de la plateforme.",
+        "Gestion complète des cours, examens, messages, fichiers et comptes de la plateforme.",
         "A",
     )
     st.success("Connecte: Administration BTS SMARTCAMPUS | Acces complet")
 
     section = st.radio(
         "Choisir une section",
-        ["Cours", "Examens", "Messages", "Planning examens", "Fichiers", "Discussion", "Utilisateurs", "Comptes etudiants", "Support"],
+        ["Cours", "Examens", "Messages", "Planning examens", "Fichiers", "Discussion", "Utilisateurs", "Comptes étudiants", "Support"],
         horizontal=True,
         key="admin_section_choice",
     )
 
     if section == "Cours":
-        subject = st.selectbox("Matiere a gerer", SUBJECTS, key="admin_course_subject")
+        subject = st.selectbox("Matière à gérer", SUBJECTS, key="admin_course_subject")
         add_course_form(data, subject, "Administration BTS SMARTCAMPUS")
         st.divider()
         delete_course_form(data, subject)
@@ -7265,7 +7273,7 @@ def show_admin_space(data):
 
     elif section == "Utilisateurs":
         user_management_admin(data)
-    elif section == "Comptes etudiants":
+    elif section == "Comptes étudiants":
         student_accounts_admin(data)
     else:
         support_tickets_admin(data)
@@ -7276,7 +7284,7 @@ def show_prof_space(data):
     user_email = st.session_state.get("platform_user_email", "")
 
     if user_role not in ("prof", "admin"):
-        st.error("Acces reserve aux professeurs et a l'administration.")
+        st.error("Accès réservé aux professeurs et à l'administration.")
         return
 
     if user_role == "admin":
@@ -7292,10 +7300,10 @@ def show_prof_space(data):
     prof_name = account.get("name", "Professeur")
     show_academic_page_header(
         "Espace professeur",
-        f"Publiez et gerez les contenus de la matiere {subject}.",
+        f"Publiez et gérez les contenus de la matière {subject}.",
         "P",
     )
-    st.success(f"Connecte: {prof_name} | Matiere: {subject}")
+    st.success(f"Connecte: {prof_name} | Matière : {subject}")
 
     section = st.radio(
         "Choisir une section",
@@ -7330,7 +7338,7 @@ def show_prof_space(data):
 def show_direction_space(data):
     user_role = st.session_state.get("platform_user_role", "student")
     if user_role not in ("direction", "admin"):
-        st.error("Acces reserve a la direction.")
+        st.error("Accès réservé à la direction.")
         return
 
     show_academic_page_header(
@@ -7342,7 +7350,7 @@ def show_direction_space(data):
 
     section = st.radio(
         "Choisir une section",
-        ["Messages officiels", "Fichiers partages", "Comptes etudiants"],
+        ["Messages officiels", "Fichiers partagés", "Comptes étudiants"],
         horizontal=True,
         key="direction_section_choice",
     )
@@ -7354,7 +7362,7 @@ def show_direction_space(data):
                 "Titre du message",
                 placeholder="Exemple: Reunion importante, annonce officielle...",
             )
-            target_subject = st.selectbox("Destination", ["Toutes les matieres"] + SUBJECTS)
+            target_subject = st.selectbox("Destination", ["Toutes les matières"] + SUBJECTS)
             content = st.text_area("Message")
             important = st.checkbox("Message important", value=True)
             uploaded_file = st.file_uploader(
@@ -7402,9 +7410,9 @@ def show_direction_space(data):
             st.success("Message officiel diffuse.")
             st.rerun()
 
-    elif section == "Fichiers partages":
-        shared_file_admin(data, "Toutes les matieres", "Direction BTS SMARTCAMPUS", "direction")
-    elif section == "Comptes etudiants":
+    elif section == "Fichiers partagés":
+        shared_file_admin(data, "Toutes les matières", "Direction BTS SMARTCAMPUS", "direction")
+    elif section == "Comptes étudiants":
         student_accounts_admin(data)
 
 
@@ -7466,7 +7474,7 @@ def show_contact(data):
             },
         )
         save_data(data)
-        st.success("Votre message a ete envoye au professeur.")
+        st.success("Votre message a été envoyé au professeur.")
 
     st.markdown(
         """
@@ -7502,12 +7510,12 @@ def show_support(data):
                 <div class="contact-icon">S</div>
                 <div>
                     <h1>Contact & support</h1>
-                    <p>Envoyez une reclamation, un probleme technique ou une demande d'aide au support de la plateforme.</p>
+                    <p>Envoyez une réclamation, un problème technique ou une demande d'aide au support de la plateforme.</p>
                 </div>
             </div>
             <div class="contact-art"></div>
         </div>
-        <div class="contact-form-title">Nouvelle reclamation</div>
+        <div class="contact-form-title">Nouvelle réclamation</div>
         """,
         unsafe_allow_html=True,
     )
@@ -7526,12 +7534,12 @@ def show_support(data):
         subject = st.text_input("Sujet")
         message = st.text_area(
             "Message",
-            placeholder="Expliquez clairement votre reclamation ou le probleme rencontre...",
+            placeholder="Expliquez clairement votre réclamation ou le problème rencontré...",
         )
         screenshot = st.file_uploader(
-            "Capture d'ecran ou fichier du probleme (optionnel)",
+            "Capture d'écran ou fichier du problème (optionnel)",
             accept_multiple_files=False,
-            help="Optionnel: ajoutez une capture d'ecran, une image, un PDF ou un autre fichier si cela aide le support.",
+            help="Optionnel: ajoutez une capture d'écran, une image, un PDF ou un autre fichier si cela aide le support.",
         )
         submitted = st.form_submit_button("Envoyer au support")
 
@@ -7568,13 +7576,13 @@ def show_support(data):
             },
         )
         save_data(data)
-        st.success("Votre demande a ete envoyee au support.")
+        st.success("Votre demande a été envoyée au support.")
 
     st.markdown(
         """
         <div class="contact-help">
             <span class="contact-help-icon">i</span>
-            <span>Votre reclamation sera geree par l'admin ou le support de la plateforme.</span>
+            <span>Votre réclamation sera gérée par l'admin ou le support de la plateforme.</span>
         </div>
         """,
         unsafe_allow_html=True,
@@ -7586,7 +7594,7 @@ def show_support(data):
         if ticket.get("email", "").strip().lower() == user_email.strip().lower()
     ]
     if user_tickets:
-        st.markdown("#### Mes reclamations")
+        st.markdown("#### Mes réclamations")
         for index, ticket in enumerate(sorted(user_tickets, key=lambda item: parse_date(item.get("date")), reverse=True)):
             response_html = ""
             if ticket.get("reponse"):
@@ -7594,7 +7602,7 @@ def show_support(data):
                     <div class="message-content">
                         <strong>Reponse support:</strong><br>
                         {ticket.get('reponse', '')}<br>
-                        <span class="message-meta">Date de reponse: {ticket.get('date_reponse', 'Date non indiquee')}</span>
+                        <span class="message-meta">Date de reponse: {ticket.get('date_reponse', 'Date non indiquée')}</span>
                     </div>
                 """
             st.markdown(
@@ -7602,7 +7610,7 @@ def show_support(data):
                 <div class="message">
                     <div class="message-title">{ticket.get('sujet', 'Reclamation')}</div>
                     <div class="message-meta">
-                        Type: {ticket.get('type', 'Reclamation')} | Statut: {ticket.get('statut', 'Nouveau')} | Date: {ticket.get('date', 'Date non indiquee')}
+                        Type: {ticket.get('type', 'Reclamation')} | Statut: {ticket.get('statut', 'Nouveau')} | Date: {ticket.get('date', 'Date non indiquée')}
                     </div>
                     <div class="message-content">{ticket.get('message', '')}</div>
                     {response_html}
@@ -7637,7 +7645,7 @@ def show_direct_messages(data):
                 <div class="contact-icon">M</div>
                 <div>
                     <h1>Messages</h1>
-                    <p>Consultez vos messages administratifs et les pieces jointes envoyees.</p>
+                    <p>Consultez vos messages administratifs et les pièces jointes envoyées.</p>
                 </div>
             </div>
             <div class="contact-art"></div>
@@ -7647,7 +7655,7 @@ def show_direct_messages(data):
     )
 
     if current_role == "admin":
-        st.markdown("#### Envoyer un message a un utilisateur")
+        st.markdown("#### Envoyer un message à un utilisateur")
         recipients = platform_users_directory(data)
         recipient_email = st.selectbox(
             "Utilisateur destinataire",
@@ -7726,7 +7734,7 @@ def show_direct_messages(data):
             <div class="message">
                 <div class="message-title">{message.get("titre", "Message")}</div>
                 <div class="message-meta">
-                    De: {message.get("from_name", "Administration BTS SMARTCAMPUS")} | Date: {message.get("date", "Date non indiquee")}{target_line}
+                    De: {message.get("from_name", "Administration BTS SMARTCAMPUS")} | Date: {message.get("date", "Date non indiquée")}{target_line}
                 </div>
                 <div class="message-content">{message.get("contenu", "")}</div>
             </div>
@@ -7752,12 +7760,12 @@ def sidebar_navigation():
     student_pages = [
         ("Accueil", "Accueil"),
         ("Cours", "Cours"),
-        ("Fichiers partages", "Fichiers Drive"),
+        ("Fichiers partagés", "Fichiers Drive"),
         ("Examens nationaux", "Examens"),
         ("Planification des examens", "Calendrier"),
         ("Messages directs", "Messages"),
         ("Contact", "Profil"),
-        ("Contact et support", "Parametres"),
+        ("Contact et support", "Paramètres"),
     ]
     user_role = st.session_state.get("platform_user_role", "student")
     if user_role == "prof":
@@ -7765,34 +7773,34 @@ def sidebar_navigation():
             ("Accueil", "Accueil"),
             ("Espace professeur", "Professeurs"),
             ("Messages directs", "Messages"),
-            ("Contact et support", "Parametres"),
+            ("Contact et support", "Paramètres"),
         ]
     elif user_role == "admin":
         pages = [
             ("Accueil", "Accueil"),
             ("Cours", "Cours"),
-            ("Fichiers partages", "Fichiers Drive"),
+            ("Fichiers partagés", "Fichiers Drive"),
             ("Examens nationaux", "Examens"),
             ("Planification des examens", "Calendrier"),
             ("Espace professeur", "Professeurs"),
             ("Espace direction", "Annonces"),
             ("Utilisateurs", "Profil"),
             ("Messages directs", "Messages"),
-            ("Contact et support", "Parametres"),
+            ("Contact et support", "Paramètres"),
         ]
     elif user_role == "direction":
         pages = [
             ("Accueil", "Accueil"),
             ("Espace direction", "Annonces"),
             ("Messages directs", "Messages"),
-            ("Contact et support", "Parametres"),
+            ("Contact et support", "Paramètres"),
         ]
     else:
         pages = list(student_pages)
 
     if "current_page" not in st.session_state:
         st.session_state.current_page = "Accueil"
-    allowed_pages = [page_name for page_name, _ in pages] + ["Dernieres mises a jour"]
+    allowed_pages = [page_name for page_name, _ in pages] + ["Dernières mises à jour"]
     if st.session_state.current_page not in allowed_pages:
         st.session_state.current_page = "Accueil"
 
@@ -7818,7 +7826,7 @@ def sidebar_navigation():
         "Messages": "✉",
         "Annonces": "!",
         "Profil": "○",
-        "Parametres": "⚙",
+        "Paramètres": "⚙",
     }
 
     for page_name, label in pages:
@@ -7837,9 +7845,9 @@ def sidebar_navigation():
         """
         <div class="sidebar-study-card">
             <div class="sidebar-study-icon">BTS</div>
-            <strong>Restez organise,<br>reussissez vos etudes.</strong>
+            <strong>Restez organisé,<br>réussissez vos études.</strong>
             <div class="sidebar-progress"><span></span></div>
-            <small>Annee universitaire</small>
+            <small>Année universitaire</small>
             <b>2024 - 2025</b>
         </div>
         """,
@@ -7905,7 +7913,7 @@ def main():
         show_home(data)
     elif page == "Recherche rapide":
         show_search(data)
-    elif page == "Dernieres mises a jour":
+    elif page == "Dernières mises à jour":
         show_updates(data)
     elif page == "Cours":
         show_courses(data)
@@ -7913,7 +7921,7 @@ def main():
         show_exams(data)
     elif page == "Planification des examens":
         show_homework_plan(data)
-    elif page == "Fichiers partages":
+    elif page == "Fichiers partagés":
         show_shared_files(data)
     elif page == "Espace professeur":
         show_prof_space(data)
