@@ -1866,6 +1866,7 @@ def show_welcome():
     st.markdown('<div class="welcome-start-panel"><div><strong>Commencer maintenant</strong><span>Accédez à tous vos cours, ressources et outils en un clic.</span></div></div>', unsafe_allow_html=True)
     if st.button("Commencer maintenant", width="stretch"):
         st.session_state.platform_started = True
+        st.session_state.dashboard_transition_once = True
         st.session_state.entry_animation = False
         st.session_state.login_transition = False
         st.session_state.current_page = "Accueil"
@@ -1942,6 +1943,7 @@ def show_welcome_academic():
     st.markdown('<div class="welcome-start-panel academic-welcome-start-panel"><div><strong>Commencer maintenant</strong><span>Accédez à tous vos cours, ressources et outils en un clic.</span></div></div>', unsafe_allow_html=True)
     if st.button("Accéder à la plateforme ->", width="stretch"):
         st.session_state.platform_started = True
+        st.session_state.dashboard_transition_once = True
         st.session_state.entry_animation = False
         st.session_state.login_transition = False
         st.session_state.current_page = "Accueil"
@@ -4162,6 +4164,8 @@ def main():
         st.session_state.platform_started = False
     if "entry_animation" not in st.session_state:
         st.session_state.entry_animation = False
+    if "dashboard_transition_once" not in st.session_state:
+        st.session_state.dashboard_transition_once = False
 
     # Keep the production flow reliable: old sessions can keep a transition flag
     # active after a rerun, which hides the app behind a full-screen overlay.
@@ -4176,6 +4180,21 @@ def main():
         show_welcome_academic()
         return
 
+    if st.session_state.get("dashboard_transition_once"):
+        st.markdown(
+            """
+            <style>
+            [data-testid="stMainBlockContainer"] {
+                animation: dashboardGate3d 0.72s cubic-bezier(.2,.84,.24,1) both !important;
+                transform-origin: center top !important;
+                will-change: transform, opacity, filter;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.session_state.dashboard_transition_once = False
+
     page = sidebar_navigation()
 
     st.sidebar.markdown("---")
@@ -4185,6 +4204,7 @@ def main():
         st.session_state.platform_started = False
         st.session_state.entry_animation = False
         st.session_state.login_transition = False
+        st.session_state.dashboard_transition_once = False
         st.session_state.platform_user_email = ""
         st.session_state.platform_user_role = "student"
         st.session_state.current_page = "Accueil"

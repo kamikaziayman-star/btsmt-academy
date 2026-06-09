@@ -82,10 +82,11 @@ footer {
 
 .block-container,
 [data-testid="stMainBlockContainer"] {
-    width: min(1180px, calc(100vw - 48px)) !important;
+    width: min(1180px, calc(100% - 48px)) !important;
     max-width: 1180px !important;
     margin: 0 auto !important;
     padding: 46px 0 72px !important;
+    transition: width 0.24s ease, max-width 0.24s ease, padding 0.24s ease, margin 0.24s ease !important;
 }
 
 section[data-testid="stSidebar"] {
@@ -442,6 +443,24 @@ select,
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dashboardGate3d {
+    0% {
+        opacity: 0;
+        filter: blur(10px) saturate(0.85);
+        transform: perspective(1100px) translateY(34px) rotateX(10deg) scale(0.965);
+    }
+    55% {
+        opacity: 1;
+        filter: blur(1px) saturate(1.04);
+        transform: perspective(1100px) translateY(-4px) rotateX(-1.4deg) scale(1.006);
+    }
+    100% {
+        opacity: 1;
+        filter: none;
+        transform: perspective(1100px) translateY(0) rotateX(0) scale(1);
+    }
 }
 
 .creator-footer {
