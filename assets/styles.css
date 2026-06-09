@@ -15317,3 +15317,122 @@ div[data-testid="stSidebarCollapsedControl"] button:hover,
     background: linear-gradient(135deg, #041b3f, #075be8) !important;
     box-shadow: 0 22px 44px rgba(7, 31, 73, 0.36) !important;
 }
+
+/* ==========================================================================
+   RELIABLE IN-APP NAVIGATOR
+   This button is rendered by the app itself, so the platform keeps a usable
+   navigator even when Streamlit's native sidebar control is hidden by cache.
+   ========================================================================== */
+
+div[data-testid="stPopover"] > button {
+    position: fixed !important;
+    top: 18px !important;
+    left: 18px !important;
+    z-index: 2147483647 !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    width: auto !important;
+    min-width: 164px !important;
+    padding: 0 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    border-radius: 15px !important;
+    border: 1px solid rgba(255, 255, 255, 0.52) !important;
+    background: linear-gradient(135deg, #061f49, #126dff) !important;
+    color: #ffffff !important;
+    box-shadow: 0 18px 38px rgba(7, 31, 73, 0.28) !important;
+    font-weight: 900 !important;
+    letter-spacing: 0 !important;
+}
+
+div[data-testid="stPopover"] > button *,
+div[data-testid="stPopover"] > button p,
+div[data-testid="stPopover"] > button span {
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+div[data-testid="stPopover"] > button:hover {
+    transform: translateY(-1px) !important;
+    background: linear-gradient(135deg, #041b3f, #075be8) !important;
+    box-shadow: 0 22px 44px rgba(7, 31, 73, 0.36) !important;
+}
+
+.visible-nav-title {
+    padding: 6px 4px 14px 4px !important;
+    color: #061f49 !important;
+}
+
+.visible-nav-title strong {
+    display: block !important;
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+    color: #061f49 !important;
+}
+
+.visible-nav-title span {
+    display: block !important;
+    margin-top: 4px !important;
+    font-size: 13px !important;
+    color: #5f7193 !important;
+}
+
+div[data-testid="stPopoverBody"] {
+    min-width: 280px !important;
+}
+
+div[data-testid="stPopoverBody"] div[data-testid="stButton"] > button {
+    min-height: 44px !important;
+    border-radius: 12px !important;
+    font-weight: 850 !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+}
+
+/* Center the platform consistently when the sidebar is opened or closed. */
+[data-testid="stMainBlockContainer"],
+.main .block-container,
+section.main .block-container {
+    width: min(calc(100vw - 56px), 1180px) !important;
+    max-width: 1180px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+
+@media (max-width: 760px) {
+    div[data-testid="stPopover"] > button {
+        top: 14px !important;
+        left: 14px !important;
+        min-width: 52px !important;
+        width: 52px !important;
+        padding: 0 !important;
+        font-size: 0 !important;
+    }
+
+    div[data-testid="stPopover"] > button p,
+    div[data-testid="stPopover"] > button span {
+        font-size: 0 !important;
+    }
+
+    div[data-testid="stPopover"] > button::before {
+        content: "\2630" !important;
+        color: #ffffff !important;
+        font-size: 28px !important;
+        line-height: 1 !important;
+    }
+
+    [data-testid="stMainBlockContainer"],
+    .main .block-container,
+    section.main .block-container {
+        width: calc(100vw - 24px) !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+}

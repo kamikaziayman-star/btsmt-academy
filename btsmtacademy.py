@@ -7805,6 +7805,7 @@ def sidebar_navigation():
     allowed_pages = [page_name for page_name, _ in pages] + ["Dernières mises à jour"]
     if st.session_state.current_page not in allowed_pages:
         st.session_state.current_page = "Accueil"
+    st.session_state.navigation_pages = list(pages)
 
     st.sidebar.markdown(
         """
@@ -7859,6 +7860,55 @@ def sidebar_navigation():
     return st.session_state.current_page
 
 
+def render_visible_navigation(pages, current_page):
+    """Fallback navigator shown in the main page when Streamlit's sidebar is hidden."""
+    nav_icons = {
+        "Accueil": "🏠",
+        "Cours": "📘",
+        "Fichiers Drive": "📁",
+        "Examens": "🎓",
+        "Calendrier": "📅",
+        "Professeurs": "👥",
+        "Messages": "💬",
+        "Annonces": "📣",
+        "Profil": "👤",
+        "Paramètres": "⚙",
+    }
+
+    with st.popover("☰ Navigation", use_container_width=False):
+        st.markdown(
+            """
+            <div class="visible-nav-title">
+                <strong>BTS SMARTCAMPUS</strong>
+                <span>Navigation de la plateforme</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        for page_name, label in pages:
+            icon = nav_icons.get(label, "•")
+            if st.button(
+                f"{icon}  {label}",
+                key=f"visible_nav_{page_name}",
+                width="stretch",
+                type="primary" if current_page == page_name else "secondary",
+            ):
+                st.session_state.current_page = page_name
+                st.rerun()
+
+        st.divider()
+        if st.button("↩  Se déconnecter", key="visible_nav_logout", width="stretch"):
+            st.session_state.platform_logged_in = False
+            st.session_state.platform_started = False
+            st.session_state.entry_animation = False
+            st.session_state.login_transition = False
+            st.session_state.platform_user_email = ""
+            st.session_state.platform_user_role = "student"
+            st.session_state.current_page = "Accueil"
+            st.rerun()
+
+
 def main():
     st.set_page_config(
         page_title=APP_TITLE,
@@ -7898,6 +7948,7 @@ def main():
         return
 
     page = sidebar_navigation()
+    render_visible_navigation(st.session_state.get("navigation_pages", []), page)
 
     st.sidebar.markdown("---")
     st.sidebar.caption(f"Connecte: {st.session_state.platform_user_label}")
