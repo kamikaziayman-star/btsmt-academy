@@ -1,40 +1,49 @@
 {
   "messages": [
     {
-      "titre": "HY ",
-      "matiere": "Marketing touristique",
-      "prof": "Prof Marketing touristique",
-      "date": "21/05/2026 00:29",
-      "important": false,
-      "contenu": "HY",
-      "_id": "57f5f7806f1410d5736fb8c3"
-    },
-    {
-      "titre": "sdgfqsgqsq",
-      "matiere": "Toutes les matieres",
-      "prof": "Direction BTS SMARTCAMPUS",
-      "date": "20/05/2026 17:46",
-      "important": true,
-      "contenu": "gqsdgqzer",
-      "_id": "cb4aa8a878655b5ce9f95a1f"
-    },
-    {
-      "titre": "ana ayman mol had platforme",
-      "matiere": "Marketing touristique",
-      "prof": "Prof Marketing touristique",
-      "date": "20/05/2026 16:45",
-      "important": false,
-      "contenu": "hello word",
-      "_id": "b426d82915dec97536738ea6"
-    },
-    {
-      "titre": "Bienvenue sur BTS SMARTCAMPUS",
+      "titre": "R?union de pr?sentation du projet BTS SMARTCAMPUS",
       "matiere": "General",
-      "prof": "Administration",
-      "date": "20/05/2026 12:00",
-      "contenu": "Les professeurs peuvent publier ici les annonces, les nouveaux cours et les dates importantes.",
+      "prof": "Administration BTS SMARTCAMPUS",
+      "date": "09/06/2026 09:00",
+      "important": true,
+      "contenu": "Pr?sentation officielle de la plateforme devant le jury. Merci de v?rifier l'acc?s aux cours, messages, examens et ressources avant la d?monstration.",
+      "_id": "9fe5c3bb277247b18dc290af"
+    },
+    {
+      "titre": "Nouveaux supports de r?vision disponibles",
+      "matiere": "Toutes les mati?res",
+      "prof": "Direction BTS SMARTCAMPUS",
+      "date": "09/06/2026 09:15",
       "important": false,
-      "_id": "fed6e43d36d84dde81309e47"
+      "contenu": "Des supports de r?vision sont organis?s par mati?re afin d'aider les ?tudiants ? pr?parer les contr?les et les examens nationaux.",
+      "_id": "deddbbcddf9f49339b4203f5"
+    },
+    {
+      "titre": "Rappel : pr?paration aux examens nationaux",
+      "matiere": "Examens nationaux",
+      "prof": "Administration BTS SMARTCAMPUS",
+      "date": "09/06/2026 09:30",
+      "important": true,
+      "contenu": "Consultez r?guli?rement la page Examens pour suivre les annales, les corrig?s et les informations importantes li?es ? la pr?paration nationale.",
+      "_id": "bbc20c1330994ae68c045143"
+    },
+    {
+      "titre": "Consignes pour les ?tudiants",
+      "matiere": "General",
+      "prof": "Direction BTS SMARTCAMPUS",
+      "date": "09/06/2026 09:45",
+      "important": false,
+      "contenu": "Chaque ?tudiant doit utiliser son compte personnel, consulter les nouveaut?s et signaler tout probl?me depuis la page Support.",
+      "_id": "4198054b2756478d978a0265"
+    },
+    {
+      "titre": "S?ance de questions-r?ponses",
+      "matiere": "Communication professionnelle",
+      "prof": "Prof Communication professionnelle",
+      "date": "09/06/2026 10:00",
+      "important": false,
+      "contenu": "Une s?ance de questions-r?ponses est pr?vue pour accompagner les ?tudiants dans l'utilisation des ressources et de la messagerie.",
+      "_id": "84c59006129b4e9ea1cd3203"
     }
   ],
   "cours": {
@@ -859,32 +868,7 @@
       "_id": "c89aa76eabe51acb873f85f2"
     }
   ],
-  "shared_files": [
-    {
-      "titre": "devoity",
-      "description": "adbnfgfsg  wfdgnwd wdfgnsfgns",
-      "matiere": "Toutes les matieres",
-      "auteur": "Direction BTS SMARTCAMPUS",
-      "role": "direction",
-      "date": "20/05/2026 17:47",
-      "filename": "Capture d’écran 2026-05-20 170649.jpg",
-      "path": "btsmtacademy_uploads\\Toutes_les_matieres\\20260520_174741_Capture_d_écran_2026-05-20_170649.jpg",
-      "mime": "image/jpeg",
-      "_id": "2ace41f51c491c67810b0598"
-    },
-    {
-      "titre": "sdgfqsgqsq",
-      "description": "gqsdgqzer",
-      "matiere": "Toutes les matieres",
-      "auteur": "Direction BTS SMARTCAMPUS",
-      "role": "direction",
-      "date": "20/05/2026 17:46",
-      "filename": "Capture d’écran 2026-05-20 170649.jpg",
-      "path": "btsmtacademy_uploads\\Toutes_les_matieres\\20260520_174627_Capture_d_écran_2026-05-20_170649.jpg",
-      "mime": "image/jpeg",
-      "_id": "25e9b6f2e3ede6bd8685a999"
-    }
-  ],
+  "shared_files": [],
   "student_contacts": [
     {
       "matiere": "Informatique de gestion",
@@ -927,44 +911,38 @@
       "screenshot_mime": "image/png"
     }
   ],
-  "direct_messages": [],
-  "seen_updates": {
-    "aymanmarzaguiprint@gmail.com": [],
-    "admin@btsmtacademy.com": []
-  },
-  "seen_dashboard": {
-    "aymanmarzaguiprint@gmail.com": {
-      "admin_messages": [],
-      "planning": [
-        "032175e72dd083fd498f5beaedd99f35e03282c5580bd1c7a83b3e6006cc995e"
-      ],
-      "files": [
-        "582aa0ad00ca7dbf981146266cddfdb4d49e7d2c1338d10ae56a1cbcfc9fa162",
-        "f94866e8f77ba923e7dc922a8dbb1378b393f95ce3c808aa37cd076cb3530088"
-      ],
-      "messages": [
-        "23896a0757f044a0dce4bf7c9f05ee2529998fd8229139afd248f626a058849c",
-        "678fb00afae709fb3e340bafa2df2765c59eb0ed8c80240d6650a2ca495c5316",
-        "92cd014cecf59c361e0bc4c31d1d52dfc53a35bf06613cdcf3c2510e3b9b83c4",
-        "f485c2fd5ba6e637da70ed9cf59cde5274b695b863ad3f0b145e4c0583b205ca"
-      ]
+  "direct_messages": [
+    {
+      "from_email": "admin@btsmtacademy.com",
+      "from_name": "Administration BTS SMARTCAMPUS",
+      "to_email": "aymanmarzaguiprint@gmail.com",
+      "to_name": "Ayman marzagui",
+      "titre": "Bienvenue dans votre espace ?tudiant",
+      "contenu": "Votre compte est pr?t. Vous pouvez consulter les cours, suivre les nouveaut?s et contacter l'administration depuis la plateforme.",
+      "date": "09/06/2026 10:10",
+      "attachment_path": "",
+      "attachment_name": "",
+      "attachment_mime": "application/octet-stream",
+      "read": false,
+      "_id": "a53d0a0f22794b8db21b66d5"
     },
-    "admin@btsmtacademy.com": {
-      "planning": [
-        "032175e72dd083fd498f5beaedd99f35e03282c5580bd1c7a83b3e6006cc995e"
-      ],
-      "files": [
-        "582aa0ad00ca7dbf981146266cddfdb4d49e7d2c1338d10ae56a1cbcfc9fa162",
-        "f94866e8f77ba923e7dc922a8dbb1378b393f95ce3c808aa37cd076cb3530088"
-      ],
-      "messages": [
-        "23896a0757f044a0dce4bf7c9f05ee2529998fd8229139afd248f626a058849c",
-        "678fb00afae709fb3e340bafa2df2765c59eb0ed8c80240d6650a2ca495c5316",
-        "92cd014cecf59c361e0bc4c31d1d52dfc53a35bf06613cdcf3c2510e3b9b83c4",
-        "f485c2fd5ba6e637da70ed9cf59cde5274b695b863ad3f0b145e4c0583b205ca"
-      ]
+    {
+      "from_email": "admin@btsmtacademy.com",
+      "from_name": "Administration BTS SMARTCAMPUS",
+      "to_email": "marketing@btsmtacademy.com",
+      "to_name": "Prof Marketing touristique",
+      "titre": "Validation des ressources p?dagogiques",
+      "contenu": "Merci de v?rifier les ressources de votre mati?re avant leur publication finale aux ?tudiants.",
+      "date": "09/06/2026 10:20",
+      "attachment_path": "",
+      "attachment_name": "",
+      "attachment_mime": "application/octet-stream",
+      "read": false,
+      "_id": "55c9656c26184284840d1f18"
     }
-  },
+  ],
+  "seen_updates": {},
+  "seen_dashboard": {},
   "view_receipts": {
     "032175e72dd083fd498f5beaedd99f35e03282c5580bd1c7a83b3e6006cc995e": [
       {
