@@ -765,7 +765,7 @@
     "admin@btsmtacademy.com": {
       "name": "Administration BTS SMARTCAMPUS",
       "subject": "Toutes les matieres",
-      "password": "pbkdf2_sha256$260000$a77f16130d1674e7475554f12ccff5c6$3b9572bfa7983e22bab87d826d0e6fd28409d0d9dd5548fc8ba5b8f25fcd1a89",
+      "password": "pbkdf2_sha256$260000$6d013a538b5dfa91497ac598dd8cb778$a744b4bf6d386b8ba54a7997fb316c6b9b950f71d7566d9e5bee3d4f9bfcffbb",
       "role": "admin"
     },
     "controle@btsmtacademy.com": {
@@ -910,7 +910,23 @@
       "admin_messages": []
     }
   },
-  "support_tickets": [],
+  "support_tickets": [
+    {
+      "type": "Probleme technique",
+      "nom": "Ayman marzagui",
+      "email": "aymanmarzaguiprint@gmail.com",
+      "role": "student",
+      "sujet": "ggggggg",
+      "message": "dgvqbvqdfb",
+      "date": "09/06/2026 03:05",
+      "statut": "En cours",
+      "reponse": "",
+      "date_reponse": "",
+      "screenshot_path": "btsmtacademy_uploads\\support\\20260609_030557_ChatGPT_Image_9_juin_2026__02_59_41.png",
+      "screenshot_name": "ChatGPT Image 9 juin 2026, 02_59_41.png",
+      "screenshot_mime": "image/png"
+    }
+  ],
   "direct_messages": [],
   "seen_updates": {
     "aymanmarzaguiprint@gmail.com": [],
