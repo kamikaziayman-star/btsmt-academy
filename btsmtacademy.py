@@ -4035,7 +4035,7 @@ def sidebar_navigation():
         ("Planification des examens", "Calendrier"),
         ("Messages directs", "Messages"),
         ("Contact", "Profil"),
-        ("Contact et support", "Paramètres"),
+        ("Contact et support", "Support"),
     ]
     user_role = st.session_state.get("platform_user_role", "student")
     if user_role == "prof":
@@ -4043,7 +4043,7 @@ def sidebar_navigation():
             ("Accueil", "Accueil"),
             ("Espace professeur", "Professeurs"),
             ("Messages directs", "Messages"),
-            ("Contact et support", "Paramètres"),
+            ("Contact et support", "Support"),
         ]
     elif user_role == "admin":
         pages = [
@@ -4056,14 +4056,14 @@ def sidebar_navigation():
             ("Espace direction", "Annonces"),
             ("Utilisateurs", "Profil"),
             ("Messages directs", "Messages"),
-            ("Contact et support", "Paramètres"),
+            ("Contact et support", "Support"),
         ]
     elif user_role == "direction":
         pages = [
             ("Accueil", "Accueil"),
             ("Espace direction", "Annonces"),
             ("Messages directs", "Messages"),
-            ("Contact et support", "Paramètres"),
+            ("Contact et support", "Support"),
         ]
     else:
         pages = list(student_pages)
@@ -4096,7 +4096,7 @@ def sidebar_navigation():
         "Messages": "✉",
         "Annonces": "!",
         "Profil": "○",
-        "Paramètres": "⚙",
+        "Support": "?",
     }
 
     for page_name, label in pages:

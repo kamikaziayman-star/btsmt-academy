@@ -171,6 +171,7 @@ section[data-testid="stSidebar"] div[data-testid="stButton"] > button {
     font-size: 15px !important;
     font-weight: 800 !important;
     box-shadow: none !important;
+    transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stButton"] > button[kind="primary"],
@@ -178,6 +179,7 @@ section[data-testid="stSidebar"] div[data-testid="stButton"] > button:hover {
     background: linear-gradient(135deg, #1677ff 0%, #0c5ee8 100%) !important;
     color: #ffffff !important;
     box-shadow: 0 12px 28px rgba(22, 119, 255, 0.28) !important;
+    transform: translateX(2px) !important;
 }
 
 section[data-testid="stSidebar"] hr {
@@ -349,6 +351,7 @@ a[data-testid="stLinkButton"] {
     font-weight: 800 !important;
     box-shadow: 0 8px 20px rgba(6, 38, 90, 0.06) !important;
     white-space: normal !important;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease, color 0.18s ease !important;
 }
 
 .stButton > button[kind="primary"],
@@ -357,6 +360,13 @@ a[data-testid="stLinkButton"]:hover {
     background: linear-gradient(135deg, #0b61ff 0%, #1677ff 100%) !important;
     color: #ffffff !important;
     border-color: transparent !important;
+}
+
+.stButton > button:hover,
+.stDownloadButton > button:hover,
+a[data-testid="stLinkButton"]:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 14px 30px rgba(6, 38, 90, 0.12) !important;
 }
 
 input,
@@ -390,6 +400,40 @@ select,
 .exam-card,
 .planning-card {
     animation: fadeIn 0.35s ease both;
+}
+
+.card,
+.course-row,
+.exam-card,
+.planning-card,
+.dashboard-stat-card,
+.dash-panel,
+.drive-stat-card,
+.drive-file-row,
+.university-feature-card,
+.shared-file-card,
+.message,
+.homework-card,
+.university-announcement {
+    transition: transform 0.20s ease, box-shadow 0.20s ease, border-color 0.20s ease !important;
+}
+
+.card:hover,
+.course-row:hover,
+.exam-card:hover,
+.planning-card:hover,
+.dashboard-stat-card:hover,
+.dash-panel:hover,
+.drive-stat-card:hover,
+.drive-file-row:hover,
+.university-feature-card:hover,
+.shared-file-card:hover,
+.message:hover,
+.homework-card:hover,
+.university-announcement:hover {
+    transform: translateY(-2px);
+    border-color: rgba(22, 119, 255, 0.28);
+    box-shadow: 0 18px 42px rgba(6, 38, 90, 0.12);
 }
 
 @keyframes fadeIn {
