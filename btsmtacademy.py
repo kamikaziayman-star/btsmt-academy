@@ -80,6 +80,11 @@ def verify_password(password, stored_password):
 def protect_password(password):
     return password if is_password_hash(password) else hash_password(str(password))
 
+
+def generate_temporary_password(length=10):
+    alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789"
+    return "".join(secrets.choice(alphabet) for _ in range(length))
+
 SUBJECTS = [
     "Controle de gestion",
     "Informatique de gestion",
@@ -3358,6 +3363,29 @@ def user_management_admin(data):
             type="password",
             key=f"quick_password_{selected_user['kind']}_{selected_user['email']}",
         )
+        generated_password_key = f"generated_password_{selected_user['kind']}_{selected_user['email']}"
+        st.caption(
+            "Sécurité : les anciens mots de passe sont protégés par hash. "
+            "L'admin peut seulement définir ou générer un nouveau mot de passe temporaire."
+        )
+        if st.button(
+            "Générer un mot de passe temporaire",
+            key=f"quick_generate_pwd_{selected_user['kind']}_{selected_user['email']}",
+            width="stretch",
+        ):
+            temporary_password = generate_temporary_password()
+            if selected_user["kind"] == "prof":
+                data["prof_accounts"][selected_user["email"]]["password"] = hash_password(temporary_password)
+            else:
+                data["student_accounts"][selected_user["email"]]["password"] = hash_password(temporary_password)
+            st.session_state[generated_password_key] = temporary_password
+            save_data(data)
+            st.success("Mot de passe temporaire généré et enregistré.")
+
+        if generated_password_key in st.session_state:
+            st.warning("Copiez ce mot de passe maintenant. Il ne sera pas visible après changement d'utilisateur.")
+            st.code(st.session_state[generated_password_key], language=None)
+
         msg_title = st.text_input(
             "Titre du message",
             key=f"quick_message_title_{selected_user['kind']}_{selected_user['email']}",
@@ -3373,11 +3401,13 @@ def user_management_admin(data):
                 st.error("Le nouveau mot de passe est obligatoire.")
             elif selected_user["kind"] == "prof":
                 data["prof_accounts"][selected_user["email"]]["password"] = hash_password(new_password.strip())
+                st.session_state.pop(generated_password_key, None)
                 save_data(data)
                 st.success("Mot de passe professeur modifie.")
                 st.rerun()
             else:
                 data["student_accounts"][selected_user["email"]]["password"] = hash_password(new_password.strip())
+                st.session_state.pop(generated_password_key, None)
                 save_data(data)
                 st.success("Mot de passe étudiant modifié.")
                 st.rerun()
@@ -3442,6 +3472,11 @@ def user_management_admin(data):
     st.markdown("#### Liste des identifiants")
     for user in users:
         is_system = user["kind"] == "system"
+        password_display = (
+            "Protégé par configuration"
+            if is_system
+            else "Protégé par hash sécurisé - réinitialisable par l'admin"
+        )
         st.markdown(
             f"""
             <div class="card">
@@ -3449,7 +3484,7 @@ def user_management_admin(data):
                 <p>
                     Role: <strong>{user["role"]}</strong><br>
                     Email: <strong>{user["email"]}</strong><br>
-                    Mot de passe: <strong>{user["password"]}</strong><br>
+                    Mot de passe: <strong>{password_display}</strong><br>
                     Statut: <strong>{user["status"]}</strong>
                 </p>
             </div>
