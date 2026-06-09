@@ -5713,7 +5713,7 @@ def show_welcome_academic():
         <div class="welcome-tags-outside academic-welcome-links">
             <span class="welcome-tag tag-academy"><b>SMART CAMPUS</b><small>Accueil et actualités</small></span>
             <span class="welcome-tag tag-ressources"><b>RESSOURCES</b><small>Cours et documents</small></span>
-            <span class="welcome-tag tag-examens"><b>EXAMENS</b><small>Annales et corriges</small></span>
+            <span class="welcome-tag tag-examens"><b>EXAMENS</b><small>Annales et corrigés</small></span>
             <span class="welcome-tag tag-direction"><b>DIRECTION</b><small>Informations et annonces</small></span>
         </div>
         """,
@@ -6419,7 +6419,7 @@ def show_shared_files(data):
 def show_student_space(data):
     show_academic_page_header(
         "Espace étudiant",
-        "Acces rapide aux cours, fiches Drive, examens et annonces importantes.",
+        "Accès rapide aux cours, fiches Drive, examens et annonces importantes.",
         "E",
     )
 
@@ -6543,8 +6543,8 @@ def add_exam_form(data, subject):
         )
         description = st.text_area(
             "Description de l'examen",
-            placeholder="Exemple: Sujet national avec corrige.",
-            help="Precisez si le fichier contient le sujet, le corrige ou les deux.",
+            placeholder="Exemple : sujet national avec corrigé.",
+            help="Précisez si le fichier contient le sujet, le corrigé ou les deux.",
         )
         url = st.text_input(
             "Lien Drive/PDF de l'examen",
@@ -6552,7 +6552,7 @@ def add_exam_form(data, subject):
             help="Collez le lien Google Drive du fichier PDF ou du dossier d'examens.",
         )
         corrige_url = st.text_input(
-            "Lien Drive/PDF du corrige",
+            "Lien Drive/PDF du corrigé",
             placeholder="Optionnel: https://drive.google.com/file/d/.../view",
             help="Ajoutez le corrige si vous l'avez. Ce champ peut rester vide.",
         )
@@ -7236,7 +7236,7 @@ def show_admin_space(data):
         "Gestion complète des cours, examens, messages, fichiers et comptes de la plateforme.",
         "A",
     )
-    st.success("Connecte: Administration BTS SMARTCAMPUS | Acces complet")
+    st.success("Connecté : Administration BTS SMARTCAMPUS | Accès complet")
 
     section = st.radio(
         "Choisir une section",
@@ -7305,7 +7305,7 @@ def show_prof_space(data):
         f"Publiez et gérez les contenus de la matière {subject}.",
         "P",
     )
-    st.success(f"Connecte: {prof_name} | Matière : {subject}")
+    st.success(f"Connecté : {prof_name} | Matière : {subject}")
 
     section = st.radio(
         "Choisir une section",
@@ -7348,7 +7348,7 @@ def show_direction_space(data):
         "Diffusez les annonces officielles, validez les comptes et partagez les documents importants.",
         "D",
     )
-    st.success("Connecte: Direction BTS SMARTCAMPUS")
+    st.success("Connecté : Direction BTS SMARTCAMPUS")
 
     section = st.radio(
         "Choisir une section",
@@ -7805,7 +7805,6 @@ def sidebar_navigation():
     allowed_pages = [page_name for page_name, _ in pages] + ["Dernières mises à jour"]
     if st.session_state.current_page not in allowed_pages:
         st.session_state.current_page = "Accueil"
-    st.session_state.navigation_pages = list(pages)
 
     st.sidebar.markdown(
         """
@@ -7860,55 +7859,6 @@ def sidebar_navigation():
     return st.session_state.current_page
 
 
-def render_visible_navigation(pages, current_page):
-    """Fallback navigator shown in the main page when Streamlit's sidebar is hidden."""
-    nav_icons = {
-        "Accueil": "🏠",
-        "Cours": "📘",
-        "Fichiers Drive": "📁",
-        "Examens": "🎓",
-        "Calendrier": "📅",
-        "Professeurs": "👥",
-        "Messages": "💬",
-        "Annonces": "📣",
-        "Profil": "👤",
-        "Paramètres": "⚙",
-    }
-
-    with st.popover("☰ Navigation", use_container_width=False):
-        st.markdown(
-            """
-            <div class="visible-nav-title">
-                <strong>BTS SMARTCAMPUS</strong>
-                <span>Navigation de la plateforme</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-        for page_name, label in pages:
-            icon = nav_icons.get(label, "•")
-            if st.button(
-                f"{icon}  {label}",
-                key=f"visible_nav_{page_name}",
-                width="stretch",
-                type="primary" if current_page == page_name else "secondary",
-            ):
-                st.session_state.current_page = page_name
-                st.rerun()
-
-        st.divider()
-        if st.button("↩  Se déconnecter", key="visible_nav_logout", width="stretch"):
-            st.session_state.platform_logged_in = False
-            st.session_state.platform_started = False
-            st.session_state.entry_animation = False
-            st.session_state.login_transition = False
-            st.session_state.platform_user_email = ""
-            st.session_state.platform_user_role = "student"
-            st.session_state.current_page = "Accueil"
-            st.rerun()
-
-
 def main():
     st.set_page_config(
         page_title=APP_TITLE,
@@ -7948,11 +7898,10 @@ def main():
         return
 
     page = sidebar_navigation()
-    render_visible_navigation(st.session_state.get("navigation_pages", []), page)
 
     st.sidebar.markdown("---")
-    st.sidebar.caption(f"Connecte: {st.session_state.platform_user_label}")
-    if st.sidebar.button("Se deconnecter", key="platform_logout"):
+    st.sidebar.caption(f"Connecté : {st.session_state.platform_user_label}")
+    if st.sidebar.button("Se déconnecter", key="platform_logout"):
         st.session_state.platform_logged_in = False
         st.session_state.platform_started = False
         st.session_state.entry_animation = False
@@ -7964,7 +7913,7 @@ def main():
 
     st.sidebar.markdown("---")
     st.sidebar.caption(
-        "Les cours, examens et messages sont sauvegardes dans btsmtacademy_data.json."
+        "Les cours, examens et messages sont sauvegardés dans btsmtacademy_data.json."
     )
 
     if page == "Accueil":
