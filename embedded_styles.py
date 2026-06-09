@@ -188,35 +188,117 @@ section[data-testid="stSidebar"] hr {
 }
 
 .sidebar-study-card {
+    position: relative;
+    overflow: hidden;
     margin: 28px 8px 18px;
     padding: 18px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 18px;
+    background:
+        radial-gradient(circle at 18% 0%, rgba(93, 181, 255, 0.30), transparent 32%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 18px 38px rgba(0, 0, 0, 0.14);
+}
+
+.sidebar-study-card::after {
+    content: "";
+    position: absolute;
+    right: -34px;
+    top: -34px;
+    width: 112px;
+    height: 112px;
+    border-radius: 999px;
+    background: rgba(22, 119, 255, 0.18);
+}
+
+.sidebar-study-head {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 13px;
+    align-items: center;
 }
 
 .sidebar-study-card strong {
     display: block;
-    margin: 12px 0;
+    margin: 0 0 6px;
     color: #fff !important;
-    font-size: 14px;
-    line-height: 1.45;
+    font-size: clamp(13px, 1vw, 15px);
+    line-height: 1.35;
+}
+
+.sidebar-study-card small {
+    color: rgba(255, 255, 255, 0.72) !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+}
+
+.sidebar-study-icon {
+    width: 54px !important;
+    height: 54px !important;
+    border-radius: 18px !important;
+    font-size: 17px !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.sidebar-progress-label {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 18px;
+    color: rgba(255, 255, 255, 0.74) !important;
+    font-size: 11px;
+    font-weight: 850;
+}
+
+.sidebar-progress-label span {
+    color: rgba(255, 255, 255, 0.74) !important;
+}
+
+.sidebar-progress-label b {
+    color: #ffffff !important;
+    white-space: nowrap !important;
 }
 
 .sidebar-progress {
+    position: relative;
+    z-index: 1;
     height: 8px;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.12);
     overflow: hidden;
-    margin: 12px 0;
+    margin: 9px 0 16px;
 }
 
 .sidebar-progress span {
     display: block;
-    width: 62%;
+    width: 38%;
     height: 100%;
     border-radius: inherit;
-    background: linear-gradient(90deg, #5ee7ff, #1677ff);
+    background: linear-gradient(90deg, #5ee7ff, #1677ff, #f5bf3d);
+    box-shadow: 0 0 18px rgba(93, 181, 255, 0.42);
+}
+
+.sidebar-study-foot {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-study-foot b {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 950;
+    white-space: nowrap !important;
 }
 
 button[data-testid="collapsedControl"],

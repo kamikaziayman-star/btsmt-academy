@@ -4079,11 +4079,22 @@ def sidebar_navigation():
     st.sidebar.markdown(
         """
         <div class="sidebar-study-card">
-            <div class="sidebar-study-icon">BTS</div>
-            <strong>Restez organisé,<br>réussissez vos études.</strong>
+            <div class="sidebar-study-head">
+                <div class="sidebar-study-icon">BTS</div>
+                <div>
+                    <strong>Restez organisé,<br>réussissez vos études.</strong>
+                    <small>Session active</small>
+                </div>
+            </div>
+            <div class="sidebar-progress-label">
+                <span>Progression annuelle</span>
+                <b>2026 - 2027</b>
+            </div>
             <div class="sidebar-progress"><span></span></div>
-            <small>Année universitaire</small>
-            <b>2024 - 2025</b>
+            <div class="sidebar-study-foot">
+                <small>Année scolaire</small>
+                <b>2026 - 2027</b>
+            </div>
         </div>
         """,
         unsafe_allow_html=True,
