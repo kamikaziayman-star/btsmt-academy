@@ -1583,6 +1583,12 @@ def show_academic_page_header(title, subtitle, icon="SC"):
     )
 
 
+def show_usage_guide(title, steps):
+    with st.expander(f"Guide rapide - {title}", expanded=False):
+        for index, step in enumerate(steps, start=1):
+            st.markdown(f"**{index}.** {step}")
+
+
 def render_login_topbar(role_label):
     st.markdown(
         f"""
@@ -2035,6 +2041,14 @@ def show_resource_card(resource, extra=""):
 
 def show_home(data):
     show_header(data)
+    show_usage_guide(
+        "Accueil",
+        [
+            "Consultez les statistiques pour voir rapidement les cours, examens, ressources et nouveautés.",
+            "Ouvrez les blocs du dashboard pour suivre les derniers messages, fichiers et examens.",
+            "Utilisez le bouton Historique des nouveautés pour revoir les publications déjà lues.",
+        ],
+    )
     current_email = st.session_state.get("platform_user_email", "")
     student_account = data.get("student_accounts", {}).get(current_email)
     admin_messages = []
@@ -2236,6 +2250,14 @@ def show_courses(data):
             """,
             unsafe_allow_html=True,
         )
+        show_usage_guide(
+            "Cours",
+            [
+                "Choisissez une matière pour afficher ses cours et ressources.",
+                "Utilisez les filtres pour afficher uniquement les cours, exercices, corrections ou fiches.",
+                "Les ressources peuvent être ouvertes par lien Drive ou téléchargées si elles ont été ajoutées comme fichier.",
+            ],
+        )
 
         columns = st.columns(3)
         for index, subject in enumerate(SUBJECTS):
@@ -2330,6 +2352,14 @@ def show_search(data):
         "Retrouvez rapidement un cours, une fiche ou une ressource par mot-clé.",
         "R",
     )
+    show_usage_guide(
+        "Recherche",
+        [
+            "Tapez un mot-clé lié au cours, à la matière ou au type de ressource.",
+            "Affinez les résultats avec les filtres Type et Statut.",
+            "Ouvrez directement la ressource trouvée depuis la liste des résultats.",
+        ],
+    )
     query = st.text_input(
         "Rechercher un cours",
         placeholder="Exemple: prix, inflation, GRH, anglais...",
@@ -2363,6 +2393,14 @@ def show_updates(data):
         """,
         unsafe_allow_html=True,
     )
+    show_usage_guide(
+        "Historique",
+        [
+            "Retrouvez ici toutes les publications déjà affichées sur le dashboard.",
+            "Utilisez cette page pour revoir un cours, une annonce ou une ressource ancienne.",
+            "Les nouveautés restent consultables même après les avoir marquées comme vues.",
+        ],
+    )
 
     items = latest_updates(data, limit=30)
     if not items:
@@ -2392,6 +2430,14 @@ def show_exams(data):
         </div>
         """,
         unsafe_allow_html=True,
+    )
+    show_usage_guide(
+        "Examens",
+        [
+            "Filtrez les anciens examens par matière, année et session.",
+            "Ouvrez le lien Drive de l'examen pour consulter le sujet.",
+            "Si un corrigé est disponible, utilisez le bouton Ouvrir le corrigé.",
+        ],
     )
 
     col1, col2, col3 = st.columns(3)
@@ -2474,6 +2520,14 @@ def show_homework_plan(data):
         """,
         unsafe_allow_html=True,
     )
+    show_usage_guide(
+        "Planning",
+        [
+            "Consultez les examens planifiés avec leur matière et leur date.",
+            "Les dates de week-end sont masquées pour garder un planning clair.",
+            "Les professeurs et l'administration peuvent ajouter ou supprimer les dates depuis leur espace.",
+        ],
+    )
 
     subject_filter = st.selectbox(
         "Filtrer par matière",
@@ -2541,6 +2595,14 @@ def show_shared_files(data):
         </div>
         """,
         unsafe_allow_html=True,
+    )
+    show_usage_guide(
+        "Fichiers partagés",
+        [
+            "Utilisez les filtres pour retrouver un document par matière ou par auteur.",
+            "Cliquez sur Télécharger pour récupérer un fichier disponible.",
+            "Les images et PDF peuvent être prévisualisés quand le serveur contient encore le fichier.",
+        ],
     )
 
     st.markdown(
@@ -3581,6 +3643,14 @@ def show_admin_space(data):
         "Gestion complète des cours, examens, messages, fichiers et comptes de la plateforme.",
         "A",
     )
+    show_usage_guide(
+        "Administration",
+        [
+            "Choisissez une section pour gérer les cours, examens, messages, fichiers ou utilisateurs.",
+            "Dans Cours, ajoutez une ressource par lien Drive ou par fichier PDF, Word, image, Excel ou PowerPoint.",
+            "Dans Utilisateurs, validez les inscriptions, gérez les comptes et générez un mot de passe temporaire si nécessaire.",
+        ],
+    )
     st.success("Connecté : Administration BTS SMARTCAMPUS | Accès complet")
 
     section = st.radio(
@@ -3649,6 +3719,14 @@ def show_prof_space(data):
         "Espace professeur",
         f"Publiez et gérez les contenus de la matière {subject}.",
         "P",
+    )
+    show_usage_guide(
+        "Professeur",
+        [
+            "Ajoutez des cours avec un lien Drive ou un fichier depuis votre ordinateur.",
+            "Publiez des messages et dates d'examen pour informer les étudiants.",
+            "Consultez les messages envoyés par les étudiants dans la section Discussion.",
+        ],
     )
     st.success(f"Connecté : {prof_name} | Matière : {subject}")
 
@@ -3791,6 +3869,14 @@ def show_contact(data):
         """,
         unsafe_allow_html=True,
     )
+    show_usage_guide(
+        "Discussion professeur",
+        [
+            "Sélectionnez la matière concernée par votre question.",
+            "Rédigez votre demande clairement avec votre nom et prénom.",
+            "Le professeur ou l'administration pourra consulter et traiter votre message.",
+        ],
+    )
 
     with st.form("student_contact_form", clear_on_submit=True):
         subject = st.selectbox("Matiere", SUBJECTS)
@@ -3865,6 +3951,14 @@ def show_support(data):
         <div class="contact-form-title">Nouvelle réclamation</div>
         """,
         unsafe_allow_html=True,
+    )
+    show_usage_guide(
+        "Support",
+        [
+            "Utilisez l'assistant pour obtenir une première réponse rapide.",
+            "Envoyez une réclamation si le problème nécessite une intervention de l'administration.",
+            "Ajoutez une capture d'écran ou un fichier si cela peut aider le support à comprendre le problème.",
+        ],
     )
 
     show_support_assistant(data, user_label, user_email, user_role)
@@ -3999,6 +4093,14 @@ def show_direct_messages(data):
         </div>
         """,
         unsafe_allow_html=True,
+    )
+    show_usage_guide(
+        "Messages",
+        [
+            "Consultez ici les messages envoyés par l'administration ou les professeurs.",
+            "L'administration peut envoyer un message direct à un utilisateur précis.",
+            "Les pièces jointes apparaissent sous le message quand elles sont disponibles.",
+        ],
     )
 
     if current_role == "admin":
