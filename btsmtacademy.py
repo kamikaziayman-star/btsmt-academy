@@ -11,6 +11,7 @@ import sqlite3
 import textwrap
 import urllib.error
 import urllib.request
+import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -522,6 +523,10 @@ def load_data():
             resource.setdefault("statut", "Disponible")
             resource.setdefault("date", "Date non indiquée")
             resource.setdefault("prof", "Administration")
+            resource.setdefault("source", "drive")
+            resource.setdefault("path", "")
+            resource.setdefault("filename", "")
+            resource.setdefault("mime", "")
             for field in ("titre", "description", "prof"):
                 resource[field] = normalize_brand_text(resource.get(field, ""))
 
@@ -2017,7 +2022,15 @@ def show_resource_card(resource, extra=""):
         """,
         unsafe_allow_html=True,
     )
-    st.link_button("Ouvrir le lien Drive", resource.get("url", "https://drive.google.com/"))
+    if resource.get("source") == "upload" or resource.get("path"):
+        render_local_attachment(
+            resource.get("path", ""),
+            resource.get("filename", ""),
+            resource.get("mime", "application/octet-stream"),
+            key_prefix=f"course_card_{resource.get('_id', resource.get('titre', 'resource'))}",
+        )
+    else:
+        st.link_button("Ouvrir le lien Drive", resource.get("url", "https://drive.google.com/"))
 
 
 def show_home(data):
@@ -2255,7 +2268,7 @@ def show_courses(data):
         st.rerun()
 
     st.subheader(subject)
-    st.write("Cliquez sur un cours pour ouvrir directement son fichier PDF ou son dossier Drive.")
+    st.write("Cliquez sur un cours pour ouvrir son fichier ou son lien Drive.")
 
     resources = data["cours"].get(subject, [])
     resource_type = st.selectbox(
@@ -2296,11 +2309,19 @@ def show_courses(data):
             """,
             unsafe_allow_html=True,
         )
-        st.link_button(
-            "Ouvrir le fichier du cours",
-            resource.get("url", "https://drive.google.com/"),
-            width="stretch",
-        )
+        if resource.get("source") == "upload" or resource.get("path"):
+            render_local_attachment(
+                resource.get("path", ""),
+                resource.get("filename", ""),
+                resource.get("mime", "application/octet-stream"),
+                key_prefix=f"course_{subject}_{resource.get('_id', resource.get('titre', 'resource'))}",
+            )
+        else:
+            st.link_button(
+                "Ouvrir le lien du cours",
+                resource.get("url", "https://drive.google.com/"),
+                width="stretch",
+            )
 
 
 def show_search(data):
@@ -2685,7 +2706,7 @@ def add_course_form(data, subject, prof_name="Administration"):
         f"Remplissez ces informations pour publier un nouveau cours dans {subject}."
     )
     with st.form("add_course_form", clear_on_submit=True):
-        st.text_input("Matiere du cours", value=subject, disabled=True)
+        st.text_input("Matière du cours", value=subject, disabled=True)
         title = st.text_input(
             "Nom du cours",
             placeholder="Exemple: Politique de prix",
@@ -2696,10 +2717,38 @@ def add_course_form(data, subject, prof_name="Administration"):
             placeholder="Exemple: Cours PDF avec explication et exercices.",
             help="Ajoutez une courte phrase pour expliquer le contenu du cours.",
         )
+        publish_mode = st.radio(
+            "Mode de publication",
+            ["Lien Drive", "Fichier depuis l'ordinateur"],
+            horizontal=True,
+            help="Choisissez un lien externe ou téléversez directement un fichier.",
+        )
         url = st.text_input(
-            "Lien Drive/PDF du cours",
+            "Lien Drive du cours",
             placeholder="Exemple: https://drive.google.com/file/d/.../view",
-            help="Collez le lien Google Drive du fichier PDF ou du dossier du cours.",
+            help="Collez le lien Google Drive du fichier ou du dossier du cours.",
+            disabled=publish_mode != "Lien Drive",
+        )
+        uploaded_file = st.file_uploader(
+            "Fichier du cours",
+            type=[
+                "pdf",
+                "doc",
+                "docx",
+                "ppt",
+                "pptx",
+                "xls",
+                "xlsx",
+                "png",
+                "jpg",
+                "jpeg",
+                "webp",
+                "txt",
+                "csv",
+            ],
+            accept_multiple_files=False,
+            help="Formats acceptés : PDF, Word, PowerPoint, Excel, image, texte.",
+            disabled=publish_mode != "Fichier depuis l'ordinateur",
         )
         resource_type = st.selectbox(
             "Type de ressource",
@@ -2714,23 +2763,49 @@ def add_course_form(data, subject, prof_name="Administration"):
         submitted = st.form_submit_button("Ajouter le cours")
 
     if submitted:
-        if not title or not url:
-            st.error("Le titre et le lien Drive sont obligatoires.")
+        title = title.strip()
+        description = description.strip()
+        url = url.strip()
+        if not title:
+            st.error("Le titre du cours est obligatoire.")
             return
+        if publish_mode == "Lien Drive" and not url:
+            st.error("Le lien Drive est obligatoire.")
+            return
+        if publish_mode == "Fichier depuis l'ordinateur" and uploaded_file is None:
+            st.error("Veuillez ajouter un fichier de cours.")
+            return
+
+        source = "drive"
+        file_path = ""
+        file_name = ""
+        file_mime = ""
+        if publish_mode == "Fichier depuis l'ordinateur":
+            saved_path = save_uploaded_file(uploaded_file, folder=f"cours_{subject}")
+            source = "upload"
+            file_path = str(saved_path)
+            file_name = uploaded_file.name
+            file_mime = uploaded_file.type or "application/octet-stream"
+            url = ""
 
         data["cours"].setdefault(subject, []).append(
             {
                 "titre": title,
                 "description": description,
                 "url": url,
+                "source": source,
+                "path": file_path,
+                "filename": file_name,
+                "mime": file_mime,
                 "type": resource_type,
                 "statut": status,
                 "date": datetime.now().strftime("%d/%m/%Y %H:%M"),
                 "prof": prof_name,
+                "_id": uuid.uuid4().hex[:24],
             }
         )
         save_data(data)
-        st.success("Cours ajoute avec succes.")
+        st.success("Cours ajouté avec succès.")
         st.rerun()
 
 
