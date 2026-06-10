@@ -2785,32 +2785,18 @@ def add_course_form(data, subject, prof_name="Administration"):
             horizontal=True,
             help="Choisissez un lien externe ou téléversez directement un fichier.",
         )
+        st.caption(
+            "Astuce : choisissez le mode, puis remplissez seulement le lien Drive ou ajoutez seulement le fichier."
+        )
         url = st.text_input(
             "Lien Drive du cours",
             placeholder="Exemple: https://drive.google.com/file/d/.../view",
             help="Collez le lien Google Drive du fichier ou du dossier du cours.",
-            disabled=publish_mode != "Lien Drive",
         )
         uploaded_file = st.file_uploader(
             "Fichier du cours",
-            type=[
-                "pdf",
-                "doc",
-                "docx",
-                "ppt",
-                "pptx",
-                "xls",
-                "xlsx",
-                "png",
-                "jpg",
-                "jpeg",
-                "webp",
-                "txt",
-                "csv",
-            ],
             accept_multiple_files=False,
-            help="Formats acceptés : PDF, Word, PowerPoint, Excel, image, texte.",
-            disabled=publish_mode != "Fichier depuis l'ordinateur",
+            help="Formats acceptés : PDF, Word, PowerPoint, Excel, image, texte, archive ou autre fichier utile au cours.",
         )
         resource_type = st.selectbox(
             "Type de ressource",
