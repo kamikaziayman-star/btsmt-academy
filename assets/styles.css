@@ -400,46 +400,185 @@ select,
 .course-row,
 .exam-card,
 .planning-card {
-    animation: fadeIn 0.35s ease both;
+    animation: academicPageIn 0.46s cubic-bezier(0.22, 0.84, 0.24, 1) both;
 }
 
 .card,
 .course-row,
 .exam-card,
 .planning-card,
+.dashboard-stat,
 .dashboard-stat-card,
 .dash-panel,
 .drive-stat-card,
 .drive-file-row,
+.subject-card,
+.welcome-mini-card,
+.university-card,
 .university-feature-card,
 .shared-file-card,
 .message,
 .homework-card,
 .university-announcement {
-    transition: transform 0.20s ease, box-shadow 0.20s ease, border-color 0.20s ease !important;
+    transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease, background 0.24s ease !important;
+    will-change: transform;
 }
 
 .card:hover,
 .course-row:hover,
 .exam-card:hover,
 .planning-card:hover,
+.dashboard-stat:hover,
 .dashboard-stat-card:hover,
 .dash-panel:hover,
 .drive-stat-card:hover,
 .drive-file-row:hover,
+.subject-card:hover,
+.welcome-mini-card:hover,
+.university-card:hover,
 .university-feature-card:hover,
 .shared-file-card:hover,
 .message:hover,
 .homework-card:hover,
 .university-announcement:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
     border-color: rgba(22, 119, 255, 0.28);
-    box-shadow: 0 18px 42px rgba(6, 38, 90, 0.12);
+    box-shadow: 0 22px 48px rgba(6, 38, 90, 0.14);
+}
+
+.dashboard-stat,
+.dashboard-stat-card,
+.dash-panel,
+.drive-stat-card,
+.drive-file-row,
+.subject-card,
+.welcome-mini-card,
+.university-feature-card,
+.shared-file-card {
+    animation: academicCardIn 0.48s cubic-bezier(0.22, 0.84, 0.24, 1) both;
+}
+
+.dashboard-stat:nth-of-type(2),
+.dashboard-stat-card:nth-of-type(2),
+.subject-card:nth-of-type(2),
+.drive-file-row:nth-of-type(2) {
+    animation-delay: 0.04s;
+}
+
+.dashboard-stat:nth-of-type(3),
+.dashboard-stat-card:nth-of-type(3),
+.subject-card:nth-of-type(3),
+.drive-file-row:nth-of-type(3) {
+    animation-delay: 0.08s;
+}
+
+.dashboard-stat:nth-of-type(4),
+.dashboard-stat-card:nth-of-type(4),
+.subject-card:nth-of-type(4),
+.drive-file-row:nth-of-type(4) {
+    animation-delay: 0.12s;
+}
+
+.stButton > button,
+.stDownloadButton > button,
+a[data-testid="stLinkButton"] {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.stButton > button::after,
+.stDownloadButton > button::after,
+a[data-testid="stLinkButton"]::after {
+    content: "";
+    position: absolute;
+    top: -40%;
+    left: -65%;
+    width: 48%;
+    height: 180%;
+    transform: rotate(18deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.38), transparent);
+    transition: left 0.48s ease;
+    pointer-events: none;
+}
+
+.stButton > button:hover::after,
+.stDownloadButton > button:hover::after,
+a[data-testid="stLinkButton"]:hover::after {
+    left: 125%;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+[data-baseweb="select"] > div:focus-within {
+    border-color: rgba(22, 119, 255, 0.52) !important;
+    box-shadow: 0 0 0 4px rgba(22, 119, 255, 0.12) !important;
+    transform: translateY(-1px);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease !important;
+}
+
+.sidebar-progress span {
+    position: relative;
+    overflow: hidden;
+    animation: progressBreath 3.4s ease-in-out infinite;
+}
+
+.sidebar-progress span::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.42), transparent);
+    transform: translateX(-105%);
+    animation: progressShine 2.8s ease-in-out infinite;
 }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes academicPageIn {
+    from {
+        opacity: 0;
+        filter: blur(4px);
+        transform: translateY(14px) scale(0.992);
+    }
+    to {
+        opacity: 1;
+        filter: none;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes academicCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes academicHeroGlow {
+    from { transform: translate3d(-8%, -5%, 0) rotate(0deg); opacity: 0.40; }
+    to { transform: translate3d(7%, 5%, 0) rotate(2deg); opacity: 0.72; }
+}
+
+@keyframes academicFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+@keyframes progressBreath {
+    0%, 100% { filter: saturate(1); }
+    50% { filter: saturate(1.25) brightness(1.08); }
+}
+
+@keyframes progressShine {
+    0% { transform: translateX(-115%); }
+    42%, 100% { transform: translateX(115%); }
 }
 
 @keyframes dashboardGate3d {
@@ -1088,6 +1227,38 @@ select,
         linear-gradient(135deg, #08275a 0%, #0b3b86 56%, #1677ff 100%);
     box-shadow: var(--bts-shadow);
     color: #fff !important;
+    animation: academicPageIn 0.54s cubic-bezier(0.22, 0.84, 0.24, 1) both;
+}
+
+.academic-dashboard-hero > *,
+.courses-hero > *,
+.files-hero > *,
+.exam-hero > *,
+.planning-hero > *,
+.platform-login-hero > *,
+.academic-welcome-panel > * {
+    position: relative;
+    z-index: 1;
+}
+
+.academic-dashboard-hero::after,
+.courses-hero::after,
+.files-hero::after,
+.exam-hero::after,
+.planning-hero::after,
+.platform-login-hero::after,
+.academic-welcome-panel::after {
+    content: "";
+    position: absolute;
+    inset: -35%;
+    z-index: 0;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.18), transparent 24%),
+        radial-gradient(circle at 74% 58%, rgba(93, 181, 255, 0.18), transparent 26%);
+    opacity: 0.55;
+    pointer-events: none;
+    animation: academicHeroGlow 8s ease-in-out infinite alternate;
 }
 
 .academic-dashboard-hero h1,
@@ -1125,6 +1296,7 @@ select,
         radial-gradient(circle at 60% 35%, rgba(255, 255, 255, 0.22), transparent 32%),
         rgba(255, 255, 255, 0.08);
     opacity: 0.9;
+    animation: academicFloat 5.8s ease-in-out infinite;
 }
 
 .dashboard-stat-grid {
@@ -1744,5 +1916,16 @@ code {
     .subject-card,
     .welcome-mini-card {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
     }
 }
